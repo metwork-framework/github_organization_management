@@ -2,7 +2,7 @@
 {% set releases = "cat releases.json"|shell()|from_json %}
 
 provider "github" {
-  token        = "{{GITHUB_TOKEN}}"
+  token        = "{{GHTOK}}"
   organization = "metwork-framework"
 }
 
@@ -38,7 +38,7 @@ locals {
 
 {% for label in labels %}
 resource "github_issue_label" "{{label.name}}" {
-  for_each = toset(data.github_repositories.metwork_all_repositories.names)
+  for_each = toset(local.github_il2plus_repositories)
   repository = each.key
   name = "{{label.title}}"
   color = "{{label.color}}"
