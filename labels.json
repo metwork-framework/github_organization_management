@@ -1,0 +1,92 @@
+[
+    {
+        "name": "bug",
+        "title": "Type: Bug",
+        "color": "e11d21"
+    },
+    {
+        "name": "enhancement",
+        "title": "Type: Enhancement",
+        "color": "84b6eb"
+    },
+    {
+        "name": "question",
+        "title": "Type: Question",
+        "color": "cc317c"
+    },
+    {
+        "name": "maintenance",
+        "title": "Type: Maintenance",
+        "color": "fbca04"
+    },
+    {
+        "name": "low",
+        "title": "Priority: Low",
+        "color": "009800"
+    },
+    {
+        "name": "high",
+        "title": "Priority: High",
+        "color": "eb6420"
+    },
+    {
+        "name": "closed",
+        "title": "Status: Closed",
+        "color": "000000"
+    },
+    {
+        "name": "accepted",
+        "title": "Status: Accepted",
+        "color": "009800"
+    },
+    {
+        "name": "not_reproduced",
+        "title": "Status: NotReproduced",
+        "color": "fef2c0"
+    },
+    {
+        "name": "blocked",
+        "title": "Status: Blocked",
+        "color": "e11d21"
+    },
+    {
+        "name": "in_progress",
+        "title": "Status: In Progress",
+        "color": "cccccc"
+    },
+    {
+        "name": "pending",
+        "title": "Status: Pending",
+        "color": "fef2c0"
+    },
+    {
+        "name": "review_needed",
+        "title": "Status: Review Needed",
+        "color": "fbca04"
+    },
+    {
+        "name": "revision_needed",
+        "title": "Status: Revision Needed",
+        "color": "e11d21"
+    },
+    {
+        "name": "merge_now",
+        "title": "Merge Now",
+        "color": "ff0000"
+    },
+    {
+        "name": "merge_manual",
+        "title": "Merge Manual",
+        "color": "ff0000"
+    },
+    {
+        "name": "easy",
+        "title": "Difficulty: Easy",
+        "color": "009800"
+    },
+    {
+        "name": "hard",
+        "title": "Difficulty: Hard",
+        "color": "eb6420"
+    }
+]

@@ -1,0 +1,55 @@
+{% set labels = "cat labels.json"|shell()|from_json %}
+{% set releases = "cat releases.json"|shell()|from_json %}
+
+provider "github" {
+  token        = "{{GITHUB_TOKEN}}"
+  organization = "metwork-framework"
+}
+
+data "github_repositories" "metwork_all_repositories" {
+  query = "org:metwork-framework archived:no"
+}
+
+data "github_repositories" "metwork_il2_repositories" {
+  query = "org:metwork-framework archived:no topic:integration-level-2"
+}
+
+data "github_repositories" "metwork_il3_repositories" {
+  query = "org:metwork-framework archived:no topic:integration-level-3"
+}
+
+data "github_repositories" "metwork_il4_repositories" {
+  query = "org:metwork-framework archived:no topic:integration-level-4"
+}
+
+data "github_repositories" "metwork_il5_repositories" {
+  query = "org:metwork-framework archived:no topic:integration-level-5"
+}
+
+locals {
+  github_il4plus_repositories = concat(data.github_repositories.metwork_il4_repositories.names, data.github_repositories.metwork_il5_repositories.names)
+  github_il3plus_repositories = concat(concat(data.github_repositories.metwork_il4_repositories.names, data.github_repositories.metwork_il5_repositories.names), data.github_repositories.metwork_il3_repositories.names)
+  github_il2plus_repositories = concat(concat(concat(data.github_repositories.metwork_il4_repositories.names, data.github_repositories.metwork_il5_repositories.names), data.github_repositories.metwork_il3_repositories.names), data.github_repositories.metwork_il2_repositories.names)
+}
+
+########################
+##### ISSUE LABELS #####
+########################
+
+{% for label in labels %}
+resource "github_issue_label" "{{label.name}}" {
+  for_each = toset(data.github_repositories.metwork_all_repositories.names)
+  repository = each.key
+  name = "{{label.title}}"
+  color = "{{label.color}}"
+}
+{% endfor %}
+
+{% for release in releases.actives %}
+resource "github_issue_label" "backport_{{release.alternate_title}}" {
+  for_each = toset(local.github_il4plus_repositories)
+  repository = each.key
+  name = "backport-to-{{release.title}}"
+  color = "eb6420"
+}
+{% endfor %}
