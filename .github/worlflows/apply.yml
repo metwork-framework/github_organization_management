@@ -1,0 +1,23 @@
+name: apply
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: "set up terraform"
+        env:
+          TERRAFORM_VERSION: "0.12.21"
+        run: |
+          wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+          unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+          sudo mv ./terraform /usr/local/bin
+          rm -rf terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      - name: "set up python deps"
+        run: |
+          python -m pip install --upgrade pip
+          pip install git+https://github.com/metwork-framework/envtpl.git
