@@ -2,7 +2,7 @@
 {% set releases = "cat releases.json"|shell()|from_json %}
 
 provider "github" {
-  token        = "{{GITHUB_TOKEN}}"
+  token        = "{{GHTOK}}"
   organization = "metwork-framework"
 }
 

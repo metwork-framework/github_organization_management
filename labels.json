@@ -88,5 +88,50 @@
         "name": "hard",
         "title": "Difficulty: Hard",
         "color": "eb6420"
+    },
+    {
+        "name": "delete0",
+        "title": "bug",
+        "color": "000000"
+    },
+    {
+        "name": "delete2",
+        "title": "documentation",
+        "color": "000000"
+    },
+    {
+        "name": "delete3",
+        "title": "duplicate",
+        "color": "000000"
+    },
+    {
+        "name": "delete4",
+        "title": "enhancement",
+        "color": "000000"
+    },
+    {
+        "name": "delete5",
+        "title": "good first issue",
+        "color": "000000"
+    },
+    {
+        "name": "delete6",
+        "title": "help wanted",
+        "color": "000000"
+    },
+    {
+        "name": "delete7",
+        "title": "invalid",
+        "color": "000000"
+    },
+    {
+        "name": "delete8",
+        "title": "question",
+        "color": "000000"
+    },
+    {
+        "name": "delete9",
+        "title": "wontfix",
+        "color": "000000"
     }
 ]
