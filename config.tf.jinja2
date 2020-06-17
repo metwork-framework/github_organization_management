@@ -32,6 +32,7 @@ locals {
   github_il2plus_repositories = concat(concat(concat(data.github_repositories.metwork_il4_repositories.names, data.github_repositories.metwork_il5_repositories.names), data.github_repositories.metwork_il3_repositories.names), data.github_repositories.metwork_il2_repositories.names)
 }
 
+
 ########################
 ##### ISSUE LABELS #####
 ########################
@@ -51,5 +52,22 @@ resource "github_issue_label" "backport_{{release.alternate_title}}" {
   repository = each.key
   name = "backport-to-{{release.title}}"
   color = "eb6420"
+}
+{% endfor %}
+
+
+##############################
+##### BRANCH PROTECTIONS #####
+##############################
+{% for release in releases.actives + releases.persistents %}
+resource "github_branch_protection" "branch_{{release.alternate_title}}" {
+  for_each = toset(local.github_il4plus_repositories)       
+  repository = each.key            
+  branch = "{{release.branch}}"
+  enforce_admins = true
+  required_status_checks {
+    strict = true
+    contexts = ["pr ready to merge"]
+  }
 }
 {% endfor %}

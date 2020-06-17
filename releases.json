@@ -31,6 +31,18 @@
             "alternate_title": "1_dot_0"
         }
     ],
+    "persistents": [
+        {
+            "branch": "master",
+            "title": "master",
+            "alternate_title": "master"
+        },
+        {
+            "branch": "integration",
+            "title": "integration",
+            "alternate_title": "integration"
+        }
+    ],
     "inactives": [
     ]
 }
