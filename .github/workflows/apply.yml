@@ -22,7 +22,7 @@ jobs:
           git config --global credential.helper cache
           cd /tmp
           git clone https://${{ secrets.CLONE_USERNAME }}:${{ secrets.CLONE_PASSWORD }}@github.com/metwork-framework/testrepo2
-          renvtpl ${GITHUB_WORKSPACE}/github_organization_management/common_files /tmp/testrepo2
+          renvtpl ${GITHUB_WORKSPACE}/common_files /tmp/testrepo2
           cd /tmp/testrepo2
           git status
           git diff
