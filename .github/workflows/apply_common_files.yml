@@ -18,6 +18,8 @@ jobs:
           sudo pip3 install PyGithub
       - name: "apply"
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
         run: |
           git config --global credential.helper cache
           cd /tmp
