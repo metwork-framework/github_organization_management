@@ -10,10 +10,19 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v1
+      - name: "set up system deps"
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install python3 python3-pip git python3-setuptools-git python3-setuptools
+          sudo pip3 install git+https://github.com/metwork-framework/envtpl.git
       - name: "test"
         run: |
+          pwd
+          echo ${GITHUB_WORKSPACE}
           git config --global credential.helper cache
+          cd /tmp
           git clone https://${{ secrets.CLONE_USERNAME }}:${{ secrets.CLONE_PASSWORD }}@github.com/metwork-framework/testrepo2
-          cd testrepo2
-          git checkout -b foo
-          git push -u origin foo
+          renvtpl ${GITHUB_WORKSPACE}/github_organization_management/common_files /tmp/testrepo2
+          cd /tmp/testrepo2
+          git status
+          git diff
