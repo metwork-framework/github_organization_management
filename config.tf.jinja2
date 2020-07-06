@@ -1,6 +1,6 @@
 {% set labels = "cat labels.json"|shell()|from_json %}
 {% set releases = "cat releases.json"|shell()|from_json %}
-{% set repositories = "bin/get_repos.py metwork-framework "|shell()|from_json %}
+{% set repositories = "cat repositories.json"|shell()|from_json %}
 
 provider "github" {
   token        = "{{GHTOK}}"

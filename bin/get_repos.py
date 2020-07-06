@@ -5,7 +5,7 @@ import argparse
 import json
 from github import Github
 
-TOKEN = os.environ['GITHUB_TOKEN']
+TOKEN = os.environ['GHTOK']
 ORG = "metwork-framework"
 
 argparser = argparse.ArgumentParser(
