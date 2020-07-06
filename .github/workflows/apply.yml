@@ -32,6 +32,7 @@ jobs:
       - name: "set up python deps"
         run: |
           sudo pip3 install git+https://github.com/metwork-framework/envtpl.git
+          sudo pip3 install PyGithub
       - name: "validate"
         env:
           GHTOK: ${{ secrets.GHTOK }}
@@ -44,12 +45,18 @@ jobs:
         run: |
           s3cmd --host="https://s3.fr-par.scw.cloud" --host-bucket="https://s3.fr-par.scw.cloud" --bucket-location="fr-par" --access_key="${SCW_AK}" --secret_key="${SCW_SK}" --no-check-certificate --force get s3://metwork-terraform/terraform.tfstate || true
         if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-      - name: "apply"
+      - name: "apply1"
+        env:
+          GHTOK: ${{ secrets.GHTOK }}
+        run: |
+          make autoapply_norefresh
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      - name: "apply2"
         env:
           GHTOK: ${{ secrets.GHTOK }}
         run: |
           make autoapply
-        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        if: github.ref == 'refs/heads/master' && github.event_name == 'schedule'
       - name: "push state"
         env:
           SCW_AK: ${{ secrets.SCW_AK }}

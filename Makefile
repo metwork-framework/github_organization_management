@@ -21,6 +21,9 @@ apply: config.tf
 autoapply: config.tf
 	terraform apply -auto-approve
 
+autoapply_norefresh: config.tf
+	terraform apply -auto-approve -refresh=false
+
 superclean: clean
 	rm -Rf .terraform terraform*
 
