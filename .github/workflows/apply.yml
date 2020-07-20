@@ -50,12 +50,14 @@ jobs:
           GHTOK: ${{ secrets.GHTOK }}
         run: |
           make autoapply_norefresh
+        continue-on-error: true
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       - name: "apply2"
         env:
           GHTOK: ${{ secrets.GHTOK }}
         run: |
           make autoapply
+        continue-on-error: true
         if: github.ref == 'refs/heads/master' && github.event_name == 'schedule'
       - name: "push state"
         env:
