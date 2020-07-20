@@ -71,13 +71,13 @@
     },
     {
         "name": "merge_now",
-        "title": "Merge Now",
+        "title": "Status: Merge Now",
         "color": "ff0000"
     },
     {
-        "name": "merge_manual",
-        "title": "Merge Manual",
-        "color": "ff0000"
+        "name": "merged",
+        "title": "Status: Merged",
+        "color": "009800"
     },
     {
         "name": "easy",
