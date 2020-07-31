@@ -12,6 +12,8 @@ for REPO in $(cat /tmp/repos); do
     cd /tmp
     git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${REPO}.git"
     cd "${REPO}"
+    git config user.email "metworkbot@metwork-framework.org"
+    git config user.name "metworkbot"
     git checkout -b common_files_force
     rm -Rf /tmp/common
     renvtpl "${DIR}/../../common_files" /tmp/common
