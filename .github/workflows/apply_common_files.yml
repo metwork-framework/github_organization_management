@@ -26,4 +26,4 @@ jobs:
           cd /tmp
           ${GITHUB_WORKSPACE}/bin/get_repos.py --topic=integration-level-5 metwork-framework >/tmp/repos
           cat /tmp/repos
-          for REPO in $(cat /tmp/repos); do git clone https://${{ secrets.CLONE_USERNAME }}:${{ secrets.CLONE_PASSWORD }}@github.com/metwork-framework/${REPO}.git; renvtpl ${GITHUB_WORKSPACE}/common_files /tmp/${REPO}; cd /tmp/${REPO}; post_gen_project ; git status; git diff; cd /tmp; done
+          for REPO in $(cat /tmp/repos); do git clone https://${{ secrets.CLONE_USERNAME }}:${{ secrets.CLONE_PASSWORD }}@github.com/metwork-framework/${REPO}.git; rm -Rf /tmp/common ; renvtpl ${GITHUB_WORKSPACE}/common_files /tmp/common; cd /tmp/common; post_gen_project ; cp -Rf * /tmp/${REPO} ; cp -Rf .* /tmp/${REPO} ; cd /tmp/${REPO} ; git status; git diff; cd /tmp; done
