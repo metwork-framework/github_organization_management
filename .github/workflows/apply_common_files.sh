@@ -11,7 +11,7 @@ for REPO in $(cat /tmp/repos); do
     echo ""
     cd /tmp
     git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${REPO}.git"
-    cd "${REPO}.git"
+    cd "${REPO}"
     git checkout -b common_files_force
     rm -Rf /tmp/common
     renvtpl "${DIR}/../../common_files" /tmp/common
@@ -34,4 +34,5 @@ for REPO in $(cat /tmp/repos); do
     fi
     echo ""
     echo ""
+    exit 0
 done
