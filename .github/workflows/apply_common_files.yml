@@ -4,6 +4,9 @@ on:
     paths:
       - 'common_files/**'
       - '.github/workflows/apply_common_files.yml'
+      - '.github/workflows/apply_common_files.sh'
+      - 'bin/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
