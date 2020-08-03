@@ -20,16 +20,23 @@ fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
+    INTEGRATION_LEVEL=$("${DIR}/../../bin/get_integration_level.py" metwork-framework "${REPO}")
     cd "${TMPDIR}"
     git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${REPO}.git"
     cd "${REPO}"
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
+    BASE=master
+    if test "${INTEGRATION_LEVEL}" = "4" -o "${INTEGRATION_LEVEL}" = "5"; then
+        BASE=integration
+    fi
+    if test "${BASE}" != "master"; then
+        git checkout "${BASE}"
+    fi
     git checkout -b common_files_force
     rm -Rf "${TMPDIR}/common"
     export REPO_HOME="${TMPDIR}/${REPO}"
     TOPICS=$("${DIR}/../../bin/get_topics.py" metwork-framework "${REPO}")
-    INTEGRATION_LEVEL=$("${DIR}/../../bin/get_integration_level.py" metwork-framework "${REPO}")
     export REPO
     export TOPICS
     export INTEGRATION_LEVEL
@@ -44,8 +51,6 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git add -u
     git add --all
     N=$(git diff --cached |wc -l)
-    git status
-    git diff --cached # DEBUG
     if test "${N}" -gt 0; then
         if test "${DEBUG}" = "2"; then
             git status
@@ -58,12 +63,11 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             fi
             git commit -m "build: sync common files from github_organization_management repository"
             git push -u origin -f common_files_force
-            "${DIR}/../../bin/create_pr.py" --title "${TITLE}" --body "" --base=integration metwork-framework "${REPO}" common_files_force
+            "${DIR}/../../bin/create_pr.py" --title "${TITLE}" --body "" --base=${BASE} metwork-framework "${REPO}" common_files_force
         fi
     else
         echo "=> NO CHANGE"
     fi
     echo ""
     echo ""
-    exit 0
 done
