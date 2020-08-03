@@ -26,7 +26,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     cd "${REPO}"
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
-    get reset --hard origin/integration
+    git reset --hard origin/integration
     git push -u origin -f master
     echo ""
     echo ""
