@@ -71,7 +71,7 @@ pull_request_rules:
 {% if INTEGRATION_LEVEL|int >= 4 %}
       - status-success=license/cla
 {% if REPO != 'mfext' and REPO != 'testrepo' and REPO != 'testrepo2' %}
-      - status-success=continuous-integration/drone/pr
+      #- status-success=continuous-integration/drone/pr
 {% endif %}
 {% endif %}
   - name: change title
@@ -100,7 +100,7 @@ pull_request_rules:
 {% if INTEGRATION_LEVEL|int >= 4 %}
       - status-success=license/cla
 {% if REPO != 'mfext' and REPO != 'testrepo' and REPO != 'testrepo2' %}
-      - status-success=continuous-integration/drone/pr
+      #- status-success=continuous-integration/drone/pr
 {% endif %}
 {% endif %}
   - name: buildbot auto merges
