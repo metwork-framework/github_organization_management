@@ -1,13 +1,21 @@
 name: apply
 on:
   push:
-    paths-ignore:
-      - '**.md'
-      - '.gitignore'
+    paths:
+      - .github/workflows/apply.yml
+      - config.tf.jinja2
+      - labels.json
+      - releases.json
+      - Makefile
+      - bin/get_repos.py
   pull_request:
-    paths-ignore:
-      - '**.md'
-      - '.gitignore'
+    paths:
+      - .github/workflows/apply.yml
+      - config.tf.jinja2
+      - labels.json
+      - releases.json
+      - Makefile
+      - bin/get_repos.py
   schedule:
     - cron: '0 4 * * *'
 
