@@ -1,4 +1,4 @@
-name: apply_common_files
+name: copy_integration_master
 on:
   workflow_dispatch:
    inputs:
