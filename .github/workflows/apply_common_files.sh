@@ -44,6 +44,8 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git add -u
     git add --all
     N=$(git diff --cached |wc -l)
+    git status
+    git diff --cached # DEBUG
     if test "${N}" -gt 0; then
         if test "${DEBUG}" = "2"; then
             git status
@@ -58,6 +60,8 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             git push -u origin -f common_files_force
             "${DIR}/../../bin/create_pr.py" --title "${TITLE}" --body "" --base=integration metwork-framework "${REPO}" common_files_force
         fi
+    else
+        echo "=> NO CHANGE"
     fi
     echo ""
     echo ""
