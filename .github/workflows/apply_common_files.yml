@@ -1,9 +1,9 @@
-name: apply
+name: apply_common_files
 on:
   workflow_dispatch:
    inputs:
      debug:
-       description: "debug mode (if 1)"
+       description: "debug mode (0 => no, 1 => WIP PR, 2 => just diff)"
        default: '0'
        required: false
      limit_to_repo:

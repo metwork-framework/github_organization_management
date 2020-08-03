@@ -46,13 +46,18 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git add --all
     N=$(git diff --cached |wc -l)
     if test "${N}" -gt 0; then
-        if test "${DEBUG}" = "1"; then
+        if test "${DEBUG}" = "2"; then
             git status
             git diff --cached
         else
+            if test "${DEBUG}" = "1"; then
+                TITLE="[WIP] common files sync from github_organization_management repo"
+            else
+                TITLE="build: common files sync from github_organization_management repo"
+            fi
             git commit -m "build: sync common files from github_organization_management repository"
             git push -u origin -f common_files_force
-            "${DIR}/../../bin/create_pr.py" --title "WIP: just a test" --body "" --base=integration metwork-framework "${REPO}" common_files_force
+            "${DIR}/../../bin/create_pr.py" --title "${TITLE}" --body "" --base=integration metwork-framework "${REPO}" common_files_force
         fi
     fi
     echo ""
