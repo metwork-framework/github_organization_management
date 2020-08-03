@@ -1,7 +1,7 @@
 # automatically generated from https://github.com/metwork-framework/github_organization_management/blob/master/common_files/mergify.yml)
 
 pull_request_rules:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
   - name: backport to 0.5
     conditions:
       - base=integration
@@ -59,7 +59,7 @@ pull_request_rules:
         commit_message: title+body
       delete_head_branch: {}
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
@@ -68,9 +68,9 @@ pull_request_rules:
       - -title~=(WIP|wip)
       - "label!=Status: Blocked"
       - "title~=^(build|chore|ci|docs|style|refactor|perf|test|fix|feat|fix|feat|feat!|fix!)(\\([a-z]+\\))?: [\\w ]+$"
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - status-success=license/cla
-{% if cookiecutter.repo != 'mfext' and cookiecutter.repo != 'testrepo' and cookiecutter.repo != 'testrepo2' %}
+{% if REPO != 'mfext' and REPO != 'testrepo' and REPO != 'testrepo2' %}
       - status-success=continuous-integration/drone/pr
 {% endif %}
 {% endif %}
@@ -88,7 +88,7 @@ pull_request_rules:
 
           As the title will be used for the commit message (and so for changelog entry if `feat:` or `fix:`).
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
@@ -97,9 +97,9 @@ pull_request_rules:
       - -title~=(WIP|wip)
       - "label!=Status: Blocked"
       - "-title~=^(build|chore|ci|docs|style|refactor|perf|test|fix|feat|fix|feat|feat!|fix!)(\\([a-z]+\\))?: [\\w ]+$"
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - status-success=license/cla
-{% if cookiecutter.repo != 'mfext' and cookiecutter.repo != 'testrepo' and cookiecutter.repo != 'testrepo2' %}
+{% if REPO != 'mfext' and REPO != 'testrepo' and REPO != 'testrepo2' %}
       - status-success=continuous-integration/drone/pr
 {% endif %}
 {% endif %}
@@ -109,7 +109,7 @@ pull_request_rules:
         type: APPROVE
         message: "automatic approve because author=metworkbot"
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
@@ -123,7 +123,7 @@ pull_request_rules:
         type: APPROVE
         message: "automatic approve because label=Status: Merge Now"
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
@@ -136,7 +136,7 @@ pull_request_rules:
         add: ["Status: In Progress"]
         remove: ["Status: Revision Needed", "Status: Pending", "Status: Review Needed", "Status: Accepted", "Status: Blocked", "Status: NotReproduced", "Status: Merged", "Status: Merge Now"]
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
@@ -149,7 +149,7 @@ pull_request_rules:
         add: ["Status: Review Needed"]
         remove: ["Status: Revision Needed", "Status: Pending", "Status: In Progress", "Status: Accepted", "Status: Blocked", "Status: NotReproduced", "Status: Merged", "Status: Merge Now"]
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
@@ -163,7 +163,7 @@ pull_request_rules:
         add: ["Status: Revision Needed"]
         remove: ["Status: In Progress", "Status: Pending", "Status: Review Needed", "Status: Accepted", "Status: Blocked", "Status: NotReproduced", "Status: Merged", "Status: Merge Now"]
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
@@ -176,14 +176,14 @@ pull_request_rules:
         add: ["Status: Revision Needed"]
         remove: ["Status: In Progress", "Status: Pending", "Status: Review Needed", "Status: Accepted", "Status: Blocked", "Status: NotReproduced", "Status: Merged", "Status: Merge Now"]
     conditions:
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
 {% endif %}
       - -merged
       - -closed
       - conflict
       - "label!=Status: Blocked"
-{% if cookiecutter.integration_level|int >= 4 %}
+{% if INTEGRATION_LEVEL|int >= 4 %}
   - name: master branch
     actions:
       comment:
