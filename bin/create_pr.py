@@ -21,5 +21,5 @@ repo = g.get_repo("%s/%s" % (args.ORG, args.REPO))
 try:
     print(repo.create_pull(title=args.title, body=args.body,
                            head=args.HEAD, base=args.base))
-except github.GithubException.GithubException:
+except github.GithubException:
     print("can't create PR (maybe already exists?)")
