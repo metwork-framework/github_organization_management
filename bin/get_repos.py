@@ -23,10 +23,21 @@ for repo in org.get_repos("public"):
     if args.topic is not None:
         if args.topic not in topics:
             continue
-    repos.append(repo.name)
+    tmp = {
+        'name': repo.name,
+        'branches': [x.name for x in repo.get_branches()],
+        'topics': topics,
+        'integration_levels': []
+    }
+    for il in (1, 2, 3, 4, 5):
+        if ("integration-level-%i" % il) in topics:
+            for j in range(1, il + 1):
+                tmp["integration_levels"].append(j)
+            break
+    repos.append(tmp)
 
 if args.json:
     print(json.dumps(repos, indent=4))
 else:
     for repo in repos:
-        print(repo)
+        print(repo['name'])
