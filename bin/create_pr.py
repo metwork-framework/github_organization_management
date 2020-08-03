@@ -2,7 +2,7 @@
 
 import os
 import argparse
-from github import Github
+import github
 
 TOKEN = os.environ['GITHUB_TOKEN']
 
@@ -16,7 +16,10 @@ argparser.add_argument("--body", help="pr body", default="")
 argparser.add_argument("--base", help="pr base", default="master")
 args = argparser.parse_args()
 
-g = Github(TOKEN)
+g = github.Github(TOKEN)
 repo = g.get_repo("%s/%s" % (args.ORG, args.REPO))
-print(repo.create_pull(title=args.title, body=args.body,
-                       head=args.HEAD, base=args.base))
+try:
+    print(repo.create_pull(title=args.title, body=args.body,
+                           head=args.HEAD, base=args.base))
+except github.GithubException.GithubException:
+    print("can't create PR (maybe already exists?)")
