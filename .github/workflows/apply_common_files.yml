@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v2
-        if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+        #if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
       - name: "set up system deps"
         run: |
           sudo apt-get update
@@ -31,7 +31,7 @@ jobs:
           sudo pip3 install git+https://github.com/metwork-framework/envtpl.git
           sudo pip3 install git+https://github.com/metwork-framework/cookiecutter_hooks.git
           sudo pip3 install PyGithub
-        if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+        #if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
       - name: "apply"
         shell: bash
         env:
@@ -42,4 +42,4 @@ jobs:
           LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
         run: |
           .github/workflows/apply_common_files.sh
-        if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+        #if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'

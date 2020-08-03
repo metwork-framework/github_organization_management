@@ -17,6 +17,7 @@ if test "${LIMIT_TO_REPO}" != ""; then
 else
     "${DIR}/../../bin/get_repos.py" --topic=integration-level-5 metwork-framework >"${TMPDIR}/repos"
 fi
+echo mfext >"${TMPDIR}/repos"
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
