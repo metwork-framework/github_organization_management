@@ -3,7 +3,7 @@
 {% set repositories = "cat repositories.json"|shell()|from_json %}
 
 provider "github" {
-  token        = "{{GHTOK}}"
+  token        = "{{GITHUB_TOKEN}}"
   organization = "metwork-framework"
 }
 

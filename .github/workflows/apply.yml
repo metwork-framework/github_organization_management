@@ -43,7 +43,7 @@ jobs:
           sudo pip3 install PyGithub
       - name: "validate"
         env:
-          GHTOK: ${{ secrets.GHTOK }}
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
         run: |
           make validate
       - name: "get state"
@@ -55,14 +55,14 @@ jobs:
         if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
       - name: "apply1"
         env:
-          GHTOK: ${{ secrets.GHTOK }}
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
         run: |
           make autoapply_norefresh
         continue-on-error: true
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       - name: "apply2"
         env:
-          GHTOK: ${{ secrets.GHTOK }}
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
         run: |
           make autoapply
         continue-on-error: true
