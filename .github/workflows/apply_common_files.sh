@@ -15,12 +15,15 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/../../bin/get_repos.py" --topic=integration-level-5 metwork-framework >"${TMPDIR}/repos"
+    "${DIR}/../../bin/get_repos.py" metwork-framework >"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
     INTEGRATION_LEVEL=$("${DIR}/../../bin/get_integration_level.py" metwork-framework "${REPO}")
+    if test "${INTEGRATION_LEVEL}" = "0"; then
+        continue
+    fi
     cd "${TMPDIR}"
     git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${REPO}.git"
     cd "${REPO}"
