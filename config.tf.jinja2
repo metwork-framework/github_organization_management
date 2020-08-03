@@ -43,15 +43,17 @@ resource "github_issue_label" "backport_{{release.alternate_title}}_on_{{repo.na
     {% for repo in repositories %}
         {% if 4 in repo.integration_levels %}
             {% if release.branch in repo.branches %}
+                {% if release.branch != "master" %}
 resource "github_branch_protection" "branch_{{release.alternate_title}}_on_{{repo.name}}" {
   repository = "{{repo.name}}"
   branch = "{{release.branch}}"
   enforce_admins = true
   required_status_checks {
     strict = true
-    contexts = []
+    contexts = ["license/cla"]
   }
 }
+                {% endif %}
             {% endif %}
         {% endif %}
     {% endfor %}
