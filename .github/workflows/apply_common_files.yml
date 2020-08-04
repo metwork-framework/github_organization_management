@@ -36,8 +36,8 @@ jobs:
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GHTOK }}
-          USERNAME: ${{ secrets.CLONE_USERNAME }}
-          PASSWORD: ${{ secrets.CLONE_PASSWORD }}
+          CLONE_USERNAME: ${{ secrets.CLONE_USERNAME }}
+          CLONE_PASSWORD: ${{ secrets.CLONE_PASSWORD }}
           DEBUG: ${{ github.event.inputs.debug }}
           LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
         run: |

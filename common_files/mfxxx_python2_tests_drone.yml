@@ -1,0 +1,76 @@
+# automatically generated from https://github.com/metwork-framework/github_organization_management/blob/master/common_files/mfxxx_drone.yml template
+
+{% set BASE_MODULE = "None" %}
+
+{% if REPO == "mfserv_python2_tests" %}
+    {% set BASE_MODULE = "mfserv" %}
+{% endif %}
+{% if REPO == "mfdata_python2_tests" %}
+    {% set BASE_MODULE = "mfdata" %}
+{% endif %}
+{% if REPO == "mfbase_python2_tests" %}
+    {% set BASE_MODULE = "mfbase" %}
+{% endif %}
+
+
+{% if BASE_MODULE != "None" %}
+
+integration_tests_common: &integration_tests_common
+  commands:
+    - if test "$${FORCED_OS_VERSION}" != ""; then if test "$${FORCED_OS_VERSION}" != "${OS_VERSION}"; then echo "step bypass"; exit 0; fi; fi
+
+    - echo -e "[metwork_$${DEP_BRANCH}]" >/etc/yum.repos.d/metwork.repo
+    - echo -e "name=Metwork Continuous Integration Branch $${DEP_BRANCH}" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/$${DEP_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
+    - echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
+    - yum -y install metwork-{{BASE_MODULE}}-full metwork-mfext-layer-python2
+    - yum -y install make git
+
+    - su --command="{{BASE_MODULE}}.init" - {{BASE_MODULE}}
+    - su --command="{{BASE_MODULE}}.start" - {{BASE_MODULE}}
+    - su --command="{{BASE_MODULE}}.status" - {{BASE_MODULE}}
+    - git init python2_tests
+    - cd python2_tests
+    - git remote add -t $${DEP_BRANCH} -f origin https://github.com/metwork-framework/{{BASE_MODULE}}.git
+    - git config core.sparseCheckout true
+    - echo "integration_tests/" > .git/info/sparse-checkout
+    - git pull origin $${DEP_BRANCH}
+    - if test -d "integration_tests"; then chown -R {{BASE_MODULE}} integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - {{BASE_MODULE}}; cd ..; fi
+    - su --command="{{BASE_MODULE}}.stop" - {{BASE_MODULE}}
+
+
+pipeline:
+
+  integration_tests_integration:
+    <<: *integration_tests_common
+    
+    image: metwork/mfxxx-${OS_VERSION}-testimage:integration
+    
+    environment:
+      - DEP_BRANCH=integration
+    when:
+
+      event: [push, pull_request]
+
+      branch: [ integration, ci_*, pci_* ]
+  integration_tests:
+    <<: *integration_tests_common
+    
+    image: metwork/mfxxx-${OS_VERSION}-testimage:${DRONE_BRANCH}
+    
+    environment:
+      - DEP_BRANCH=${DRONE_BRANCH}
+    when:
+
+      event: [push, pull_request]
+
+      branch: [  master, release_*, experimental* ]
+
+{% endif %} 
+
+matrix:
+  OS_VERSION:
+    - centos6
+
+
+branches: [ master, integration, experimental*, ci_*, pci_*, release_* ]

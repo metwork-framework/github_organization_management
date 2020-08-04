@@ -1,0 +1,66 @@
+# automatically generated from https://github.com/metwork-framework/github_organization_management/blob/master/common_files/docker-mfxxx-yyy-buildimage_drone.yml)
+
+{% if REPO|fnmatch('docker-mf*-*-buildimage') %}
+    {% set LIST = REPO.split("-") %}
+    {% set MODULE = LIST[1] %}
+    {% set OS = LIST[2] %}
+{% else %}
+    {% set MODULE = "" %}
+    {% set OS = "" %}
+{% endif %}
+
+trigger_common: &trigger_common
+  image: metwork/drone-downstream-specific-image:latest
+  pull: true
+  secrets: [ downstream_token, downstream_server ]
+  params:
+    - FORCED_OS_VERSION={{OS}}
+
+
+
+pipeline:
+  docker:
+    image: metwork/drone-docker-specific-image:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root:/root
+    commands:
+      - HASH_BEFORE=`docker images -q metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH}`
+      - if test "${DRONE_BRANCH}" = "master"; then EXTRA_TAGS="-t metwork/{{MODULE}}-{{OS}}-buildimage:latest"; else EXTRA_TAGS=""; fi
+      - docker build -t metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH} $${EXTRA_TAGS} --build-arg BRANCH=${DRONE_BRANCH} --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .
+      - HASH_AFTER=`docker images -q metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH}`
+      - if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then
+          touch .drone_downstream_bypass;
+        else
+          if test "${DRONE_BRANCH}" = "master"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:latest;
+          elif test "${DRONE_BRANCH}" = "integration"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+          elif test "${DRONE_BRANCH}" != "${DRONE_BRANCH#release_}"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+          elif test "{{MODULE}}" = "mfservplugins"; then
+            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
+          fi;
+        fi
+    when:
+      event: push
+{% if MODULE == "mfext" or MODULE == "mfxxx" %}
+  trigger:
+    <<: *trigger_common
+    repositories:
+{% if MODULE == "mfext" %}
+      - metwork-framework/{{MODULE}}@${DRONE_BRANCH}
+{% elif MODULE == "mfxxx" %}
+      - metwork-framework/mfserv@${DRONE_BRANCH}
+      - metwork-framework/mfdata@${DRONE_BRANCH}
+      - metwork-framework/mfbase@${DRONE_BRANCH}
+      - metwork-framework/mfadmin@${DRONE_BRANCH}
+      - metwork-framework/mfsysmon@${DRONE_BRANCH}
+{% endif %}
+    when:
+      status: success
+      event: push
+{% endif %}
+
+branches: [ master, integration, experimental*, release_* ]

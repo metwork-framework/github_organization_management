@@ -1,0 +1,5 @@
+{% if REPO|fnmatch('docker-mf*-*-testimage') %}
+    {% if not REPO|fnmatch('docker-mfext*') %}
+        Dockerfile
+    {% endif %}
+{% endif %}

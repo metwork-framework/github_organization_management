@@ -1,0 +1,7 @@
+{%- if INTEGRATION_LEVEL|int >= 5 -%}
+    {% if REPO|fnmatch('mf*') %}
+        {% if not REPO|fnmatch('mfext*') %}
+            bootstrap.sh
+        {% endif %}
+    {% endif %}
+{% endif %}

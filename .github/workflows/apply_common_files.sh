@@ -4,6 +4,19 @@ git config --global credential.helper cache
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 TMPDIR=/tmp/apply_common_files.$$
 
+if test "${CLONE_USERNAME:-}" = ""; then
+    echo "CLONE_USERNAME env is not set"
+    exit 1
+fi
+if test "${CLONE_PASSWORD:-}" = ""; then
+    echo "CLONE_PASSWORD env is not set"
+    exit 1
+fi
+if test "${GITHUB_TOKEN:-}" = ""; then
+    echo "GITHUB_TOKEN env is not set"
+    exit 1
+fi
+
 function cleanup {
     rm -Rf "${TMPDIR}"
 }
@@ -12,7 +25,7 @@ set -eu
 trap cleanup EXIT
 
 mkdir -p "${TMPDIR}"
-if test "${LIMIT_TO_REPO}" != ""; then
+if test "${LIMIT_TO_REPO:-}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
     "${DIR}/../../bin/get_repos.py" metwork-framework >"${TMPDIR}/repos"
@@ -25,7 +38,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
         continue
     fi
     cd "${TMPDIR}"
-    git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${REPO}.git"
+    git clone "https://${CLONE_USERNAME}:${CLONE_PASSWORD}@github.com/metwork-framework/${REPO}.git"
     cd "${REPO}"
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
@@ -55,11 +68,11 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git add --all
     N=$(git diff --cached |wc -l)
     if test "${N}" -gt 0; then
-        if test "${DEBUG}" = "2"; then
+        if test "${DEBUG:-}" = "2"; then
             git status
             git diff --cached
         else
-            if test "${DEBUG}" = "1"; then
+            if test "${DEBUG:-}" = "1"; then
                 TITLE="[WIP] common files sync from github_organization_management repo"
             else
                 TITLE="build: common files sync from github_organization_management repo"
