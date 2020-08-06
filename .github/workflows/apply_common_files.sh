@@ -57,6 +57,11 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     export TOPICS
     export INTEGRATION_LEVEL
     renvtpl "${DIR}/../../common_files" "${TMPDIR}/common"
+    # we remove mergify.yml files because mergify do not merge PRs when
+    # its configuration is modified by the current PR
+    # (so we have a dedicated action for that)
+    rm -f "${TMPDIR}/common/mergify.yml"
+    rm -f "${TMPDIR}/common/mergify.yml.rename"
     cd "${TMPDIR}/common"
     post_gen_project
     shopt -s dotglob
