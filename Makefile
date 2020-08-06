@@ -39,3 +39,6 @@ init: config.tf .terraform/plugins/linux_amd64/lock.json
 
 debug_common_files:
 	export DEBUG=2 ; .github/workflows/apply_common_files.sh
+
+debug_common_mergify:
+	export DEBUG=2 ; .github/workflows/apply_common_mergify.sh

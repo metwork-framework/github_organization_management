@@ -1,0 +1,46 @@
+name: apply_common_mergify
+on:
+  workflow_dispatch:
+   inputs:
+     debug:
+       description: "debug mode (0 => no, 1 => WIP PR, 2 => just diff)"
+       default: '0'
+       required: false
+     limit_to_repo:
+       descript: "if set limit to this repo"
+       default: ''
+       required: false
+  push:
+    paths:
+      - 'common_files/mergify.yml'
+      - 'common_files/mergify.yml.rename'
+      - '.github/workflows/apply_common_mergify.yml'
+      - '.github/workflows/apply_common_mergify.sh'
+      - 'bin/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+        if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+      - name: "set up system deps"
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install python3 python3-pip git python3-setuptools-git python3-setuptools
+          sudo pip3 install git+https://github.com/metwork-framework/envtpl.git
+          sudo pip3 install git+https://github.com/metwork-framework/cookiecutter_hooks.git
+          sudo pip3 install PyGithub
+        if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+      - name: "apply"
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
+          CLONE_USERNAME: ${{ secrets.CLONE_USERNAME }}
+          CLONE_PASSWORD: ${{ secrets.CLONE_PASSWORD }}
+          DEBUG: ${{ github.event.inputs.debug }}
+          LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
+        run: |
+          .github/workflows/apply_common_mergify.sh
+        if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
