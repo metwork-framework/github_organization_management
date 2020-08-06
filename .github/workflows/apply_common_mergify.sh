@@ -37,19 +37,19 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     if test "${INTEGRATION_LEVEL}" = "0"; then
         continue
     fi
+    if test "${INTEGRATION_LEVEL}" = "4"; then
+        echo "skipping ${REPO} because integration_level>=4"
+        continue
+    fi
+    if test "${INTEGRATION_LEVEL}" = "5"; then
+        echo "skipping ${REPO} because integration_level>=4"
+        continue
+    fi
     cd "${TMPDIR}"
     git clone "https://${CLONE_USERNAME}:${CLONE_PASSWORD}@github.com/metwork-framework/${REPO}.git"
     cd "${REPO}"
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
-    BASE=master
-    if test "${INTEGRATION_LEVEL}" = "4" -o "${INTEGRATION_LEVEL}" = "5"; then
-        BASE=integration
-    fi
-    if test "${BASE}" != "master"; then
-        git checkout "${BASE}"
-    fi
-    git checkout -b common_files_force
     rm -Rf "${TMPDIR}/common"
     export REPO_HOME="${TMPDIR}/${REPO}"
     TOPICS=$("${DIR}/../../bin/get_topics.py" metwork-framework "${REPO}")
@@ -57,22 +57,14 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     export TOPICS
     export INTEGRATION_LEVEL
     renvtpl "${DIR}/../../common_files" "${TMPDIR}/common"
-    if test "${INTEGRATION_LEVEL}" != "4" -a "${INTEGRATION_LEVEL}" != "5"; then
-        # we remove mergify.yml files because mergify do not merge PRs when
-        # its configuration is modified by the current PR
-        # (so we have a dedicated action for that)
-        # note: not necessary for repos with integration branches
-        # because mergify configuration is used in master branch
-        rm -f "${TMPDIR}/common/mergify.yml"
-        rm -f "${TMPDIR}/common/mergify.yml.rename"
-    fi
     cd "${TMPDIR}/common"
     post_gen_project
-    shopt -s dotglob
-    rsync -av "${TMPDIR}/common/" "${TMPDIR}/${REPO}/"
+    if ! test -f "${TMPDIR}/common/.mergify.yml"; then
+        echo "skipping ${REPO} because no .mergify.yml found"
+        continue
+    fi
+    cp -f "${TMPDIR}/common/.mergify.yml" "${TMPDIR}/${REPO}/"
     cd "${TMPDIR}/${REPO}"
-    find . -type f -name "*.forcedelete" |sed 's/\.forcedelete$//g' |xargs rm -rf
-    find . -type f -name "*.forcedelete" -exec rm -f {} \;
     git add -u
     git add --all
     N=$(git diff --cached |wc -l)
@@ -81,14 +73,8 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             git status
             git diff --cached
         else
-            if test "${DEBUG:-}" = "1"; then
-                TITLE="[WIP] common files sync from github_organization_management repo"
-            else
-                TITLE="build: common files sync from github_organization_management repo"
-            fi
             git commit -m "build: sync common files from github_organization_management repository"
-            git push -u origin -f common_files_force
-            "${DIR}/../../bin/create_pr.py" --title "${TITLE}" --body "" --base=${BASE} metwork-framework "${REPO}" common_files_force
+            git push -u origin master
         fi
     else
         echo "=> NO CHANGE"
