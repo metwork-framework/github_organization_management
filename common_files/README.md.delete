@@ -1,0 +1,5 @@
+{% if INTEGRATION_LEVEL|int < 4 %}
+{% if "autoreadme" not in "TOPICS"|getenv|from_json %}
+yes
+{% endif %}
+{% endif %}

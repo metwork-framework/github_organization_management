@@ -1,0 +1,27 @@
+# automatically generated from https://github.com/metwork-framework/github_organization_management/blob/master/common_files/docker-mfxxx-yyy-testimage_drone.yml)
+
+{% if REPO|fnmatch('docker-mf*-*-testimage') %}
+    {% set LIST = REPO.split("-") %}
+    {% set MODULE = LIST[1] %}
+    {% set OS = LIST[2] %}
+{% else %}
+    {% set MODULE = "" %}
+    {% set OS = "" %}
+{% endif %}
+
+pipeline:
+  docker:
+    image: metwork/drone-docker-specific-image:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root:/root
+    commands:
+      - HASH_BEFORE=`docker images -q metwork/{{MODULE}}-{{OS}}-testimage:${DRONE_BRANCH}`
+      - if test "${DRONE_BRANCH}" = "master"; then EXTRA_TAGS="-t metwork/{{MODULE}}-{{OS}}-testimage:latest"; else EXTRA_TAGS=""; fi
+      - docker build -t metwork/{{MODULE}}-{{OS}}-testimage:${DRONE_BRANCH} $${EXTRA_TAGS} --build-arg BRANCH=${DRONE_BRANCH} --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .
+      - HASH_AFTER=`docker images -q metwork/{{MODULE}}-{{OS}}-testimage:${DRONE_BRANCH}`
+      - if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then touch .drone_downstream_bypass; fi
+    when:
+      event: push
+
+branches: [ master, integration, experimental*, release_* ]

@@ -1,0 +1,6 @@
+{% if INTEGRATION_LEVEL|int < 5 and "mfext-addon" not in "TOPICS"|getenv|from_json %}
+yes
+{% endif %}
+{% if REPO == "mfextaddon_template" -%}
+yes
+{% endif %}

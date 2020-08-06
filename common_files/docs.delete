@@ -1,0 +1,3 @@
+{% if REPO not in ["mfbus", "mfext", "mfsysmon", "mfdata", "mfbase", "mfadmin", "mfserv"] and "mfextaddon_" not in REPO %}
+1
+{% endif %}

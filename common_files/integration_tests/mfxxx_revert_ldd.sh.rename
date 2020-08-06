@@ -1,0 +1,3 @@
+{% if INTEGRATION_LEVEL|int == 5 or "mfext-addon" in "TOPICS"|getenv|from_json %}
+revert_ldd.sh
+{% endif %}

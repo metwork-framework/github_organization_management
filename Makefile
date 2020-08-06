@@ -36,3 +36,6 @@ init: config.tf .terraform/plugins/linux_amd64/lock.json
 
 .terraform/plugins/linux_amd64/lock.json:
 	terraform init
+
+debug_common_files:
+	export DEBUG=2 ; .github/workflows/apply_common_files.sh

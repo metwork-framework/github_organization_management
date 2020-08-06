@@ -1,0 +1,3 @@
+{% if REPO|fnmatch('docker-mf*-*-buildimage') %}
+    .drone.yml
+{% endif %}

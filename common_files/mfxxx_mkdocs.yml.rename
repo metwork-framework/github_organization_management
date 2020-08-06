@@ -1,0 +1,6 @@
+{% if REPO in ["mfext", "mfbus", "mfsysmon", "mfbase", "mfdata", "mfserv", "mfadmin"] %}
+mkdocs.yml
+{% endif %}
+{% if "mfextaddon_" in REPO %}
+mkdocs.yml
+{% endif %}

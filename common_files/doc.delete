@@ -1,0 +1,6 @@
+{% if REPO != "mfext" and "mfextaddon_" not in REPO and REPO != "mfdata" %}
+yes
+{% endif %}
+{% if REPO == "mfextaddon_template" or "docker-mfextaddon_" in REPO %}
+yes
+{% endif %}
