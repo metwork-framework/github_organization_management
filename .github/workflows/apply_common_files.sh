@@ -76,6 +76,11 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git add -u
     git add --all
     N=$(git diff --cached |wc -l)
+    echo "***********************"
+    cat "${TMPDIR}/common/.mergify.yml"
+    echo "***********************"
+    cat "${TMPDIR}/${REPO}/.mergify.yml"
+    echo "***********************"
     if test "${N}" -gt 0; then
         if test "${DEBUG:-}" = "2"; then
             git status
