@@ -44,6 +44,20 @@ resource "github_issue_label" "backport_{{release.alternate_title}}_on_{{repo.na
         {% if 4 in repo.integration_levels %}
             {% if release.branch in repo.branches %}
                 {% if release.branch != "master" %}
+                    {% if repo.name == "mfext" %}
+resource "github_branch_protection" "branch_{{release.alternate_title}}_on_{{repo.name}}" {
+  repository = "{{repo.name}}"
+  branch = "{{release.branch}}"
+  enforce_admins = true
+  required_status_checks {
+    strict = true
+    contexts = ["license/cla"]
+  }
+  required_pull_request_reviews {
+    required_approving_review_count = 1
+  }
+}                    
+                    {% else %}
 resource "github_branch_protection" "branch_{{release.alternate_title}}_on_{{repo.name}}" {
   repository = "{{repo.name}}"
   branch = "{{release.branch}}"
@@ -53,6 +67,7 @@ resource "github_branch_protection" "branch_{{release.alternate_title}}_on_{{rep
     contexts = ["license/cla"]
   }
 }
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% endif %}
