@@ -1,0 +1,20 @@
+{% macro print_group(tag, group, title) %}
+{% if group in tag.groups %}
+### {{ title }}
+{% for commit in tag.groups[group] %}
+- {{ "[" + commit.specific + "] " if commit.specific }}{{ commit.description.strip() }}
+{% endfor %}
+
+{% endif %}
+{% endmacro %}
+
+
+{% macro commit_list_format(tag) %}
+{% if tag.groups['feat']|length > 0 or tag.groups['fix']|length > 0 or tag.groups['perf']|length > 0 %}
+{{ print_group(tag, 'feat', 'New Features') }}
+{{ print_group(tag, 'fix', 'Bug Fixes') }}
+{{ print_group(tag, 'perf', 'Performance Enhancements') }}
+{% else %}
+- No interesting change
+{% endif %}
+{% endmacro %}

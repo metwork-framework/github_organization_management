@@ -1,0 +1,21 @@
+{% import 'tag_format.jinja2' as macros %}
+# {{ title }}
+
+{% if description %}
+{{ description|wordwrap() }}
+{% endif %}
+
+{% if unreleased %}
+{% if unreleased.groups['feat']|length > 0 or unreleased.groups['fix']|length > 0 or unreleased.groups['perf']|length > 0 %}
+## [Unreleased]
+
+{{ macros.commit_list_format(unreleased) }}
+{% endif %}
+{% endif %}
+
+{% for tag in tags %}
+## {{ tag.name }} ({{ tag.date.strftime('%Y-%m-%d') }})
+
+{{ macros.commit_list_format(tag) }}
+
+{% endfor %}
