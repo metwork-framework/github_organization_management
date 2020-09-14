@@ -23,6 +23,8 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     cd "${TMPDIR}"
     git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${REPO}.git"
     cd "${REPO}"
+    git config user.email "metworkbot@metwork-framework.org"
+    git config user.name "metworkbot"
     git checkout -b changelog_update
     export TITLE=CHANGELOG
     export REV=master
