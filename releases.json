@@ -1,34 +1,48 @@
 {
     "actives": [
         {
-            "branch": "release_0.5",
-            "title": "0.5",
-            "alternate_title": "0_dot_5"
-        },
-        {
-            "branch": "release_0.6",
-            "title": "0.6",
-            "alternate_title": "0_dot_6"
-        },
-        {
             "branch": "release_0.7",
             "title": "0.7",
-            "alternate_title": "0_dot_7"
+            "alternate_title": "0_dot_7",
+            "latest": 0,
+            "previous": "release_0.6"
         },
         {
             "branch": "release_0.8",
             "title": "0.8",
-            "alternate_title": "0_dot_8"
+            "alternate_title": "0_dot_8",
+            "latest": 0,
+            "previous": "release_0.7"
         },
         {
             "branch": "release_0.9",
             "title": "0.9",
-            "alternate_title": "0_dot_9"
+            "alternate_title": "0_dot_9",
+            "latest": 1,
+            "previous": "release_0.8"
         },
         {
             "branch": "release_1.0",
             "title": "1.0",
-            "alternate_title": "1_dot_0"
+            "alternate_title": "1_dot_0",
+            "latest": 0,
+            "previous": "release_0.9"
+        }
+    ],
+    "inactives": [
+        {
+            "branch": "release_0.5",
+            "title": "0.5",
+            "alternate_title": "0_dot_5",
+            "latest": 0,
+            "previous": null
+        },
+        {
+            "branch": "release_0.6",
+            "title": "0.6",
+            "alternate_title": "0_dot_6",
+            "latest": 0,
+            "previous": "release_0.5"
         }
     ],
     "persistents": [
@@ -42,7 +56,5 @@
             "title": "integration",
             "alternate_title": "integration"
         }
-    ],
-    "inactives": [
     ]
 }
