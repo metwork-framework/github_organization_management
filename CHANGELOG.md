@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- changelog generation for integration-level >=4 (part1)
 - first implementation of changelog generation
 - migrate resources common_files (#5)
 - apply for all repositories
