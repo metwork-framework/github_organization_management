@@ -45,22 +45,42 @@ pipeline:
         fi
     when:
       event: push
-{% if MODULE == "mfext" or MODULE == "mfxxx" %}
+{% if MODULE == "mfext" %}
   trigger:
     <<: *trigger_common
     repositories:
-{% if MODULE == "mfext" %}
-      - metwork-framework/{{MODULE}}@${DRONE_BRANCH}
+      - metwork-framework/mfext@${DRONE_BRANCH}
+    when:
+      status: success
+      event: push
+
 {% elif MODULE == "mfxxx" %}
+  trigger:
+    <<: *trigger_common
+    repositories:
       - metwork-framework/mfserv@${DRONE_BRANCH}
       - metwork-framework/mfdata@${DRONE_BRANCH}
       - metwork-framework/mfbase@${DRONE_BRANCH}
       - metwork-framework/mfadmin@${DRONE_BRANCH}
       - metwork-framework/mfsysmon@${DRONE_BRANCH}
-{% endif %}
     when:
       status: success
       event: push
+      branches: [ integration, experimental*, release_* ]
+
+  trigger_master
+    <<: *trigger_common
+    repositories:
+      - metwork-framework/mfserv@${DRONE_BRANCH}
+      - metwork-framework/mfdata@${DRONE_BRANCH}
+      - metwork-framework/mfbase@${DRONE_BRANCH}
+      - metwork-framework/mfadmin@${DRONE_BRANCH}
+      - metwork-framework/mfsysmon@${DRONE_BRANCH}
+      - metwork-framework/mfextaddons@${DRONE_BRANCH}
+    when:
+      status: success
+      event: push
+      branches: [ master ]
 {% endif %}
 
 branches: [ master, integration, experimental*, release_* ]
