@@ -68,7 +68,7 @@ pipeline:
       event: push
       branches: [ integration, experimental*, release_* ]
 
-  trigger_master
+  trigger_master:
     <<: *trigger_common
     repositories:
       - metwork-framework/mfserv@${DRONE_BRANCH}
