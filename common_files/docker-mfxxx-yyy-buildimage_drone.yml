@@ -54,8 +54,7 @@ pipeline:
       status: success
       event: push
 
-{% endif %}
-{% if MODULE == "mfxxx" %}
+{% else %}
   trigger:
     <<: *trigger_common
     repositories:
