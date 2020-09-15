@@ -6,6 +6,8 @@ on:
        descript: "if set limit to this repo"
        default: ''
        required: false
+  schedule:
+    - cron: '0 1 * * *'
 
 jobs:
   build:
