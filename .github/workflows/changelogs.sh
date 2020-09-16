@@ -16,6 +16,17 @@ function changelog {
     # $5: TAG_FILTER
     # $6: BASE
     # $7: FILE
+    # $8: REPO
+    # $9: BRANCH
+    cd "${TMPDIR}"
+    git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${8}.git"
+    cd "${8}"
+    git config user.email "metworkbot@metwork-framework.org"
+    git config user.name "metworkbot"
+    if test "${9}" != "master"; then
+        git checkout "${9}"
+    fi
+    git checkout -b changelog_update
     set -x
     auto-changelog --template-dir="${DIR}/../../changelog_templates" --title="${1}" --rev="${2}" --exclude-branches="${3}" --include-branches="${4}" --tag-filter="${5}" --output="./${7}"
     set +x
@@ -39,6 +50,7 @@ function changelog {
     else
         echo "=> NO CHANGE"
     fi
+    rm -Rf "${TMPDIR:?}/${8}"
 }
 
 set -eu
@@ -56,19 +68,12 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
     INTEGRATION_LEVEL=$("${DIR}/../../bin/get_integration_level.py" metwork-framework "${REPO}")
-    cd "${TMPDIR}"
-    git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${REPO}.git"
-    cd "${REPO}"
-    git config user.email "metworkbot@metwork-framework.org"
-    git config user.name "metworkbot"
     if test "${INTEGRATION_LEVEL}" = "3"; then
-        git checkout -b changelog_update
-        changelog CHANGELOG master nothing master "v*" master CHANGELOG.md
+        changelog CHANGELOG master nothing master "v*" master CHANGELOG.md "${REPO}" master
     else
-        git checkout integration
-        git checkout -b changelog_update
+        BRANCH=integration
         LATEST=$("${DIR}/../../bin/latest_release.py" "${DIR}/../../releases.json")
-        changelog CHANGELOG origin/integration "origin/${LATEST}" origin/integration xxxxxxxxxxx integration CHANGELOG.md
+        changelog CHANGELOG origin/integration "origin/${LATEST}" origin/integration xxxxxxxxxxx integration CHANGELOG.md "${REPO}" "${BRANCH}"
     fi
     echo ""
     echo ""
