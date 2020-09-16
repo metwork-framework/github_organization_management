@@ -25,9 +25,7 @@ function changelog {
     cd "${8}"
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
-    #if test "${9}" != "master"; then
-        git checkout "${9}"
-    #fi
+    git checkout "${9}" || return 0
     git checkout -b changelog_update
     set -x
     auto-changelog --template-dir="${DIR}/../../changelog_templates" --title="${1}" --rev="${2}" --exclude-branches="${3}" --include-branches="${4}" --tag-filter="${5}" --output="./${7}"
