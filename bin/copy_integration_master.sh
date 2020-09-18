@@ -15,8 +15,8 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/../../bin/get_repos.py" --topic=integration-level-4 metwork-framework >"${TMPDIR}/repos"
-    "${DIR}/../../bin/get_repos.py" --topic=integration-level-5 metwork-framework >>"${TMPDIR}/repos"
+    "${DIR}/get_repos.py" --topic=integration-level-4 metwork-framework >"${TMPDIR}/repos"
+    "${DIR}/get_repos.py" --topic=integration-level-5 metwork-framework >>"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"

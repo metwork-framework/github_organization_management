@@ -28,12 +28,12 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO:-}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/../../bin/get_repos.py" metwork-framework >"${TMPDIR}/repos"
+    "${DIR}/get_repos.py" metwork-framework >"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
-    INTEGRATION_LEVEL=$("${DIR}/../../bin/get_integration_level.py" metwork-framework "${REPO}")
+    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" metwork-framework "${REPO}")
     if test "${INTEGRATION_LEVEL}" = "0"; then
         continue
     fi
@@ -52,11 +52,11 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git config user.name "metworkbot"
     rm -Rf "${TMPDIR}/common"
     export REPO_HOME="${TMPDIR}/${REPO}"
-    TOPICS=$("${DIR}/../../bin/get_topics.py" metwork-framework "${REPO}")
+    TOPICS=$("${DIR}/get_topics.py" metwork-framework "${REPO}")
     export REPO
     export TOPICS
     export INTEGRATION_LEVEL
-    renvtpl "${DIR}/../../common_files" "${TMPDIR}/common"
+    renvtpl "${DIR}/../common_files" "${TMPDIR}/common"
     cd "${TMPDIR}/common"
     post_gen_project
     if ! test -f "${TMPDIR}/common/.mergify.yml"; then

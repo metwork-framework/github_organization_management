@@ -28,12 +28,12 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO:-}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/../../bin/get_repos.py" metwork-framework >"${TMPDIR}/repos"
+    "${DIR}/get_repos.py" metwork-framework >"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
-    INTEGRATION_LEVEL=$("${DIR}/../../bin/get_integration_level.py" metwork-framework "${REPO}")
+    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" metwork-framework "${REPO}")
     if test "${INTEGRATION_LEVEL}" = "0"; then
         continue
     fi
@@ -52,11 +52,11 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git checkout -b common_files_force
     rm -Rf "${TMPDIR}/common"
     export REPO_HOME="${TMPDIR}/${REPO}"
-    TOPICS=$("${DIR}/../../bin/get_topics.py" metwork-framework "${REPO}")
+    TOPICS=$("${DIR}/get_topics.py" metwork-framework "${REPO}")
     export REPO
     export TOPICS
     export INTEGRATION_LEVEL
-    renvtpl "${DIR}/../../common_files" "${TMPDIR}/common"
+    renvtpl "${DIR}/../common_files" "${TMPDIR}/common"
     if test "${INTEGRATION_LEVEL}" != "4" -a "${INTEGRATION_LEVEL}" != "5"; then
         # we remove mergify.yml files because mergify do not merge PRs when
         # its configuration is modified by the current PR
@@ -88,7 +88,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             fi
             git commit -m "build: sync common files from github_organization_management repository"
             git push -u origin -f common_files_force
-            "${DIR}/../../bin/create_pr.py" --title "${TITLE}" --body "" --base=${BASE} metwork-framework "${REPO}" common_files_force
+            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base=${BASE} metwork-framework "${REPO}" common_files_force
         fi
     else
         echo "=> NO CHANGE"
