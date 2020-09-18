@@ -36,4 +36,4 @@ jobs:
           DEBUG: ${{ github.event.inputs.debug }}
           LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
         run: |
-          .github/workflows/changelogs.sh
+          bin/changelogs.sh
