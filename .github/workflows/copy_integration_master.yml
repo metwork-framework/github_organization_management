@@ -30,4 +30,4 @@ jobs:
           PASSWORD: ${{ secrets.CLONE_PASSWORD }}
           LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
         run: |
-          .github/workflows/copy_integration_master.sh
+          bin/copy_integration_master.sh
