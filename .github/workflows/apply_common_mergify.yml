@@ -15,7 +15,6 @@ on:
       - 'common_files/mergify.yml'
       - 'common_files/mergify.yml.rename'
       - '.github/workflows/apply_common_mergify.yml'
-      - '.github/workflows/apply_common_mergify.sh'
       - 'bin/**'
 
 jobs:
@@ -42,5 +41,5 @@ jobs:
           DEBUG: ${{ github.event.inputs.debug }}
           LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
         run: |
-          .github/workflows/apply_common_mergify.sh
+          bin/apply_common_mergify.sh
         if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
