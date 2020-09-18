@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 git config --global credential.helper cache
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 TMPDIR=/tmp/copy_branch.$$
@@ -38,9 +40,9 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git config user.name "metworkbot"
     git checkout "${SOURCE_BRANCH}"
     if test "${REMOVE_BRANCH_PROTECTION:-}" = "1"; then
-        "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${TARGET_BRANCH}"
+        "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${TARGET_BRANCH}" || true
     fi
-    git push -u origin -f "${TARGET_BRANCH}"
+    git push -u origin -f "${SOURCE_BRANCH}:${TARGET_BRANCH}"
     echo ""
     echo ""
 done
