@@ -4,6 +4,7 @@
 ## [Unreleased]
 
 ### New Features
+- add copy_branch workflow
 - changelog generation for release branches (#21)
 - add cron to copy integration branch
 - changelog generation for integration-level >=4 (part1)
