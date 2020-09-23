@@ -4,9 +4,10 @@ on:
    inputs:
      release_branch:
        descript: "the branch to release (example: release_0.9)"
+       default: ''
        required: true
      debug:
-       description: "debug mode (0 => no, 1 => yes (don't push))",
+       description: "debug mode (0 => no, 1 => yes (don't push))"
        default: '0'
        required: false
      limit_to_repo:
