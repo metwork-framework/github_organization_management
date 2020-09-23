@@ -80,7 +80,9 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             BRANCH=$(echo "${T}" |awk -F ';' '{print $1;}')
             PREVIOUS=$(echo "${T}" |awk -F ';' '{print $2;}')
             TAGS=$(echo "${T}" |awk -F ';' '{print $3;}')
+            TITLE=$(echo "${T}" |awk -F ';' '{print $4;}')
             changelog "${BRANCH} CHANGELOG" "origin/${BRANCH}" "origin/${PREVIOUS}" "origin/${BRANCH}" "${TAGS}" "${BRANCH}" CHANGELOG.md "${REPO}" "${BRANCH}" || true
+            changelog "${BRANCH} CHANGELOG" "origin/integration" "origin/${PREVIOUS}" "origin/${BRANCH}" "${TAGS}" "${BRANCH}" "CHANGELOG-${TITLE}.md" "${REPO}" "${BRANCH}" || true
             for T2 in $("${DIR}/active_releases.py" "${DIR}/../releases.json"); do
                 BRANCH2=$(echo "${T2}" |awk -F ';' '{print $1;}')
                 PREVIOUS2=$(echo "${T2}" |awk -F ';' '{print $2;}')
