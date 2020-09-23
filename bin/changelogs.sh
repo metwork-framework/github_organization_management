@@ -19,6 +19,7 @@ function changelog {
     # $8: REPO
     # $9: BRANCH
     cd "${TMPDIR}"
+    RND=$("${DIR}/get_short_random_hexa.py")
     if ! test -d "${8}"; then
         git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${8}.git"
     fi
@@ -26,7 +27,7 @@ function changelog {
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
     git checkout "${9}" || return 0
-    git checkout -b changelog_update
+    git checkout -b "change_update_${RND}"
     set -x
     auto-changelog --template-dir="${DIR}/../changelog_templates" --title="${1}" --rev="${2}" --exclude-branches="${3}" --include-branches="${4}" --tag-filter="${5}" --output="./${7}"
     set +x
@@ -44,14 +45,14 @@ function changelog {
                 TITLE="build: changelog automatic update"
             fi
             git commit -m "build: changelog automatic update"
-            git push -u origin -f changelog_update
-            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base="${6}" metwork-framework "${REPO}" changelog_update
+            git push -u origin -f "change_update_${RND}"
+            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base="${6}" metwork-framework "${REPO}" "change_update_${RND}"
         fi
     else
         echo "=> NO CHANGE"
     fi
     git checkout "${9}"
-    git branch -D changelog_update
+    git branch -D "change_update_${RND}"
     #rm -Rf "${TMPDIR:?}/${8}"
 }
 
@@ -80,7 +81,9 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             BRANCH=$(echo "${T}" |awk -F ';' '{print $1;}')
             PREVIOUS=$(echo "${T}" |awk -F ';' '{print $2;}')
             TAGS=$(echo "${T}" |awk -F ';' '{print $3;}')
+            TITLE=$(echo "${T}" |awk -F ';' '{print $4;}')
             changelog "${BRANCH} CHANGELOG" "origin/${BRANCH}" "origin/${PREVIOUS}" "origin/${BRANCH}" "${TAGS}" "${BRANCH}" CHANGELOG.md "${REPO}" "${BRANCH}" || true
+            #changelog "${BRANCH} CHANGELOG" "origin/integration" "origin/${PREVIOUS}" "origin/${BRANCH}" "${TAGS}" "${BRANCH}" "CHANGELOG-${TITLE}.md" "${REPO}" integration || true
             for T2 in $("${DIR}/active_releases.py" "${DIR}/../releases.json"); do
                 BRANCH2=$(echo "${T2}" |awk -F ';' '{print $1;}')
                 PREVIOUS2=$(echo "${T2}" |awk -F ';' '{print $2;}')
