@@ -45,6 +45,7 @@ pipeline:
         fi
     when:
       event: push
+{% if OS == "centos6" %}
 {% if MODULE == "mfext" %}
   trigger:
     <<: *trigger_common
@@ -81,6 +82,7 @@ pipeline:
       status: success
       event: push
       branches: [ master ]
+  {% endif %}
 {% endif %}
 
 branches: [ master, integration, experimental*, release_* ]
