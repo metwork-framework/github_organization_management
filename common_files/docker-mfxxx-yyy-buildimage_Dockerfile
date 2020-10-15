@@ -15,6 +15,12 @@
 {% elif MODULE == "mfservplugins" %}
     {% set DEP1 = "mfxxx" %}
     {% set DEP2 = "mfserv-full" %}
+{% elif MODULE == "mfdataplugins" %}
+    {% set DEP1 = "mfxxx" %}
+    {% set DEP2 = "mfdata-full" %}
+{% elif MODULE == "mfbaseplugins" %}
+    {% set DEP1 = "mfxxx" %}
+    {% set DEP2 = "mfbase-full" %}
 {% else %}
     {% set DEP1 = "" %}
     {% set DEP2 = "" %}
