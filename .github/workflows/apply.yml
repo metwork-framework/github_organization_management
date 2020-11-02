@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: "set up terraform"
         env:
-          TERRAFORM_VERSION: "0.12.21"
+          TERRAFORM_VERSION: "0.13.5"
         run: |
           wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
           unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
