@@ -18,6 +18,7 @@
 
 
 ### Bug Fixes
+- fix issue with latest 3.1 github provider
 - fix branch protection
 - fix title regex
 
