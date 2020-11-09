@@ -20,7 +20,14 @@ pipeline:
       - if test "${DRONE_BRANCH}" = "master"; then EXTRA_TAGS="-t metwork/{{MODULE}}-{{OS}}-testimage:latest"; else EXTRA_TAGS=""; fi
       - docker build -t metwork/{{MODULE}}-{{OS}}-testimage:${DRONE_BRANCH} $${EXTRA_TAGS} --build-arg BRANCH=${DRONE_BRANCH} --build-arg CACHEBUST=${DRONE_BUILD_NUMBER} .
       - HASH_AFTER=`docker images -q metwork/{{MODULE}}-{{OS}}-testimage:${DRONE_BRANCH}`
-      - if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then touch .drone_downstream_bypass; fi
+      - if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then
+          touch .drone_downstream_bypass;
+        else
+          docker push metwork/{{MODULE}}-{{OS}}-testimage:${DRONE_BRANCH};
+          if test "${DRONE_BRANCH}" = "master"; then
+            docker push metwork/{{MODULE}}-{{OS}}-testimage:latest;
+          fi;
+        fi
     when:
       event: push
 
