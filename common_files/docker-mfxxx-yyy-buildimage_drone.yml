@@ -32,15 +32,9 @@ pipeline:
       - if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then
           touch .drone_downstream_bypass;
         else
+          docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
           if test "${DRONE_BRANCH}" = "master"; then
-            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
             docker push metwork/{{MODULE}}-{{OS}}-buildimage:latest;
-          elif test "${DRONE_BRANCH}" = "integration"; then
-            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
-          elif test "${DRONE_BRANCH}" != "${DRONE_BRANCH#release_}"; then
-            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
-          elif test "{{MODULE}}" = "mfservplugins"; then
-            docker push metwork/{{MODULE}}-{{OS}}-buildimage:${DRONE_BRANCH};
           fi;
         fi
     when:
