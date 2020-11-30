@@ -15,6 +15,11 @@
         "color": "cc317c"
     },
     {
+        "name": "backport",
+        "title": "Type: Backport",
+        "color": "eb6420"
+    },
+    {
         "name": "maintenance",
         "title": "Type: Maintenance",
         "color": "fbca04"
