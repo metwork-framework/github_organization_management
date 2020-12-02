@@ -12,12 +12,6 @@
 {% if REPO == "mfext" %}
     {% set DEP_MODULE = "" %}
     {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage" %}
-    {% if "${OS_VERSION}" == "centos6" %}
-        {% set TEST_IMAGE_NAME = "metwork/${OS_VERSION}:latest" %}
-    {% else %}
-        {% set TEST_IMAGE_NAME = "centos:${OS_VERSION}" %}
-    {% endif %}
-
 {% else %}
     {% if MFEXT_ADDON == "1" %}
         {% set DEP_MODULE = "" %}
@@ -258,7 +252,7 @@ pipeline:
     {% if REPO != "mfext" %}
     image: metwork/mfxxx-${OS_VERSION}-testimage:integration
     {% else %}
-    image: {{TEST_IMAGE_NAME}}
+    image: metwork/${OS_VERSION}:latest
     {% endif%}
     environment:
       - DEP_BRANCH=integration
@@ -274,7 +268,7 @@ pipeline:
     {% if REPO != "mfext" %}
     image: metwork/mfxxx-${OS_VERSION}-testimage:${DRONE_BRANCH}
     {% else %}
-    image: {{TEST_IMAGE_NAME}}
+    image: metwork/${OS_VERSION}:latest
     {% endif%}
     environment:
       - DEP_BRANCH=${DRONE_BRANCH}
