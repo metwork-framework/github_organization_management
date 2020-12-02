@@ -252,7 +252,7 @@ pipeline:
     {% if REPO != "mfext" %}
     image: metwork/mfxxx-${OS_VERSION}-testimage:integration
     {% else %}
-    image: centos:${OS_VERSION}
+    image: metwork/${OS_VERSION}:latest
     {% endif%}
     environment:
       - DEP_BRANCH=integration
@@ -268,7 +268,7 @@ pipeline:
     {% if REPO != "mfext" %}
     image: metwork/mfxxx-${OS_VERSION}-testimage:${DRONE_BRANCH}
     {% else %}
-    image: centos:${OS_VERSION}
+    image: metwork/${OS_VERSION}:latest
     {% endif%}
     environment:
       - DEP_BRANCH=${DRONE_BRANCH}
