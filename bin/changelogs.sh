@@ -17,16 +17,16 @@ function changelog {
     # $6: BRANCH
     cd "${TMPDIR}"
     RND=$("${DIR}/get_short_random_hexa.py")
-    if ! test -d "${8}"; then
-        git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${8}.git"
+    if ! test -d "${5}"; then
+        git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${5}.git"
     fi
-    cd "${8}"
+    cd "${5}"
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
-    git checkout "${9}" || return 0
+    git checkout "${6}" || return 0
     git checkout -b "change_update_${RND}"
     set -x
-    ghtc --title="${1}" --tags-regex="${333}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" >"${4}"
+    ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" >"${4}"
     set +x
     git add -u
     git add --all
@@ -43,14 +43,14 @@ function changelog {
             fi
             git commit -m "build: changelog automatic update"
             git push -u origin -f "change_update_${RND}"
-            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base="${6}" metwork-framework "${REPO}" "change_update_${RND}"
+            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base="${6}" metwork-framework "${5}" "change_update_${RND}"
         fi
     else
         echo "=> NO CHANGE"
     fi
-    git checkout "${9}"
+    git checkout "${6}"
     git branch -D "change_update_${RND}"
-    #rm -Rf "${TMPDIR:?}/${8}"
+    #rm -Rf "${TMPDIR:?}/${5}"
 }
 
 set -eu
@@ -69,7 +69,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     echo ""
     INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" metwork-framework "${REPO}")
     if test "${INTEGRATION_LEVEL}" = "3"; then
-        changelog CHANGELOG "" "v*" CHANGELOG.md  master
+        changelog CHANGELOG "" "v*" CHANGELOG.md "${REPO}" master
     else
         BRANCH=integration
         LATEST=$("${DIR}/latest_release.py" "${DIR}/../releases.json")
