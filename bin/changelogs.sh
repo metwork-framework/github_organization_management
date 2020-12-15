@@ -26,7 +26,7 @@ function changelog {
     git checkout "${6}" || return 0
     git checkout -b "change_update_${RND}"
     set -x
-    ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" >"${4}"
+    ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" . >"${4}"
     set +x
     git add -u
     git add --all
