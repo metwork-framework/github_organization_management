@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
    inputs:
      debug:
-       description: "debug mode (0 => no, 1 => WIP PR, 2 => just diff)"
+       description: "debug mode (0 => no, 1 => just diff)"
        default: '0'
        required: false
      limit_to_repo:
@@ -31,6 +31,11 @@ jobs:
           sudo pip3 install git+https://github.com/metwork-framework/cookiecutter_hooks.git
           sudo pip3 install PyGithub
         if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
+      - name: "validate"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
+        run: |
+          make validate
       - name: "apply"
         shell: bash
         env:

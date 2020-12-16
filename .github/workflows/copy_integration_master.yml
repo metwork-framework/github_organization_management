@@ -22,6 +22,11 @@ jobs:
           sudo pip3 install git+https://github.com/metwork-framework/envtpl.git
           sudo pip3 install git+https://github.com/metwork-framework/cookiecutter_hooks.git
           sudo pip3 install PyGithub
+      - name: "validate"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
+        run: |
+          make validate
       - name: "apply"
         shell: bash
         env:

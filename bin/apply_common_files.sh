@@ -67,7 +67,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git add --all
     N=$(git diff --cached |wc -l)
     if test "${N}" -gt 0; then
-        if test "${DEBUG:-}" = "2"; then
+        if test "${DEBUG:-}" = "1"; then
             git status
             git diff --cached
         else
