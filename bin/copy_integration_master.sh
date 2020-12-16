@@ -27,7 +27,9 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
     git reset --hard origin/integration
+    "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" master
     git push -u origin -f master
+    "${DIR}/restore_branch_protection.py" metwork-framework "${REPO}" master
     echo ""
     echo ""
 done
