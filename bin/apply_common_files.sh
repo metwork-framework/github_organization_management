@@ -28,7 +28,7 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO:-}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/get_repos.py" metwork-framework >"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" >"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
