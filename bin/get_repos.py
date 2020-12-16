@@ -7,6 +7,7 @@ from github import Github
 
 TOKEN = os.environ["GITHUB_TOKEN"]
 ORG = "metwork-framework"
+LIMIT_TO_REPO = os.environ.get("LIMIT_TO_REPO", "")
 
 argparser = argparse.ArgumentParser(
     description="get a list of github repositories for the given org"
@@ -21,6 +22,9 @@ repos = []
 for repo in org.get_repos("public"):
     if repo.archived:
         continue
+    if LIMIT_TO_REPO:
+        if repo.name != LIMIT_TO_REPO:
+            continue
     topics = repo.get_topics()
     if args.topic is not None:
         if args.topic not in topics:

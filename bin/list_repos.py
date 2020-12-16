@@ -20,4 +20,4 @@ for repo in repositories:
     if args.topic is not None:
         if args.topic not in repo["topics"]:
             continue
-    print(repo.name)
+    print(repo['name'])
