@@ -33,7 +33,7 @@ fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
-    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" metwork-framework "${REPO}")
+    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" "${REPO}")
     if test "${INTEGRATION_LEVEL}" = "0"; then
         continue
     fi
