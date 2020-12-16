@@ -17,5 +17,5 @@ debug_common_files:
 debug_common_mergify:
 	export DEBUG=2 ; bin/apply_common_mergify.sh
 
-apply:
+apply_config:
 	bin/set_config.py

@@ -41,12 +41,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GHTOK }}
         run: |
           make apply_config
-        continue-on-error: true
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       - name: "apply_config2"
         env:
           GITHUB_TOKEN: ${{ secrets.GHTOK }}
         run: |
           make apply_config
-        continue-on-error: true
         if: github.ref == 'refs/heads/master' && github.event_name == 'schedule'
