@@ -49,7 +49,6 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     if test "${BASE}" != "master"; then
         git checkout "${BASE}"
     fi
-    git checkout -b common_files_force
     rm -Rf "${TMPDIR}/common"
     export REPO_HOME="${TMPDIR}/${REPO}"
     TOPICS=$("${DIR}/get_topics.py" metwork-framework "${REPO}")
@@ -57,15 +56,6 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     export TOPICS
     export INTEGRATION_LEVEL
     renvtpl "${DIR}/../common_files" "${TMPDIR}/common"
-    if test "${INTEGRATION_LEVEL}" != "4" -a "${INTEGRATION_LEVEL}" != "5"; then
-        # we remove mergify.yml files because mergify do not merge PRs when
-        # its configuration is modified by the current PR
-        # (so we have a dedicated action for that)
-        # note: not necessary for repos with integration branches
-        # because mergify configuration is used in master branch
-        rm -f "${TMPDIR}/common/mergify.yml"
-        rm -f "${TMPDIR}/common/mergify.yml.rename"
-    fi
     cd "${TMPDIR}/common"
     post_gen_project
     shopt -s dotglob
@@ -81,14 +71,10 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             git status
             git diff --cached
         else
-            if test "${DEBUG:-}" = "1"; then
-                TITLE="[WIP] common files sync from github_organization_management repo"
-            else
-                TITLE="build: common files sync from github_organization_management repo"
-            fi
             git commit -m "build: sync common files from github_organization_management repository"
-            git push -u origin -f common_files_force
-            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base=${BASE} metwork-framework "${REPO}" common_files_force
+            "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${BASE}" >/dev/null 2>&1 || true
+            git push -u origin "${BASE}"
+            "${DIR}/restore_branch_protection.py" metwork-framework "${REPO}" "${BASE}" >/dev/null 2>&1 || true
         fi
     else
         echo "=> NO CHANGE"

@@ -3,17 +3,21 @@
 import os
 import argparse
 import json
-from github import Github
 
-TOKEN = os.environ['GITHUB_TOKEN']
+
+DIR = os.path.dirname(os.path.realpath(__file__))
 
 argparser = argparse.ArgumentParser(
     description="get topics")
-argparser.add_argument("ORG", help="organization name")
 argparser.add_argument("REPO", help="repo name")
 args = argparser.parse_args()
 
-g = Github(TOKEN)
-repo = g.get_repo("%s/%s" % (args.ORG, args.REPO))
-topics = repo.get_topics()
-print(json.dumps(topics, indent=4))
+with open(f"{DIR}/../repositories.json", "r") as f:
+    c = f.read()
+repositories = json.loads(c)
+
+for repo in repositories:
+    if repo["name"] != args.REPO:
+        continue
+    print(json.dumps(repo["topics"], indent=4))
+    break
