@@ -51,7 +51,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     fi
     rm -Rf "${TMPDIR}/common"
     export REPO_HOME="${TMPDIR}/${REPO}"
-    TOPICS=$("${DIR}/get_topics.py" metwork-framework "${REPO}")
+    TOPICS=$("${DIR}/get_topics.py" "${REPO}")
     export REPO
     export TOPICS
     export INTEGRATION_LEVEL
