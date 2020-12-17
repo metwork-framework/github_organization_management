@@ -16,7 +16,6 @@ function changelog {
     # $5: REPO
     # $6: BRANCH
     cd "${TMPDIR}"
-    RND=$("${DIR}/get_short_random_hexa.py")
     if ! test -d "${5}"; then
         git clone "https://${USERNAME}:${PASSWORD}@github.com/metwork-framework/${5}.git"
     fi
@@ -24,7 +23,6 @@ function changelog {
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
     git checkout "${6}" || return 0
-    git checkout -b "change_update_${RND}"
     set -x
     ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" . >"${4}"
     set +x
@@ -32,25 +30,16 @@ function changelog {
     git add --all
     N=$(git diff --cached |wc -l)
     if test "${N}" -gt 0; then
-        if test "${DEBUG:-}" = "2"; then
+        if test "${DEBUG:-}" = "1"; then
             git status
             git diff --cached
         else
-            if test "${DEBUG:-}" = "1"; then
-                TITLE="[WIP] build: changelog automatic update"
-            else
-                TITLE="build: changelog automatic update"
-            fi
             git commit -m "build: changelog automatic update"
-            git push -u origin -f "change_update_${RND}"
-            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base="${6}" metwork-framework "${5}" "change_update_${RND}"
+            git push -u origin "${6}"
         fi
     else
         echo "=> NO CHANGE"
     fi
-    git checkout "${6}"
-    git branch -D "change_update_${RND}"
-    #rm -Rf "${TMPDIR:?}/${5}"
 }
 
 set -eu
