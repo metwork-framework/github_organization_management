@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
    inputs:
      debug:
-       description: "debug mode (0 => no, 1 => WIP PR, 2 => just diff)"
+       description: "debug mode (0 => no, 1 => just diff)"
        default: '0'
        required: false
      limit_to_repo:

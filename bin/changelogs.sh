@@ -33,6 +33,7 @@ function changelog {
         if test "${DEBUG:-}" = "1"; then
             git status
             git diff --cached
+            git reset --hard "origin/${6}"
         else
             git commit -m "build: changelog automatic update"
             git push -u origin "${6}"
