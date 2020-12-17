@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
    inputs:
      debug:
-       description: "debug mode (0 => no, 1 => WIP PR, 2 => just diff)"
+       description: "debug mode (0 => no, 1 => just diff)"
        default: '0'
        required: false
      limit_to_repo:
@@ -25,7 +25,7 @@ jobs:
           sudo apt-get -y install yajl-tools python3 python3-pip git python3-setuptools-git python3-setuptools
           sudo pip3 install git+https://github.com/metwork-framework/envtpl.git
           sudo pip3 install git+https://github.com/metwork-framework/cookiecutter_hooks.git
-          sudo pip3 install git+https://github.com/metwork-framework/auto-changelog.git#egg=auto_changelog
+          sudo pip3 install git+https://github.com/metwork-framework/git_history_to_changelog.git#egg=ghtc
           sudo pip3 install PyGithub
       - name: "validate"
         env:
