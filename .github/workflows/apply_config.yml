@@ -1,4 +1,4 @@
-name: apply
+name: apply_config
 on:
   push:
     paths:
