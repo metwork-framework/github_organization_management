@@ -20,7 +20,7 @@
             "branch": "release_0.9",
             "title": "0.9",
             "alternate_title": "0_dot_9",
-            "latest": 1,
+            "latest": 0,
             "previous": "release_0.8",
             "tags": "v0.9.*"
         },
@@ -28,7 +28,7 @@
             "branch": "release_1.0",
             "title": "1.0",
             "alternate_title": "1_dot_0",
-            "latest": 0,
+            "latest": 1,
             "previous": "release_0.9",
             "tags": "v1.0.*"
         }
