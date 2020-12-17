@@ -24,8 +24,14 @@ jobs:
       - name: "set up system deps"
         run: |
           sudo apt-get update
-          sudo apt-get -y install python3 python3-pip git python3-setuptools-git python3-setuptools
+          sudo apt-get -y install yajl-tools python3 python3-pip git python3-setuptools-git python3-setuptools
           sudo pip3 install PyGithub
+      - name: "validate"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
+          LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
+        run: |
+          make validate
       - name: "apply"
         shell: bash
         env:

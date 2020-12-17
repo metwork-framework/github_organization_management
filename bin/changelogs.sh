@@ -60,14 +60,14 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/get_repos.py" --topic=integration-level-3 metwork-framework >"${TMPDIR}/repos"
-    "${DIR}/get_repos.py" --topic=integration-level-4 metwork-framework >>"${TMPDIR}/repos"
-    "${DIR}/get_repos.py" --topic=integration-level-5 metwork-framework >>"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" --topic=integration-level-3 >"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" --topic=integration-level-4 >>"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" --topic=integration-level-5 >>"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
-    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" metwork-framework "${REPO}")
+    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" "${REPO}")
     if test "${INTEGRATION_LEVEL}" = "3"; then
         changelog CHANGELOG "" "v*" CHANGELOG.md "${REPO}" master
     else

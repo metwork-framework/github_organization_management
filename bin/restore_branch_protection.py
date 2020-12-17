@@ -18,6 +18,6 @@ g = Github(TOKEN)
 repo = g.get_repo("%s/%s" % (args.ORG, args.REPO))
 branch = repo.get_branch(args.BRANCH)
 if branch.protected:
-    branch.remove_admin_enforcement()
+    branch.set_admin_enforcement()
     # We wait a little bit
     time.sleep(3)

@@ -15,8 +15,8 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/get_repos.py" --topic=integration-level-4 metwork-framework >"${TMPDIR}/repos"
-    "${DIR}/get_repos.py" --topic=integration-level-5 metwork-framework >>"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" --topic=integration-level-4 >"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" --topic=integration-level-5 >>"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
@@ -27,7 +27,9 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
     git reset --hard origin/integration
+    "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" master >/dev/null 2>&1 || true
     git push -u origin -f master
+    "${DIR}/restore_branch_protection.py" metwork-framework "${REPO}" master >/dev/null 2>&1 || true
     echo ""
     echo ""
 done

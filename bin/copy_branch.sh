@@ -26,8 +26,8 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO:-}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/get_repos.py" --topic=integration-level-4 metwork-framework >"${TMPDIR}/repos"
-    "${DIR}/get_repos.py" --topic=integration-level-5 metwork-framework >>"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" --topic=integration-level-4 >"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" --topic=integration-level-5 >>"${TMPDIR}/repos"
 fi
 
 for REPO in $(cat "${TMPDIR}/repos"); do
@@ -39,9 +39,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
     git checkout "${SOURCE_BRANCH}"
-    if test "${REMOVE_BRANCH_PROTECTION:-}" = "1"; then
-        "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${TARGET_BRANCH}" || true
-    fi
+    "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${TARGET_BRANCH}" >/dev/null 2>&1 || true
     git push -u origin -f "${SOURCE_BRANCH}:${TARGET_BRANCH}"
     echo ""
     echo ""

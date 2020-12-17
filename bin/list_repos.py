@@ -8,8 +8,8 @@ import json
 DIR = os.path.dirname(os.path.realpath(__file__))
 
 argparser = argparse.ArgumentParser(
-    description="get topics")
-argparser.add_argument("REPO", help="repo name")
+    description="list repo names")
+argparser.add_argument("--topic", help="topic filter")
 args = argparser.parse_args()
 
 with open(f"{DIR}/../repositories.json", "r") as f:
@@ -17,7 +17,7 @@ with open(f"{DIR}/../repositories.json", "r") as f:
 repositories = json.loads(c)
 
 for repo in repositories:
-    if repo["name"] != args.REPO:
-        continue
-    print(json.dumps(repo["topics"], indent=4))
-    break
+    if args.topic is not None:
+        if args.topic not in repo["topics"]:
+            continue
+    print(repo['name'])

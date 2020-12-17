@@ -28,12 +28,12 @@ mkdir -p "${TMPDIR}"
 if test "${LIMIT_TO_REPO:-}" != ""; then
     echo "${LIMIT_TO_REPO}" >"${TMPDIR}/repos"
 else
-    "${DIR}/get_repos.py" metwork-framework >"${TMPDIR}/repos"
+    "${DIR}/list_repos.py" >"${TMPDIR}/repos"
 fi
 for REPO in $(cat "${TMPDIR}/repos"); do
     echo "***** REPO: ${REPO} *****"
     echo ""
-    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" metwork-framework "${REPO}")
+    INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" "${REPO}")
     if test "${INTEGRATION_LEVEL}" = "0"; then
         continue
     fi
@@ -49,23 +49,13 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     if test "${BASE}" != "master"; then
         git checkout "${BASE}"
     fi
-    git checkout -b common_files_force
     rm -Rf "${TMPDIR}/common"
     export REPO_HOME="${TMPDIR}/${REPO}"
-    TOPICS=$("${DIR}/get_topics.py" metwork-framework "${REPO}")
+    TOPICS=$("${DIR}/get_topics.py" "${REPO}")
     export REPO
     export TOPICS
     export INTEGRATION_LEVEL
     renvtpl "${DIR}/../common_files" "${TMPDIR}/common"
-    if test "${INTEGRATION_LEVEL}" != "4" -a "${INTEGRATION_LEVEL}" != "5"; then
-        # we remove mergify.yml files because mergify do not merge PRs when
-        # its configuration is modified by the current PR
-        # (so we have a dedicated action for that)
-        # note: not necessary for repos with integration branches
-        # because mergify configuration is used in master branch
-        rm -f "${TMPDIR}/common/mergify.yml"
-        rm -f "${TMPDIR}/common/mergify.yml.rename"
-    fi
     cd "${TMPDIR}/common"
     post_gen_project
     shopt -s dotglob
@@ -77,18 +67,14 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git add --all
     N=$(git diff --cached |wc -l)
     if test "${N}" -gt 0; then
-        if test "${DEBUG:-}" = "2"; then
+        if test "${DEBUG:-}" = "1"; then
             git status
             git diff --cached
         else
-            if test "${DEBUG:-}" = "1"; then
-                TITLE="[WIP] common files sync from github_organization_management repo"
-            else
-                TITLE="build: common files sync from github_organization_management repo"
-            fi
             git commit -m "build: sync common files from github_organization_management repository"
-            git push -u origin -f common_files_force
-            "${DIR}/create_pr.py" --title "${TITLE}" --body "" --base=${BASE} metwork-framework "${REPO}" common_files_force
+            "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${BASE}" >/dev/null 2>&1 || true
+            git push -u origin "${BASE}"
+            "${DIR}/restore_branch_protection.py" metwork-framework "${REPO}" "${BASE}" >/dev/null 2>&1 || true
         fi
     else
         echo "=> NO CHANGE"
