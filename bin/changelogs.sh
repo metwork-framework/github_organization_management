@@ -29,11 +29,11 @@ function changelog {
     set +x
     git add -u
     git add --all
-    N=$(git diff --cached |wc -l)
+    N=$(git diff --cached --ignore-blank-lines |wc -l)
     if test "${N}" -gt 0; then
         if test "${DEBUG:-}" = "1"; then
             git status
-            git diff --cached
+            git diff --cached --ignore-blank-lines
             git reset --hard "origin/${6}"
         else
             git commit -m "build: changelog automatic update"
