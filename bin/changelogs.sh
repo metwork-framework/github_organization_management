@@ -37,7 +37,9 @@ function changelog {
             git reset --hard "origin/${6}"
         else
             git commit -m "build: changelog automatic update"
+            "${DIR}/remove_branch_protection.py" metwork-framework "${5}" "${6}" >/dev/null 2>&1 || true
             git push -u origin "${6}"
+            "${DIR}/restore_branch_protection.py" metwork-framework "${5}" "${6}" >/dev/null 2>&1 || true
         fi
     else
         echo "=> NO CHANGE"
