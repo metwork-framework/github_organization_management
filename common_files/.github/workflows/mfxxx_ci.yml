@@ -74,7 +74,7 @@ jobs:
         uses: cross-the-world/ssh-scp-ssh-pipelines@latest
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.buildlog_dir }}{% endraw %}
-          LOCAL: {% raw %}${{ github.workspace }}/buildlogs{% raw %}
+          LOCAL: {% raw %}${{ github.workspace }}/buildlogs{% endraw %}
         with:
           host: {% raw %}${{ secrets.PUB_HOST }}{% endraw %}
           user: {% raw %}${{ secrets.PUB_USERNAME }}{% endraw %}
