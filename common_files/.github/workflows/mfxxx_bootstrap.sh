@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -eu
+#set -eu
+set -x
 
 {% if "mfext-addon" in "TOPICS"|getenv|from_json %}
     {% set MFEXT_ADDON = "1" %}
@@ -19,7 +20,9 @@ set -eu
     {% endif %}
 {% endif %}
 cd /src
+ls -l /opt
 mkdir -p "/opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}"
+ls -l /opt
 {% if REPO == "mfext" or MFEXT_ADDON == "1" %}
 ./bootstrap.sh "/opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}"
 {% else %}

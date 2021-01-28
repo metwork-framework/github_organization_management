@@ -44,7 +44,7 @@ jobs:
       - name: bootstrap
         if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         run: |
-          export TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
+          TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
           DEP_DIR={% raw %}${{ steps.SetVariables.outputs.dep_dir }}{% endraw %}
           BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
           docker run ${DOCKER_RUN_OPTIONS} -e DEP_DIR=${DEP_DIR} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/bootstrap.sh"
@@ -52,8 +52,8 @@ jobs:
         if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         id: BuildStep
         run: |
-          export TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
-          export REPO={% raw %}${{ steps.SetVariables.outputs.repository }}{% endraw %}
+          TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
+          REPO={% raw %}${{ steps.SetVariables.outputs.repository }}{% endraw %}
           BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           TAG={% raw %}${{ steps.SetVariables.outputs.tag }}{% endraw %}
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
