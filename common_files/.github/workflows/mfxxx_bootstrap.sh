@@ -23,7 +23,7 @@ mkdir -p "/opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}"
 {% if REPO == "mfext" or MFEXT_ADDON == "1" %}
 ./bootstrap.sh "/opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}"
 {% else %}
-./bootstrap.sh /opt/metwork-{% raw %}{{FORCED_REPO}}{% endraw %}-${TARGET_DIR} /opt/metwork-{% raw %}{{DEP_MODULE}}{% endraw %}-${DEP_DIR}
+./bootstrap.sh /opt/metwork-{{FORCED_REPO}}-${TARGET_DIR} /opt/metwork-{{DEP_MODULE}}-${DEP_DIR}
 {% endif %}
 cat adm/root.mk
 env | sort

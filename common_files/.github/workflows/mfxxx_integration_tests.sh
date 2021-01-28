@@ -26,17 +26,17 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
     yum -y localinstall ./rpms/metwork-mfext*.rpm
     if test -d "integration_tests"; then cd integration_tests; /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh; cd ..; fi
 {% else %}
-    yum -y localinstall ./rpms/metwork-{% raw %}{{REPO}}{% endraw %}*.rpm
+    yum -y localinstall ./rpms/metwork-{{REPO}}*.rpm
     yum -y install make
 {% if REPO == "mfdata" %}
     yum -y install vsftpd ftp
     service vsftpd start
     echo -e "mfdata\nmfdata" | passwd mfdata
 {% endif %}
-    su --command="{% raw %}{{REPO}}{% endraw %}.init" - {% raw %}{{REPO}}{% endraw %}
-    su --command="{% raw %}{{REPO}}{% endraw %}.start" - {% raw %}{{REPO}}{% endraw %}
-    su --command="{% raw %}{{REPO}}{% endraw %}.status" - {% raw %}{{REPO}}{% endraw %}
-    if test -d "integration_tests"; then chown -R {% raw %}{{REPO}}{% endraw %} integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - {% raw %}{{REPO}}{% endraw %}; cd ..; fi
-    su --command="{% raw %}{{REPO}}{% endraw %}.stop" - {% raw %}{{REPO}}{% endraw %}
+    su --command="{{REPO}}.init" - {{REPO}}
+    su --command="{{REPO}}.start" - {{REPO}}
+    su --command="{{REPO}}.status" - {{REPO}}
+    if test -d "integration_tests"; then chown -R {{REPO}} integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - {{REPO}}; cd ..; fi
+    su --command="{{REPO}}.stop" - {{REPO}}
 {% endif %}
 {% endif %}
