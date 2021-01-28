@@ -1,3 +1,0 @@
-{% if "with-cache-action" in "TOPICS"|getenv|from_json %}
-ci.yaml
-{% endif %}
