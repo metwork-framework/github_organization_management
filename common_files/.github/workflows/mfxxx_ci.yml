@@ -18,9 +18,7 @@ on:
 
 env:
     OS_VERSION: centos6
-    MFMODULE: MFEXT
-    MFMODULE_LOWERCASE: mfext
-    DOCKER_RUN_OPTIONS: "-v {% raw %}${{ github.workspace }}{% endraw %}:/src -e GITHUB_REF -e MFMODULE_LOWERCASE -e GITHUB_RUN_NUMBER -e GITHUB_SHA -e GITHUB_REPOSITORY -e TARGET_DIR -e OS_VERSION"
+    DOCKER_RUN_OPTIONS: "-v {% raw %}${{ github.workspace }}{% endraw %}:/src -e GITHUB_REF -e MFMODULE_LOWERCASE -e GITHUB_RUN_NUMBER -e GITHUB_SHA -e GITHUB_REPOSITORY -e OS_VERSION"
     WORKFLOW_SCRIPTS_DIR: .github/workflows
     DOCKER_WORKFLOW_SCRIPTS_DIR: /src/.github/workflows
     PAYLOAD_BRANCH: {% raw %}${{ github.event.client_payload.branch}}{% endraw %}
@@ -47,7 +45,7 @@ jobs:
           TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
           DEP_DIR={% raw %}${{ steps.SetVariables.outputs.dep_dir }}{% endraw %}
           BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
-          docker run ${DOCKER_RUN_OPTIONS} -e DEP_DIR=${DEP_DIR} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/bootstrap.sh"
+          docker run ${DOCKER_RUN_OPTIONS} -e TARGET_DIR=${TARGET_DIR} -e DEP_DIR=${DEP_DIR} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/bootstrap_ci.sh"
       - name: build
         if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         id: BuildStep
@@ -58,7 +56,7 @@ jobs:
           TAG={% raw %}${{ steps.SetVariables.outputs.tag }}{% endraw %}
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
           BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
-          docker run ${DOCKER_RUN_OPTIONS} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} -e REPO=${REPO} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
+          docker run ${DOCKER_RUN_OPTIONS} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} -e REPO=${REPO} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
       - name: check ssh connect as ssh-scp-ssh-pipelines does not do it
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: appleboy/ssh-action@master
