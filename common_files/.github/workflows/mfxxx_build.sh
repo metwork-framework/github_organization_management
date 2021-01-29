@@ -27,7 +27,12 @@ export DRONE=true
 
 cd /src
 
-mkdir -p "/opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}"
+{% if "mfext-addon" in "TOPICS"|getenv|from_json %}
+{% set MODULE = "mfext}" %}
+{% else %}
+{% set MODULE = REPO|lower %}
+{% endif %}
+mkdir -p "/opt/metwork-{{MODULE}}-${TARGET_DIR}"
 
 mkdir -p buildlogs
 export BUILDLOGS=buildlogs
@@ -47,7 +52,7 @@ fi
 #if test -f /opt/metwork-mfext-${TARGET_DIR}/.dhash; then cat /opt/metwork-mfext-${TARGET_DIR}/.dhash; fi
 #cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
 #echo "${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
-#if test -f "${BUILDCACHE}/build_hash_${REPO}_${BRANCH}_`cat .build_hash`"; then
+#if test -f "${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`"; then
 #    echo "::set-output name=bypass::true"
 #    exit 0
 #fi
@@ -55,15 +60,15 @@ fi
 if test -d docs; then make docs >${BUILDLOGS}/make_doc.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_doc.log ; exit 1 ); fi
 if test -d doc; then make doc >${BUILDLOGS}/make_doc.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_doc.log ; exit 1 ); fi
 rm -Rf html_doc
-if test -d /opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}/html_doc; then cp -Rf /opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}/html_doc . ; fi
+if test -d /opt/metwork-{{MODULE}}-${TARGET_DIR}/html_doc; then cp -Rf /opt/metwork-mfext-${TARGET_DIR}/html_doc . ; fi
 make test >${BUILDLOGS}/make_test.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_test.log ; exit 1 )
 make RELEASE_BUILD=${GITHUB_RUN_NUMBER} rpm >${BUILDLOGS}/make_rpm.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_rpm.log ; exit 1 )
 
 mkdir rpms
-mv /opt/metwork-${MFMODULE_LOWERCASE}-${TARGET_DIR}/*.rpm rpms
+mv /opt/metwork-{{MODULE}}-${TARGET_DIR}/*.rpm rpms
 
-#rm -f ${BUILDCACHE}/build_hash_${REPO}_${BRANCH}_*
-#touch ${BUILDCACHE}/build_hash_${REPO}_${BRANCH}_`cat .build_hash`
+#rm -f ${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_*
+#touch ${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`
 #ls -l ${BUILDCACHE}
 
 #echo "::set-output name=bypass::false"

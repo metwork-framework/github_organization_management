@@ -51,12 +51,11 @@ jobs:
         id: BuildStep
         run: |
           TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
-          REPO={% raw %}${{ steps.SetVariables.outputs.repository }}{% endraw %}
           BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           TAG={% raw %}${{ steps.SetVariables.outputs.tag }}{% endraw %}
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
           BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
-          docker run ${DOCKER_RUN_OPTIONS} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} -e REPO=${REPO} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
+          docker run ${DOCKER_RUN_OPTIONS} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
       - name: check ssh connect as ssh-scp-ssh-pipelines does not do it
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: appleboy/ssh-action@master
