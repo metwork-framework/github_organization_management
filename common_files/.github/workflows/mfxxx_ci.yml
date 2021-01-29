@@ -60,9 +60,9 @@ jobs:
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: appleboy/ssh-action@master
         with:
-          host: {% raw %}${{ secrets.PUB_HOST }}{% endraw %}
-          username: {% raw %}${{ secrets.PUB_USERNAME }}{% endraw %}
-          password: {% raw %}${{ secrets.PUB_PASSWORD }}{% endraw %}
+          host: {% raw %}${{ secrets.METWORKPUB_HOST }}{% endraw %}
+          username: {% raw %}${{ secrets.METWORKPUB_USERNAME }}{% endraw %}
+          password: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
           port: 22
           script: |
             pwd
@@ -73,9 +73,9 @@ jobs:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.buildlog_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}/buildlogs{% endraw %}
         with:
-          host: {% raw %}${{ secrets.PUB_HOST }}{% endraw %}
-          user: {% raw %}${{ secrets.PUB_USERNAME }}{% endraw %}
-          pass: {% raw %}${{ secrets.PUB_PASSWORD }}{% endraw %}
+          host: {% raw %}${{ secrets.METWORKPUB_HOST }}{% endraw %}
+          user: {% raw %}${{ secrets.METWORKPUB_USERNAME }}{% endraw %}
+          pass: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
           port: 22
           first_ssh: |
             mkdir -p ${REMOTE}
@@ -94,9 +94,9 @@ jobs:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}{% endraw %}/rpms
         with:
-          host: {% raw %}${{ secrets.PUB_HOST }}{% endraw %}
-          user: {% raw %}${{ secrets.PUB_USERNAME }}{% endraw %}
-          pass: {% raw %}${{ secrets.PUB_PASSWORD }}{% endraw %}
+          host: {% raw %}${{ secrets.METWORKPUB_HOST }}{% endraw %}
+          user: {% raw %}${{ secrets.METWORKPUB_USERNAME }}{% endraw %}
+          pass: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
           port: 22
           first_ssh: |
             mkdir -p ${REMOTE}
@@ -111,9 +111,9 @@ jobs:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.doc_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}{% endraw %}/html_doc
         with:
-          host: {% raw %}${{ secrets.PUB_HOST }}{% endraw %}
-          user: {% raw %}${{ secrets.PUB_USERNAME }}{% endraw %}
-          pass: {% raw %}${{ secrets.PUB_PASSWORD }}{% endraw %}
+          host: {% raw %}${{ secrets.METWORKPUB_HOST }}{% endraw %}
+          user: {% raw %}${{ secrets.METWORKPUB_USERNAME }}{% endraw %}
+          pass: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
           port: 22
           first_ssh: |
             rm -rf ${REMOTE}
