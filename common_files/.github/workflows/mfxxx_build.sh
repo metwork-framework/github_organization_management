@@ -28,7 +28,7 @@ export DRONE=true
 cd /src
 
 {% if "mfext-addon" in "TOPICS"|getenv|from_json %}
-{% set MODULE = "mfext}" %}
+{% set MODULE = "mfext" %}
 {% else %}
 {% set MODULE = REPO|lower %}
 {% endif %}
