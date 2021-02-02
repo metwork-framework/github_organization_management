@@ -86,7 +86,7 @@ publish_ci_common: &publish_ci_common
     - if ! test -L {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/portable; then ln -s centos6 {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/portable; fi
     - cp *.rpm {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/
     - createrepo --update {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}
-    - chown -R metworkpub:metworkpub {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/repodata
+    - chown -R 1018:1018 {{PUB_ROOT}}/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/repodata
     - rm -Rf {{PUB_ROOT}}/continuous_integration/docs/${DRONE_BRANCH}/{{REPO}}; mkdir -p {{PUB_ROOT}}/continuous_integration/docs/${DRONE_BRANCH}/{{REPO}} ; if test -d html_doc; then cp -Rf html_doc/* {{PUB_ROOT}}/continuous_integration/docs/${DRONE_BRANCH}/{{REPO}}/ ; fi
     - rm -f $${BUILDCACHE}/build_hash_{{REPO}}_${DRONE_BRANCH}_*
     - touch "$${BUILDCACHE}/build_hash_{{REPO}}_${DRONE_BRANCH}_`cat .build_hash`"
@@ -309,7 +309,7 @@ pipeline:
       - cp *.rpm {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/centos6/
 {% endif %}
       - createrepo --update {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}
-      - chown -R metworkpub:metworkpub {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/repodata
+      - chown -R 1018:1018 {{PUB_ROOT}}/releases/rpms/${DRONE_BRANCH}/${OS_VERSION}/repodata
       - rm -Rf {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{REPO}}; mkdir -p {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{REPO}} ; if test -d html_doc; then cp -Rf html_doc/* {{PUB_ROOT}}/releases/docs/${DRONE_BRANCH}/{{REPO}}/ ; fi
     when:
       event: tag
