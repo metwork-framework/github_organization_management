@@ -51,7 +51,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: ./Dockerfile
-          push: false
+          push: true
           tags: |
             {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}
             {% raw %}${{ steps.SetVariables.outputs.tag_latest }}{% endraw %}
