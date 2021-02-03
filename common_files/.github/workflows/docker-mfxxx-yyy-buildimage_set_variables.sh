@@ -25,10 +25,10 @@ esac
 if [ -z ${BRANCH} ]; then
   BRANCH=null
 fi
-TAG_BRANCH="metwork/{{MODULE}}-{{OS}}-buildimage2:${BRANCH}"
+TAG_BRANCH="metwork/{{MODULE}}-{{OS}}-buildimage:${BRANCH}"
 TAG_LATEST=""
 if test "${BRANCH}" = "master"; then
-    TAG_LATEST="metwork/{{MODULE}}-{{OS}}-buildimage2:latest"
+    TAG_LATEST="metwork/{{MODULE}}-{{OS}}-buildimage:latest"
 fi 
 echo "::set-output name=branch::${BRANCH}"
 echo "::set-output name=tag_branch::${TAG_BRANCH}"
