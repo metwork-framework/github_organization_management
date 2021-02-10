@@ -57,6 +57,7 @@ jobs:
             {% raw %}${{ steps.SetVariables.outputs.tag_latest }}{% endraw %}
           build-args: |
             BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+            CACHEBUST={% raw %}${{ github.run_number }}{% endraw %}
       - name: Image digest
         run: echo {% raw %}${{ steps.docker_build.outputs.digest }}{% endraw %}
 
