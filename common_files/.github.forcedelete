@@ -1,5 +1,3 @@
 {% if "github-actions" not in "TOPICS"|getenv|from_json %}
-{% if REPO|fnmatch('mf*_python2_tests') %}
-.drone.yml
-{% endif %}
+yes
 {% endif %}
