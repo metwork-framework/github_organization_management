@@ -16,6 +16,7 @@
 - add copy_branch workflow
 - introduce release workflow
 - new changelog generator tool (ghtc) (#42)
+- add common files to build Metwork modules with github actions when "github-actions" is in repository topics (#46)
 
 ### Bug Fixes
 
