@@ -1,5 +1,0 @@
-{% if "github-actions" in "TOPICS"|getenv|from_json %}
-{% if REPO|fnmatch('docker-mf*-*-buildimage') %}
-ci.yml
-{% endif %}
-{% endif %}
