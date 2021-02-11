@@ -30,7 +30,7 @@ if test "${LIMIT_TO_REPO:-}" != ""; then
 else
     "${DIR}/list_repos.py" >"${TMPDIR}/repos"
 fi
-for REPO in $(cat "${TMPDIR}/repos"); do
+for REPO in $(cat "${TMPDIR}/repos" | grep -v github_organization_management); do
     echo "***** REPO: ${REPO} *****"
     echo ""
     INTEGRATION_LEVEL=$("${DIR}/get_integration_level.py" "${REPO}")
