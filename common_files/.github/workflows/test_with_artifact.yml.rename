@@ -1,0 +1,3 @@
+{% if "with-artifact" in "TOPICS"|getenv|from_json %}
+ci.yaml
+{% endif %}
