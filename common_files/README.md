@@ -14,7 +14,7 @@
 [![DockerHub](https://github.com/metwork-framework/resources/blob/master/badges/dockerhub_link.svg)](https://hub.docker.com/r/metwork/{{REPO}}/)
 {%- endif %}
 {%- if INTEGRATION_LEVEL|int >= 1 %}
-[![Maintenance](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)]()
+[![Maintenance](https://raw.githubusercontent.com/metwork-framework/resources/master/badges/maintained.svg)](https://github.com/metwork-framework/resources/blob/master/badges/maintained.svg)
 {%- endif %}
 {%- if INTEGRATION_LEVEL|int >= 5 %}
 [![License](https://github.com/metwork-framework/resources/blob/master/badges/bsd.svg)]()
