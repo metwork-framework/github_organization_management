@@ -9,12 +9,15 @@
     {% set OS = "" %}
 {% endif %}
 
+{% if "trigger-github" not in "TOPICS"|getenv|from_json %}
 trigger_common: &trigger_common
+{% if "trigger-github" in "TOPICS"|getenv|from_json %}
   image: metwork/drone-downstream-specific-image:latest
   pull: true
   secrets: [ downstream_token, downstream_server ]
   params:
     - FORCED_OS_VERSION={{OS}}
+{% endif %}
 
 
 
@@ -40,7 +43,8 @@ pipeline:
     when:
       event: push
 {% if OS == "centos6" %}
-{% if MODULE == "mfext" %}
+  {% if "trigger-github" not in "TOPICS"|getenv|from_json %}
+    {% if MODULE == "mfext" %}
   trigger:
     <<: *trigger_common
     repositories:
@@ -49,7 +53,7 @@ pipeline:
       status: success
       event: push
 
-{% elif MODULE == "mfxxx" %}
+    {% elif MODULE == "mfxxx" %}
   trigger:
     <<: *trigger_common
     repositories:
@@ -76,6 +80,47 @@ pipeline:
       status: success
       event: push
       branch: [ master ]
+    {% endif %}
+  {% else %}
+    {% if MODULE == "mfext" %}
+  repository_dispatch:
+    image: metwork/drone-repository-dispatch-specific-image:latest
+    repositories:
+      - metwork-framework/mfext@${DRONE_BRANCH}
+    secrets: [ downstream_github_token ]
+    when:
+      status: success
+      event: push
+    {% elif MODULE == "mfxxx" %}
+  repository_dispatch:
+    image: metwork/drone-repository-dispatch-specific-image:latest
+    repositories:
+      - metwork-framework/mfserv@${DRONE_BRANCH}
+      - metwork-framework/mfdata@${DRONE_BRANCH}
+      - metwork-framework/mfbase@${DRONE_BRANCH}
+      - metwork-framework/mfadmin@${DRONE_BRANCH}
+      - metwork-framework/mfsysmon@${DRONE_BRANCH}
+      - metwork-framework/mfextaddons@${DRONE_BRANCH}
+    secrets: [ downstream_github_token ]
+    when:
+      status: success
+      event: push
+      branch: [ integration, experimental*, release_* ]
+
+  repository_dispatch_master:
+    image: metwork/drone-repository-dispatch-specific-image:latest
+    repositories:
+      - metwork-framework/mfserv@${DRONE_BRANCH}
+      - metwork-framework/mfdata@${DRONE_BRANCH}
+      - metwork-framework/mfbase@${DRONE_BRANCH}
+      - metwork-framework/mfadmin@${DRONE_BRANCH}
+      - metwork-framework/mfsysmon@${DRONE_BRANCH}
+    secrets: [ downstream_github_token ]
+    when:
+      status: success
+      event: push
+      branch: [ master ]
+    {% endif %}
   {% endif %}
 {% endif %}
 
