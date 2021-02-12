@@ -23,5 +23,7 @@
 - fix title regex
 - fix branch protection
 - fix issue with latest 3.1 github provider
+- fix wrong removal of directory .github for some repositories (#47)
+- do not apply common files on github_organization_management
 
 
