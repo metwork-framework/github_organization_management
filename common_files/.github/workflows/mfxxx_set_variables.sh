@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -eu
+#set -eu
+set -x
 
 if test "${OS_VERSION:-}" = ""; then
     echo "ERROR: OS_VERSION env is empty"
@@ -35,6 +36,7 @@ DEP_BRANCH=
 TARGET_DIR=
 DEP_DIR=
 BUILD=yes
+echo "GITHUB_REF = " "${GITHUB_REF}"
 case "${GITHUB_REF}" in
     refs/heads/experimental* | refs/heads/master | refs/heads/release_*)
         DEP_BRANCH=${B}
@@ -50,6 +52,10 @@ case "${GITHUB_REF}" in
         DEP_DIR=${B##release_}
         TARGET_DIR=${B##release_};;
     refs/pull/*)
+{%- if REPO == "mfext" or REPO == "mfextaddon_scientific" or REPO == "mfextaddon_python3_ia" -%}
+        #No build on pull requests on these repositories
+        B=null
+{%- endif -%}
         case "${B}" in
             integration | ci* | pci* | github*)
                 DEP_BRANCH=integration
@@ -59,12 +65,7 @@ case "${GITHUB_REF}" in
                 DEP_BRANCH=${B}
                 DEP_DIR=${B##release_}
                 TARGET_DIR=${B##release_};;
-        esac
-{% if REPO == "mfext" or REPO == "mfextaddon_scientific" or REPO == "mfextaddon_python3_ia" %}
-        #No build on pull requests on these repositories
-        B=null
-{% endif %}
-        ;;
+        esac;;
 esac
 
 if [ -z ${TAG} ]; then

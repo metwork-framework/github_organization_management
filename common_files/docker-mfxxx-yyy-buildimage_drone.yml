@@ -11,7 +11,6 @@
 
 {% if "trigger-github" not in "TOPICS"|getenv|from_json %}
 trigger_common: &trigger_common
-{% if "trigger-github" in "TOPICS"|getenv|from_json %}
   image: metwork/drone-downstream-specific-image:latest
   pull: true
   secrets: [ downstream_token, downstream_server ]
