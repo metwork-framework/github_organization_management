@@ -57,19 +57,9 @@ jobs:
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
           BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
           docker run ${DOCKER_RUN_OPTIONS} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
-      - name: check ssh connect as ssh-scp-ssh-pipelines does not do it
-        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: appleboy/ssh-action@master
-        with:
-          host: {% raw %}${{ secrets.METWORKPUB_HOST }}{% endraw %}
-          username: {% raw %}${{ secrets.METWORKPUB_USERNAME }}{% endraw %}
-          password: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
-          port: 22
-          script: |
-            pwd
       - name: publish buildlogs
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.buildlog_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}/buildlogs{% endraw %}
@@ -90,7 +80,7 @@ jobs:
           docker run ${DOCKER_RUN_OPTIONS} -e DEP_BRANCH=${DEP_BRANCH} --rm ${TESTIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/integration_tests.sh"
       - name: publish rpms
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}{% endraw %}/rpms
@@ -107,7 +97,7 @@ jobs:
             createrepo --update ${REMOTE} 
       - name: publish doc
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.doc_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}{% endraw %}/html_doc
