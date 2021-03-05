@@ -1,4 +1,4 @@
-name: ci_build
+name: CI
 
 {% if REPO|fnmatch('docker-mf*-*-buildimage') %}
     {% set LIST = REPO.split("-") %}
