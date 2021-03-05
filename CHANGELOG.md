@@ -18,6 +18,7 @@
 - new changelog generator tool (ghtc) (#42)
 - add common files to build Metwork modules with github actions when "github-actions" is in repository topics (#46)
 - trigger from drone with github action repository-dispatch (if "trigger-github" is in topics)
+- use a fork of action ssh-scp-ssh-pipelines which fails in case of error
 
 ### Bug Fixes
 
