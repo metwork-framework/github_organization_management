@@ -9,7 +9,7 @@
 
 {% set drone_managed = ("cat " + "REPO_HOME"|getenv + "/.drone.yml 2>/dev/null")|shell %}
 
-{% if drone_managed != "" %}[![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/{{REPO}}/status.svg)](http://metwork-framework.org:8000/metwork-framework/{{REPO}}){% else %}[![GitHub CI](https://github.com/metwork-framework/{{REPO}}/workflows/CI/badge.svg?branch=master)](https://github.com/metwork-framework/{{REPO}}/actions?query=workflow%3ACI&branch=master){% endif %}
+{% if drone_managed != "" %}[![Drone CI](http://metwork-framework.org:8000/api/badges/metwork-framework/{{REPO}}/status.svg)](http://metwork-framework.org:8000/metwork-framework/{{REPO}}){% else %}[![GitHub CI](https://github.com/metwork-framework/{{REPO}}/workflows/CI/badge.svg?branch=master)](https://github.com/metwork-framework/{{REPO}}/actions?query=workflow%3ACI+branch%3Amaster){% endif %}
 {%- if "docker-image" in "TOPICS"|getenv|from_json %}
 [![DockerHub](https://github.com/metwork-framework/resources/blob/master/badges/dockerhub_link.svg)](https://hub.docker.com/r/metwork/{{REPO}}/)
 {%- endif %}
