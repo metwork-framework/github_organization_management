@@ -99,7 +99,6 @@ pipeline:
       - metwork-framework/mfbase@${DRONE_BRANCH}
       - metwork-framework/mfadmin@${DRONE_BRANCH}
       - metwork-framework/mfsysmon@${DRONE_BRANCH}
-      - metwork-framework/mfextaddons@${DRONE_BRANCH}
     secrets: [ downstream_github_token ]
     when:
       status: success
@@ -114,6 +113,7 @@ pipeline:
       - metwork-framework/mfbase@${DRONE_BRANCH}
       - metwork-framework/mfadmin@${DRONE_BRANCH}
       - metwork-framework/mfsysmon@${DRONE_BRANCH}
+      - metwork-framework/mfextaddons@${DRONE_BRANCH}
     secrets: [ downstream_github_token ]
     when:
       status: success
