@@ -21,6 +21,7 @@
 - use a fork of action ssh-scp-ssh-pipelines which fails in case of error
 - improve createrepo (manage concurrent commands)
 - improve createrepo (manage concurrent commands)
+- we are in python 3.8 now
 
 ### Bug Fixes
 
