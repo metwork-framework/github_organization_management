@@ -1,0 +1,142 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - master
+      - integration
+      - experimental*
+      - release_*
+      - ci*
+      - pci* 
+    tags:
+      - v*
+  pull_request:
+  repository_dispatch:
+    types:
+      - metwork-trigger*
+
+env:
+    OS_VERSION: centos6
+    DOCKER_RUN_OPTIONS: "-v {% raw %}${{ github.workspace }}{% endraw %}:/src -v /buildcache:/buildcache -v /pub:/pub -e GITHUB_REF -e GITHUB_RUN_NUMBER -e GITHUB_SHA -e GITHUB_REPOSITORY -e OS_VERSION"
+    WORKFLOW_SCRIPTS_DIR: .github/workflows
+    DOCKER_WORKFLOW_SCRIPTS_DIR: /src/.github/workflows
+    PAYLOAD_BRANCH: {% raw %}${{ github.event.client_payload.branch}}{% endraw %}
+
+jobs:
+  ci_build:
+    runs-on: [self-hosted, metwork]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: {% raw %}${{ github.event.client_payload.branch || github.ref }}{% endraw %}
+      - name: set variables
+        id: SetVariables
+        run: |
+          ${WORKFLOW_SCRIPTS_DIR}/set_variables.sh
+      - name: debug env
+        run: |
+          env
+      - name: bootstrap
+        if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        run: |
+          TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
+          BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          TAG={% raw %}${{ steps.SetVariables.outputs.tag }}{% endraw %}
+          DEP_DIR={% raw %}${{ steps.SetVariables.outputs.dep_dir }}{% endraw %}
+          BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
+          docker run ${DOCKER_RUN_OPTIONS} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e TAG=${TAG} -e DEP_DIR=${DEP_DIR} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/bootstrap_ci.sh"
+      - name: build
+        if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        id: BuildStep
+        run: |
+          TARGET_DIR={% raw %}${{ steps.SetVariables.outputs.target_dir }}{% endraw %}
+          BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          TAG={% raw %}${{ steps.SetVariables.outputs.tag }}{% endraw %}
+          DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
+          BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
+          docker run ${DOCKER_RUN_OPTIONS} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
+      - name: integration tests
+        if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        run: |
+          TESTIMAGE={% raw %}${{ steps.SetVariables.outputs.testimage }}{% endraw %}
+          DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
+          docker run ${DOCKER_RUN_OPTIONS} -e DEP_BRANCH=${DEP_BRANCH} --rm ${TESTIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/integration_tests.sh"
+      - name: publish rpms and docs
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        run: |
+          mkdir -p {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
+          cd {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
+          if ! test -L {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}/../portable; then ln -s  {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %} {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}/../portable; fi
+          cp {% raw %}${{ github.workspace }}{% endraw %}/rpms/*.rpm {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
+          cp {% raw %}${{ github.workspace }}{% endraw %}/.github/workflows/createrepo.sh {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
+          cd {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
+          chmod +x createrepo.sh
+          ./createrepo.sh .
+          rm -f createrepo.sh
+          rm -Rf {% raw %}${{ steps.SetVariables.outputs.doc_dir }}{% endraw %}
+          mkdir -p {% raw %}${{ steps.SetVariables.outputs.doc_dir }}{% endraw %}
+          if test -d {% raw %}${{ github.workspace }}{% endraw %}/html_doc; then cp -Rf {% raw %}${{ github.workspace }}{% endraw %}/html_doc/* {% raw %}${{ steps.SetVariables.outputs.doc_dir }}{% endraw %} ; fi
+      - name: clean cache on failure
+        if: failure()
+        run: |
+          rm -f {% raw %}${{ steps.BuildStep.outputs.buildcache }}{% endraw %}
+
+{% if REPO == "mfserv" or REPO == "mfdata" or REPO == "mfbase" %}
+      - name: dispatch plugins buildimage centos7
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/docker-{{REPO}}plugins-centos7-buildimage
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+      - name: dispatch plugins buildimage centos8
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/docker-{{REPO}}plugins-centos8-buildimage
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+{% endif %}
+{% if REPO == "mfext" %}
+      - name: dispatch mfxxx buildimage centos6
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/docker-mfxxx-centos6-buildimage
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+      - name: dispatch mfxxx buildimage centos7
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/docker-mfxxx-centos7-buildimage
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+      - name: dispatch mfxxx buildimage centos8
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/docker-mfxxx-centos8-buildimage
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+{% endif %}
+      - name: chown on build outputs
+        if: always()
+        run: |
+          sudo chown -R metworkpub:metworkpub .
+          sudo chmod -R 775 .
+          cd /buildcache
+          sudo chown -R metworkpub:metworkpub .
+          sudo chmod -R 775 .
+          cd /pub/metwork
+          sudo chown -R metworkpub:metworkpub .
+          sudo chmod -R 775 .
+
