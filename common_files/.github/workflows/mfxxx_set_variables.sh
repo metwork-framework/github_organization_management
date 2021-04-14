@@ -52,7 +52,7 @@ if [ "${GITHUB_EVENT_NAME}" != "repository_dispatch" ]; then
             DEP_DIR=${B##release_}
             TARGET_DIR=${B##release_};;
         refs/pull/*)
-{% if REPO == "mfext" or REPO == "mfextaddon_scientific" or REPO == "mfextaddon_python3_ia" -%}
+{% if REPO == "mfext" or REPO == "mfextaddon_scientific" -%}
             #No build on pull requests on these repositories
             B=null
 {% endif -%}
@@ -89,7 +89,7 @@ fi
 
 {% if REPO == "mfext" %}
     {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
-    {% set TEST_IMAGE_NAME = "metwork/${OS_VERSION}:latest" %}
+    {% set TEST_IMAGE_NAME = "${OS_VERSION}:latest" %}
 {% else %}
     {% if "mfext-addon" in "TOPICS"|getenv|from_json %}
         {% if REPO == "mfextaddon_python3_ia" %}
