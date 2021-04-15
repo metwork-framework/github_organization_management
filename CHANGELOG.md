@@ -22,6 +22,7 @@
 - improve createrepo (manage concurrent commands)
 - improve createrepo (manage concurrent commands)
 - we are in python 3.8 now
+- add workflow for self-hosted repositories
 
 ### Bug Fixes
 
