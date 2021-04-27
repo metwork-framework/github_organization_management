@@ -1,14 +1,5 @@
 name: CI
 
-{% if REPO|fnmatch('docker-mf*-*-buildimage') %}
-    {% set LIST = REPO.split("-") %}
-    {% set MODULE = LIST[1] %}
-    {% set OS = LIST[2] %}
-{% else %}
-    {% set MODULE = "" %}
-    {% set OS = "" %}
-{% endif %}
-
 on:
   push:
     branches: 

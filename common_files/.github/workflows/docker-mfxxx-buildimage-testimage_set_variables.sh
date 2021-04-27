@@ -25,11 +25,19 @@ esac
 if [ -z ${BRANCH} ]; then
   BRANCH=null
 fi
-TAG_BRANCH="metwork/{{MODULE}}-{{OS}}-buildimage:${BRANCH}"
 TAG_LATEST=""
+{% if REPO|fnmatch('docker-mf*-*-buildimage') %}
+TAG_BRANCH="metwork/{{MODULE}}-{{OS}}-buildimage:${BRANCH}"
 if test "${BRANCH}" = "master"; then
     TAG_LATEST="metwork/{{MODULE}}-{{OS}}-buildimage:latest"
 fi 
+{% endif %}
+{% if REPO|fnmatch('docker-mf*-*-testimage') %}
+TAG_BRANCH="metwork/{{MODULE}}-{{OS}}-testimage:${BRANCH}"
+if test "${BRANCH}" = "master"; then
+    TAG_LATEST="metwork/{{MODULE}}-{{OS}}-testimage:latest"
+fi 
+{% endif %}
 echo "::set-output name=branch::${BRANCH}"
 echo "::set-output name=tag_branch::${TAG_BRANCH}"
 echo "::set-output name=tag_latest::${TAG_LATEST}"

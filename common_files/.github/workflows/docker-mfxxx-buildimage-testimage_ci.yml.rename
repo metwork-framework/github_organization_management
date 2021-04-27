@@ -2,4 +2,7 @@
 {% if REPO|fnmatch('docker-mf*-*-buildimage') and REPO != "docker-mfextaddon_python3_ia-centos7-buildimage" %}
 ci.yml
 {% endif %}
+{% if REPO|fnmatch('docker-mf*-*-testimage') %}
+ci.yml
+{% endif %}
 {% endif %}
