@@ -37,8 +37,17 @@ releases = json.loads(c)
 g = Github(TOKEN)
 for repository in repositories:
     repo = g.get_repo("%s/%s" % ("metwork-framework", repository["name"]))
+    extra_labels = []
+    if 4 in repository["integration_levels"]:
+        for release in releases["actives"]:
+            title = release["title"]
+            extra_labels.append({
+                "name": "backport-to-%s" % title,
+                "title": "backport-to-%s" % title,
+                "color": "eb6420"
+            })
     # LABELS
-    for lbl in labels:
+    for lbl in labels + extra_labels:
         if (
             lbl["title"] not in repository["labels"]
             or lbl["color"] != repository["labels"][lbl["title"]]

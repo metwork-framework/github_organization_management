@@ -80,11 +80,6 @@
         "color": "ff0000"
     },
     {
-        "name": "backport-to-1.1",
-        "title": "backport-to-1.1",
-        "color": "eb6420"
-    },
-    {
         "name": "merged",
         "title": "Status: Merged",
         "color": "009800"
