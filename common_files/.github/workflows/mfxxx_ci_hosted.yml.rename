@@ -1,5 +1,0 @@
-{% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
-{% if INTEGRATION_LEVEL|int == 5 or "mfext-addon" in "TOPICS"|getenv|from_json %}
-ci.yml
-{% endif %}
-{% endif %}

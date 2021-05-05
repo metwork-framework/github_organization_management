@@ -3,7 +3,7 @@
 #set -eu
 set -x
 
-#if test -d /buildcache; then export BUILDCACHE=/buildcache; fi
+if test -d /buildcache; then export BUILDCACHE=/buildcache; fi
 
 #We keep the names DRONE_* with github_actions because they are used by guess_version.sh
 export DRONE_BRANCH=${BRANCH}
@@ -31,6 +31,7 @@ cd /src
 {% else %}
 {% set MODULE = REPO|lower %}
 {% endif %}
+
 mkdir -p "/opt/metwork-{{MODULE}}-${TARGET_DIR}"
 
 mkdir -p buildlogs
@@ -47,14 +48,17 @@ if test "${OUTPUT}" != ""; then
     exit 1
 fi
 
-#MODULEHASH=`/opt/metwork-mfext-${TARGET_DIR}/bin/mfext_wrapper module_hash 2>module_hash.debug`
-#if test -f /opt/metwork-mfext-${TARGET_DIR}/.dhash; then cat /opt/metwork-mfext-${TARGET_DIR}/.dhash; fi
-#cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
-#echo "${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
-#if test -f "${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`"; then
-#    echo "::set-output name=bypass::true"
-#    exit 0
-#fi
+{% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
+MODULEHASH=`/opt/metwork-mfext-${TARGET_DIR}/bin/mfext_wrapper module_hash 2>module_hash.debug`
+if test -f /opt/metwork-mfext-${TARGET_DIR}/.dhash; then cat /opt/metwork-mfext-${TARGET_DIR}/.dhash; fi
+cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
+echo "${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
+if test -f "${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`"; then
+    echo "::set-output name=bypass::true"
+    echo "::set-output name=buildcache::null"
+    exit 0
+fi
+{% endif %} 
 
 if test -d docs; then make docs >${BUILDLOGS}/make_doc.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_doc.log ; exit 1 ); fi
 if test -d doc; then make doc >${BUILDLOGS}/make_doc.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_doc.log ; exit 1 ); fi
@@ -66,9 +70,12 @@ make RELEASE_BUILD=${GITHUB_RUN_NUMBER} rpm >${BUILDLOGS}/make_rpm.log 2>&1 || (
 mkdir rpms
 mv /opt/metwork-{{MODULE}}-${TARGET_DIR}/*.rpm rpms
 
-#rm -f ${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_*
-#touch ${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`
-#ls -l ${BUILDCACHE}
+{% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
+rm -f ${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_*
+hash_file=${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`
+touch ${hash_file}
+chown 1018:1018 ${hash_file}
+{% endif %} 
 
-#echo "::set-output name=bypass::false"
-
+echo "::set-output name=bypass::false"
+echo "::set-output name=buildcache::${hash_file}"
