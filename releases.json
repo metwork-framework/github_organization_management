@@ -28,9 +28,17 @@
             "branch": "release_1.0",
             "title": "1.0",
             "alternate_title": "1_dot_0",
-            "latest": 1,
+            "latest": 0,
             "previous": "release_0.9",
             "tags": "v1.0.*"
+        },
+        {
+            "branch": "release_1.1",
+            "title": "1.1",
+            "alternate_title": "1_dot_1",
+            "latest": 1,
+            "previous": "release_1.0",
+            "tags": "v1.1.*"
         }
     ],
     "inactives": [

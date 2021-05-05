@@ -90,7 +90,7 @@ jobs:
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
           docker run ${DOCKER_RUN_OPTIONS} -e DEP_BRANCH=${DEP_BRANCH} --rm ${TESTIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/integration_tests.sh"
       - name: publish rpms
-        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
@@ -105,7 +105,7 @@ jobs:
           scp: |
             '${LOCAL}/metwork-*.rpm' => ${REMOTE}
       - name: createrepo
-        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
@@ -123,7 +123,7 @@ jobs:
             ./createrepo.sh .
             rm -f createrepo.sh
       - name: publish doc
-        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.doc_dir }}{% endraw %}

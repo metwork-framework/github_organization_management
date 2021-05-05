@@ -75,7 +75,7 @@ rm -f ${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_*
 hash_file=${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`
 touch ${hash_file}
 chown 1018:1018 ${hash_file}
+echo "::set-output name=buildcache::${hash_file}"
 {% endif %} 
 
 echo "::set-output name=bypass::false"
-echo "::set-output name=buildcache::${hash_file}"
