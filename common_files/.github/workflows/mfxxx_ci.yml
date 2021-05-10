@@ -121,6 +121,16 @@ jobs:
             cd ${REMOTE}
             chmod +x createrepo.sh
             ./createrepo.sh .
+      - name: mageia_repo
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        uses: appleboy/ssh-action@master
+        with:
+          host: {% raw %}${{ secrets.METWORKPUB_HOST }}{% endraw %}
+          username: {% raw %}${{ secrets.METWORKPUB_USERNAME }}{% endraw %}
+          password: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
+          port: 22
+          script: |
+            docker run -v /pub:/pub --rm mageia:6 /bin/bash -c "genhdlist2 --allow-empty-media {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}"
       - name: publish doc
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
