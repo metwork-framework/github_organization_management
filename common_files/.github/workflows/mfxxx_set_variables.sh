@@ -111,5 +111,10 @@ echo "::set-output name=dep_dir::${DEP_DIR}"
 echo "::set-output name=buildimage::metwork/{{BUILD_IMAGE_NAME}}"
 echo "::set-output name=testimage::metwork/{{TEST_IMAGE_NAME}}"
 echo "::set-output name=buildlog_dir::/pub/metwork/${CI}/buildlogs/${B}/{{REPO}}/${OS_VERSION}/${GITHUB_RUN_NUMBER}"
+{% if "private-addon" in "TOPICS"|getenv|from_json %}
+echo "::set-output name=rpm_dir::/private/metwork_addons/${CI}/rpms/${B}/${OS_VERSION}"
+echo "::set-output name=doc_dir::/private/metwork_addons/${CI}/docs/${B}/{{REPO}}"
+{% else %}
 echo "::set-output name=rpm_dir::/pub/metwork/${CI}/rpms/${B}/${OS_VERSION}"
 echo "::set-output name=doc_dir::/pub/metwork/${CI}/docs/${B}/{{REPO}}"
+{% endif %}

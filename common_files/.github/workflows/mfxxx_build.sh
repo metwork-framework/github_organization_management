@@ -19,6 +19,10 @@ export DRONE=true
     yum install -y metwork-mfext-layer-python2-${BRANCH##release_}
 {% elif REPO == "mfextaddon_vim" %}
     yum install -y metwork-mfext-layer-python2_devtools-${BRANCH##release_}
+{% elif REPO == "mfextaddon_radartools" %}
+    yum install -y metwork-mfext-layer-python3_scientific metwork-mfext-layer-python2_scientific metwork-mfext-layer-python2_devtools-${BRANCH##release_}
+{% elif REPO == "mfextaddon_soprano" %}
+    yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/metwork-mfext-layer-python3_radartools* | tail -1 | awk '{print $NF}'`
 {% endif %}
 {% if REPO == "mfbus" %}
     yum -y install metwork-mfext-layer-rabbitmq-${DRONE_BRANCH##release_}
