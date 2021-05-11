@@ -122,7 +122,7 @@ jobs:
 {% endif %}
 {% if REPO == "docker-mfxxx-centos7-buildimage" %}
       - name: dispatch docker-mfextaddon_python3_ia-centos7-buildimage
-        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch == 'master' }}{% endraw %}
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
