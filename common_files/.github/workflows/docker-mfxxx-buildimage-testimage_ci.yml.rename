@@ -1,5 +1,5 @@
 {% if "github-actions" in "TOPICS"|getenv|from_json %}
-{% if REPO|fnmatch('docker-mf*-*-buildimage') and REPO != "docker-mfextaddon_python3_ia-centos7-buildimage" %}
+{% if REPO|fnmatch('docker-mf*-*-buildimage') %}
 ci.yml
 {% endif %}
 {% if REPO|fnmatch('docker-mf*-*-testimage') %}
