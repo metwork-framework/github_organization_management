@@ -23,6 +23,7 @@
 - improve createrepo (manage concurrent commands)
 - we are in python 3.8 now
 - add workflow for self-hosted repositories
+- manage mfextaddons and their dispatches
 
 ### Bug Fixes
 
