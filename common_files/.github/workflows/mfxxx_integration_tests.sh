@@ -20,6 +20,9 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
 {% if REPO == "mfextaddon_python2" %}
     yum -y install metwork-mfext-layer-tcltk
 {% endif %}
+{% if REPO == "mfextaddon_soprano" %}
+    yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS_VERSION}/metwork-mfext-layer-python3_radartools* | tail -1 | awk '{print $NF}'`
+{% endif %}
     rm /etc/yum.repos.d/metwork.repo
     yum clean all
     yum -y localinstall ./rpms/metwork-mfext*.rpm
