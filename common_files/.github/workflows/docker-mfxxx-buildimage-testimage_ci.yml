@@ -103,12 +103,40 @@ jobs:
           repository: metwork-framework/mfsysmon
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
-      - name: dispatch mfextaddons
-        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch == 'master' }}{% endraw %}
+      - name: dispatch mfextaddon_python2
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
-          repository: metwork-framework/mfextaddons
+          repository: metwork-framework/mfextaddon_python2
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+      - name: dispatch mfextaddon_rabbitmq
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/mfextaddon_rabbitmq
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+{% endif %}
+{% if REPO == "docker-mfxxx-centos7-buildimage" %}
+      - name: dispatch docker-mfextaddon_python3_ia-centos7-buildimage
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/docker-mfextaddon_python3_ia-centos7-buildimage
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+{% endif %}
+{% if REPO == "docker-mfextaddon_python3_ia-centos7-buildimage" %}
+      - name: dispatch mfextaddon_python3_ia
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/mfextaddon_python3_ia
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
 {% endif %}

@@ -19,6 +19,10 @@ export DRONE=true
     yum install -y metwork-mfext-layer-python2-${BRANCH##release_}
 {% elif REPO == "mfextaddon_vim" %}
     yum install -y metwork-mfext-layer-python2_devtools-${BRANCH##release_}
+{% elif REPO == "mfextaddon_radartools" %}
+    yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_} metwork-mfext-layer-python2_scientific-${BRANCH##release_} metwork-mfext-layer-python2_devtools-${BRANCH##release_}
+{% elif REPO == "mfextaddon_soprano" %}
+    yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/metwork-mfext-layer-python3_radartools* | tail -1 | awk '{print $NF}'`
 {% endif %}
 {% if REPO == "mfbus" %}
     yum -y install metwork-mfext-layer-rabbitmq-${DRONE_BRANCH##release_}
@@ -53,7 +57,7 @@ MODULEHASH=`/opt/metwork-mfext-${TARGET_DIR}/bin/mfext_wrapper module_hash 2>mod
 if test -f /opt/metwork-mfext-${TARGET_DIR}/.dhash; then cat /opt/metwork-mfext-${TARGET_DIR}/.dhash; fi
 cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
 echo "${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
-if test -f "${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`"; then
+if test -f "${BUILDCACHE}/build_hash_{{REPO}}_${BRANCH}_`cat .build_hash`"; then
     echo "::set-output name=bypass::true"
     echo "::set-output name=buildcache::null"
     exit 0
@@ -71,8 +75,8 @@ mkdir rpms
 mv /opt/metwork-{{MODULE}}-${TARGET_DIR}/*.rpm rpms
 
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
-rm -f ${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_*
-hash_file=${BUILDCACHE}/build_hash_{{MODULE}}_${BRANCH}_`cat .build_hash`
+rm -f ${BUILDCACHE}/build_hash_{{REPO}}_${BRANCH}_*
+hash_file=${BUILDCACHE}/build_hash_{{REPO}}_${BRANCH}_`cat .build_hash`
 touch ${hash_file}
 chown 1018:1018 ${hash_file}
 echo "::set-output name=buildcache::${hash_file}"
