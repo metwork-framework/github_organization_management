@@ -135,7 +135,12 @@ jobs:
           password: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
           port: 22
           script: |
+{% if "private-addon" in "TOPICS"|getenv|from_json %}
+            docker run -v /private:/private --rm mageia:6 /bin/bash -c "genhdlist2 --allow-empty-media {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}"
+{% else %}
             docker run -v /pub:/pub --rm mageia:6 /bin/bash -c "genhdlist2 --allow-empty-media {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}"
+{% endif %}
+
       - name: publish doc
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
@@ -156,7 +161,7 @@ jobs:
       - name: clean cache on failure
         if: failure()
         run: |
-          rm -f {% raw %}${{ steps.BuildStep.outputs.buildcache }}{% endraw %}
+          sudo rm -f {% raw %}${{ steps.BuildStep.outputs.buildcache }}{% endraw %}
 {% endif %}
 {% if REPO == "mfserv" or REPO == "mfdata" or REPO == "mfbase" %}
       - name: dispatch plugins buildimage centos7
