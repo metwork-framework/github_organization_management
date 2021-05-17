@@ -23,3 +23,4 @@ for repo in repositories:
         if "integration-level-%i" % i in repo["topics"]:
             print(i)
             sys.exit(0)
+print("0")

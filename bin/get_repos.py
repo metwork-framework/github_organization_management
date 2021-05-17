@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import itertools
 import argparse
 import json
 from github import Github
@@ -19,7 +20,7 @@ args = argparser.parse_args()
 g = Github(TOKEN)
 org = g.get_organization(args.ORG)
 repos = []
-for repo in org.get_repos("public"):
+for repo in itertools.chain(org.get_repos("public"), org.get_repos("private")):
     if repo.archived:
         continue
     if LIMIT_TO_REPO:
