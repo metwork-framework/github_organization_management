@@ -9,6 +9,10 @@
 {% if REPO == "mfextaddon_python3_ia" %}
 layers/layer5_python3_ia/0600_tensorflow/requirements3.txt
 {% endif %}
+{% if REPO == "mfextaddon_radartools" %}
+layers/layer*/0600_radartools/dist
+layers/layer*/0600_radartools/*.egg-info
+{% endif %}
 doc/_build
 doc/layer_*.md
 doc/api
