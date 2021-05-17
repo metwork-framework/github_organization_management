@@ -1,0 +1,3 @@
+{% if REPO == "mfextaddon_radartools" %}
+yes
+{% endif %}
