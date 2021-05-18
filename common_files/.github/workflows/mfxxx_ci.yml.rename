@@ -1,5 +1,7 @@
 {% if "github-actions" in "TOPICS"|getenv|from_json or "github-selfhosted" in "TOPICS"|getenv|from_json %}
 {% if INTEGRATION_LEVEL|int == 5 or "mfext-addon" in "TOPICS"|getenv|from_json %}
+{% if REPO != "mfserv_python2_tests" and REPO != "mfdata_python2_tests" %}
 ci.yml
+{% endif %}
 {% endif %}
 {% endif %}

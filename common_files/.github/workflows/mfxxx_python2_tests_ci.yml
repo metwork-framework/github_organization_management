@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: 
+      - master
+      - integration
+      - experimental*
+      - release_*
+      - ci*
+      - pci* 
+    tags:
+      - v*
+  pull_request:
+  repository_dispatch:
+    types:
+      - metwork-trigger*
+
+env:
+    OS_VERSION: centos6
+    WORKFLOW_SCRIPTS_DIR: .github/workflows
+    DOCKER_WORKFLOW_SCRIPTS_DIR: /src/.github/workflows
+    PAYLOAD_BRANCH: {% raw %}${{ github.event.client_payload.branch}}{% endraw %}
+
+jobs:
+  ci_build:
+{% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
+    runs-on: [self-hosted, metwork]
+{% endif %}
+{% if "github-actions" in "TOPICS"|getenv|from_json %}
+    runs-on: ubuntu-latest
+{% endif %}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: {% raw %}${{ github.event.client_payload.branch || github.ref }}{% endraw %}
+      - name: set variables
+        id: SetVariables
+        run: |
+          ${WORKFLOW_SCRIPTS_DIR}/set_variables.sh
+      - name: debug env
+        run: |
+          env
+      - name: integration tests
+        if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
+        run: |
+          TESTIMAGE={% raw %}${{ steps.SetVariables.outputs.testimage }}{% endraw %}
+          DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
+          BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          docker run ${DOCKER_RUN_OPTIONS} -e DEP_BRANCH=${DEP_BRANCH} -e BRANCH=${BRANCH} --rm ${TESTIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/integration_tests.sh"
