@@ -54,11 +54,11 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
     git config core.sparseCheckout true
     echo "integration_tests/" > .git/info/sparse-checkout
     git pull origin ${DEP_BRANCH}
-    su --command="mfserv" - mfserv
-    su --command="mfserv" - mfserv
-    su --command="mfserv" - mfserv
+    su --command="mfserv.init" - mfserv
+    su --command="mfserv.start" - mfserv
+    su --command="mfserv.status" - mfserv
     if test -d "integration_tests"; then chown -R mfserv integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - mfserv; cd ..; fi
-    su --command="mfserv" - mfserv
+    su --command="mfserv.stop" - mfserv
 {% else %}
     yum -y localinstall ./rpms/metwork-{{REPO}}*.rpm
     yum -y install make
