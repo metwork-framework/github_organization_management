@@ -180,6 +180,16 @@ jobs:
           repository: metwork-framework/docker-{{REPO}}plugins-centos8-buildimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+{% if REPO != "mfbase" %}
+      - name: dispatch python2 tests
+        if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/{{REPO}}_python2_tests
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+{% endif %}
 {% endif %}
 {% if REPO == "mfext" %}
       - name: dispatch mfxxx testimage centos6
