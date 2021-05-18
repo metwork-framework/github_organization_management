@@ -49,7 +49,62 @@ for DIR in `find /pub/metwork/continuous_integration/rpms -mindepth 2 -maxdepth 
     rm -Rf ${DIR}
   fi
 done
+
 find /pub/metwork/continuous_integration/rpms -mindepth 1 -maxdepth 1 -type d -exec rmdir {} \; >/dev/null 2>&1
 
 chown -RL metworkpub:metworkpub /pub/metwork
 chmod -R 755 /pub/metwork
+
+#Private addons
+find /private/metwork_addons/continuous_integration/rpms -mindepth 1 -maxdepth 1 -type d -exec rmdir {} \; >/dev/null 2>&1
+
+find /private/metwork_addons/continuous_integration/docs/ -type f -not -path '*/integration/*' -a -not -path '*/master/*' -a -not -path '*/release_*/*' -mtime +15 -exec rm -f {} \; 2>/dev/null
+find /private/metwork_addons/continuous_integration/docs/ -type d -not -path '*/integration/*' -a -not -path '*/master/*' -a -not -path '*/release_*/*' -exec rmdir {} \; 2>/dev/null
+
+BRANCHES=$(find /private/metwork_addons/continuous_integration/rpms/ -maxdepth 1 -mindepth 1 -type d -exec basename {} \;)
+for BRANCH in ${BRANCHES}; do
+  BRANCH_SHORT=$(echo "${BRANCH}" |sed 's/release_//g')
+  if test -L "/private/metwork_addons/continuous_integration/rpms/${BRANCH}"; then
+    continue
+  fi
+  for OS in centos6 centos7; do
+    DELETED=0
+    for MODULE in  mfext-layer-python2_radartools-${BRANCH_SHORT} mfext-layer-python3_radartools-${BRANCH_SHORT} mfext-layer-soprano-${BRANCH_SHORT}; do
+      echo "- Searching for ${BRANCH}/${OS}/${MODULE}/..."
+      # We only keep rpms of the 3 last ci
+      for N in `find /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS} -type f -name "metwork-${MODULE}-${BRANCH_SHORT}.ci*.rpm" 2>/dev/null |xargs -r -n 1 basename |grep '\.ci[0-9][0-9]*\.' |sed 's/^.*\.\(ci[0-9][0-9]*\)\..*$/\1/g' |sed 's/ci//g' |sort -rn |uniq |awk 'NR>3'`; do
+        echo "    => deleting /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS}/metwork-${MODULE}-${BRANCH_SHORT}.ci${N}.*.rpm"
+        rm -f /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS}/metwork-${MODULE}-${BRANCH_SHORT}.ci${N}.*.rpm
+        DELETED=1
+      done
+      # For each kept ci, we only keep rpms of the 3 last builds
+      for N in `find /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS} -type f -name "metwork-${MODULE}-${BRANCH_SHORT}.ci*.rpm" 2>/dev/null |xargs -r -n 1 basename |grep '\.ci[0-9][0-9]*\.' |sed 's/^.*\.\(ci[0-9][0-9]*\)\..*$/\1/g' |sed 's/ci//g' |sort -rn |uniq`; do
+        for M in `find /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS} -type f -name "metwork-${MODULE}-${BRANCH_SHORT}.ci${N}*.rpm" 2>/dev/null |xargs -r -n 1 basename | awk -F "-" '{ print $NF }' | awk -F "." '{ print $1 }' | sort -rn | uniq |awk 'NR>3'`; do
+          echo "    => deleting /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS}/metwork-${MODULE}-${BRANCH_SHORT}.ci${N}.*-${M}.gen.x86_64.rpm"
+          rm -f /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS}/metwork-${MODULE}-${BRANCH_SHORT}.ci${N}.*-${M}.gen.x86_64.rpm 
+          DELETED=1
+        done
+      done
+    done
+    if test "${DELETED}" = "1"; then
+      cd /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS} && su -c "createrepo ." metworkpub
+    fi
+  done
+done
+
+for DIR in `find /private/metwork_addons/continuous_integration/rpms -mindepth 2 -maxdepth 2 -type d -not -path '*/integration/*' -a -not -path '*/master/*' -a -not -path '*/release_*/*'`; do
+  echo "Searching in ${DIR}..."
+  N=`find ${DIR} -type f -name "*.rpm" -mtime +15 2>/dev/null |wc -l`
+  if test ${N} -gt 0; then
+    find ${DIR} -type f -name "*.rpm" -mtime +15 -exec rm -f {} \; 2>/dev/null
+    cd ${DIR} && su -c "createrepo ." metworkpub
+  fi
+  N=`find ${DIR} -type f -name "*.rpm" 2>/dev/null |wc -l`
+  if test ${N} -eq 0; then
+    rm -Rf ${DIR}
+  fi
+done
+find /private/metwork_addons/continuous_integration/rpms -mindepth 1 -maxdepth 1 -type d -exec rmdir {} \; >/dev/null 2>&1
+
+chown -RL metworkpub:metworkpub /private/metwork_addons
+chmod -R 755 /private/metwork_addons
