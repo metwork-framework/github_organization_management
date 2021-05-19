@@ -59,4 +59,5 @@ jobs:
           TESTIMAGE={% raw %}${{ steps.SetVariables.outputs.testimage }}{% endraw %}
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
           BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          docker pull ${TESTIMAGE}
           docker run ${DOCKER_RUN_OPTIONS} -e DEP_BRANCH=${DEP_BRANCH} -e BRANCH=${BRANCH} --rm ${TESTIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/integration_tests.sh"
