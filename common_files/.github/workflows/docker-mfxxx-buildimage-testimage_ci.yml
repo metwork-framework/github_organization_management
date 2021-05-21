@@ -29,6 +29,11 @@ jobs:
         id: SetVariables
         run: |
           ${WORKFLOW_SCRIPTS_DIR}/set_variables.sh
+      - name: debug env
+        run: |
+          env
+          echo "Dockerfile"
+          cat ./Dockerfile
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -43,6 +48,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           file: ./Dockerfile
+          no-cache: true
           push: true
           tags: |
             {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}

@@ -4,7 +4,8 @@
 {% set MODULE = LIST[1] %}
 {% set OS = LIST[2] %}
 
-set -eu
+#set -eu
+set -x
 
 if test "{{OS}}" = ""; then
     echo "ERROR: OS env is empty"
