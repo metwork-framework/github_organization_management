@@ -37,22 +37,22 @@ jobs:
       - name: docker build and push not master
         id: DockerStep
         run: |
-          docker login -p ${{ secrets.DOCKER_PASSWORD }} -u ${{ secrets.DOCKER_USERNAME }}
-          docker pull ${{ steps.SetVariables.outputs.tag_branch }}
-          HASH_BEFORE=`docker images -q ${{ steps.SetVariables.outputs.tag_branch }}` 
-          if ${{ steps.SetVariables.outputs.branch != 'master' }}; then
-            docker build -t ${{ steps.SetVariables.outputs.tag_branch }} --build-arg BRANCH=${{ steps.SetVariables.outputs.branch }} --build-arg CACHEBUST=${{ github.run_number }} .
+          docker login -p {% raw %}${{ secrets.DOCKER_PASSWORD }}{% endraw %} -u {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}
+          docker pull {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}
+          HASH_BEFORE=`docker images -q ${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}` 
+          if {% raw %}${{ steps.SetVariables.outputs.branch != 'master' }}{% endraw %}; then
+            docker build -t {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %} --build-arg BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %} --build-arg CACHEBUST={% raw %}${{ github.run_number }}{% endraw %} .
           else
-            docker build -t ${{ steps.SetVariables.outputs.tag_branch }} -t ${{ steps.SetVariables.outputs.tag_latest }} --build-arg BRANCH=${{ steps.SetVariables.outputs.branch }} --build-arg CACHEBUST=${{ github.run_number }} .
+            docker build -t {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %} -t {% raw %}${{ steps.SetVariables.outputs.tag_latest }}{% endraw %} --build-arg BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %} --build-arg CACHEBUST={% raw %}${{ github.run_number }}{% endraw %} .
           fi
-          HASH_AFTER=`docker images -q ${{ steps.SetVariables.outputs.tag_branch }}`
+          HASH_AFTER=`docker images -q {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}`
           if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then
             echo "::set-output name=dispatch_bypass::true"
           else
             echo "::set-output name=dispatch_bypass::false"
-            docker push ${{ steps.SetVariables.outputs.tag_branch }}
-            if ${{ steps.SetVariables.outputs.branch == 'master' }}; then
-              docker push ${{ steps.SetVariables.outputs.tag_latest }}
+            docker push {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}
+            if {% raw %}${{ steps.SetVariables.outputs.branch == 'master' }}{% endraw %}; then
+              docker push {% raw %}${{ steps.SetVariables.outputs.tag_latest }}{% endraw %}
             fi
           fi
 
