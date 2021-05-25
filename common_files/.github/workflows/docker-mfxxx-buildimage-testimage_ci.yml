@@ -34,27 +34,16 @@ jobs:
           env
           echo "Dockerfile"
           cat ./Dockerfile
-      - name: docker build and push not master
+      - name: docker build and push
         id: DockerStep
+        env: 
+          BRANCH: {% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          CACHEBUST: {% raw %}${{ github.run_number }}{% endraw %}
+          TAG_BRANCH: {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}
+          TAG_LATEST: {% raw %}${{ steps.SetVariables.outputs.tag_latest }}{% endraw %}
         run: |
-          docker login -p {% raw %}${{ secrets.DOCKER_PASSWORD }}{% endraw %} -u {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}
-          docker pull {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}
-          HASH_BEFORE=`docker images -q {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}` 
-          if {% raw %}${{ steps.SetVariables.outputs.branch != 'master' }}{% endraw %}; then
-            docker build -t {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %} --build-arg BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %} --build-arg CACHEBUST={% raw %}${{ github.run_number }}{% endraw %} .
-          else
-            docker build -t {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %} -t {% raw %}${{ steps.SetVariables.outputs.tag_latest }}{% endraw %} --build-arg BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %} --build-arg CACHEBUST={% raw %}${{ github.run_number }}{% endraw %} .
-          fi
-          HASH_AFTER=`docker images -q {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}`
-          if test "$${HASH_BEFORE}" = "$${HASH_AFTER}"; then
-            echo "::set-output name=dispatch_bypass::true"
-          else
-            echo "::set-output name=dispatch_bypass::false"
-            docker push {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}
-            if {% raw %}${{ steps.SetVariables.outputs.branch == 'master' }}{% endraw %}; then
-              docker push {% raw %}${{ steps.SetVariables.outputs.tag_latest }}{% endraw %}
-            fi
-          fi
+          echo {% raw %}${{ secrets.DOCKER_PASSWORD }}{% endraw %} | docker login -u {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %} --password-stdin
+          ${WORKFLOW_SCRIPTS_DIR}/docker_build.sh
 
 {% if REPO == "docker-mfext-centos6-buildimage" %}
       - name: dispatch mfext
