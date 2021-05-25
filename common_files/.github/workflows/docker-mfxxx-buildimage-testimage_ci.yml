@@ -39,7 +39,7 @@ jobs:
         run: |
           docker login -p {% raw %}${{ secrets.DOCKER_PASSWORD }}{% endraw %} -u {% raw %}${{ secrets.DOCKER_USERNAME }}{% endraw %}
           docker pull {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}
-          HASH_BEFORE=`docker images -q ${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}` 
+          HASH_BEFORE=`docker images -q {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %}` 
           if {% raw %}${{ steps.SetVariables.outputs.branch != 'master' }}{% endraw %}; then
             docker build -t {% raw %}${{ steps.SetVariables.outputs.tag_branch }}{% endraw %} --build-arg BRANCH={% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %} --build-arg CACHEBUST={% raw %}${{ github.run_number }}{% endraw %} .
           else
