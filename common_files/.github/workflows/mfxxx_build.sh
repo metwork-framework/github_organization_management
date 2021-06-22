@@ -9,6 +9,12 @@ if test -d /buildcache; then export BUILDCACHE=/buildcache; fi
 export DRONE_BRANCH=${BRANCH}
 export DRONE_TAG=${TAG}
 export DRONE=true
+
+{% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
+#Security in case where previous build has been canceled (unwanted outputs may have remained)
+rm -rf html_doc rpms .build_hash
+{% endif %}
+
 {% if REPO != "mfextaddon_python3_ia" %}
     if test "${OS_VERSION}" = "centos6"; then export METWORK_BUILD_OS=generic; else export METWORK_BUILD_OS=${OS_VERSION}; fi
 {% else %}
