@@ -89,14 +89,19 @@ fi
 
 {% if REPO == "mfext" %}
     {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
-    {% set TEST_IMAGE_NAME = "${OS_VERSION}:latest" %}
+    case "${OS_VERSION}" in
+        centos6)
+            {% set TEST_IMAGE_NAME = "metwork/${OS_VERSION}:latest" %};;
+        *)
+            {% set TEST_IMAGE_NAME = "centos:${OS_VERSION}" %};;
+    esac
 {% else %}
     {% if REPO == "mfextaddon_python3_ia" %}
             {% set BUILD_IMAGE_NAME = "mfextaddon_python3_ia-centos7-buildimage:${DEP_BRANCH}" %}
             {% set TEST_IMAGE_NAME = "mfxxx-centos7-testimage:${DEP_BRANCH}" %}
     {% else %}
         {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
-        {% set TEST_IMAGE_NAME = "mfxxx-${OS_VERSION}-testimage:${DEP_BRANCH}" %}
+        {% set TEST_IMAGE_NAME = "metwork/mfxxx-${OS_VERSION}-testimage:${DEP_BRANCH}" %}
     {% endif %}
 {% endif %}
 
@@ -106,7 +111,7 @@ echo "::set-output name=dep_branch::${DEP_BRANCH}"
 echo "::set-output name=target_dir::${TARGET_DIR}"
 echo "::set-output name=dep_dir::${DEP_DIR}"
 echo "::set-output name=buildimage::metwork/{{BUILD_IMAGE_NAME}}"
-echo "::set-output name=testimage::metwork/{{TEST_IMAGE_NAME}}"
+echo "::set-output name=testimage::{{TEST_IMAGE_NAME}}"
 echo "::set-output name=buildlog_dir::/pub/metwork/${CI}/buildlogs/${B}/{{REPO}}/${OS_VERSION}/${GITHUB_RUN_NUMBER}"
 {% if "private-addon" in "TOPICS"|getenv|from_json %}
 echo "::set-output name=rpm_dir::/private/metwork_addons/${CI}/rpms/${B}/${OS_VERSION}"
