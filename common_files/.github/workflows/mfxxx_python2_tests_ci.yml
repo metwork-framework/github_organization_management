@@ -17,7 +17,10 @@ on:
       - metwork-trigger*
 
 env:
-    OS_VERSION: centos6
+  if: {% raw %}${{ github.event_name == 'repository_dispatch' }} {% endraw %}
+      OS_VERSION: {% raw %}${{ github.event.client_payload.os }}{% endraw %}
+  if: {% raw %}${{ github.event_name != 'repository_dispatch' }} {% endraw %}
+      OS_VERSION: centos6
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
 {% if REPO == "mfextaddon_soprano" %}
     DOCKER_RUN_OPTIONS: "-v {% raw %}${{ github.workspace }}{% endraw %}:/src -v /buildcache:/buildcache -v /private:/private -e GITHUB_REF -e GITHUB_RUN_NUMBER -e GITHUB_SHA -e GITHUB_REPOSITORY -e OS_VERSION"

@@ -17,7 +17,10 @@ on:
       - metwork-trigger*
 
 env:
-    OS_VERSION: centos6
+  if: {% raw %}${{ github.event_name == 'repository_dispatch' }} {% endraw %}
+      OS_VERSION: {% raw %}${{ github.event.client_payload.os }}{% endraw %}
+  if: {% raw %}${{ github.event_name != 'repository_dispatch' }} {% endraw %}
+      OS_VERSION: centos6
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
 {% if REPO == "mfextaddon_soprano" %}
     DOCKER_RUN_OPTIONS: "-v {% raw %}${{ github.workspace }}{% endraw %}:/src -v /buildcache:/buildcache -v /private:/private -e GITHUB_REF -e GITHUB_RUN_NUMBER -e GITHUB_SHA -e GITHUB_REPOSITORY -e OS_VERSION"
@@ -174,7 +177,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-{{REPO}}plugins-centos7-buildimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch plugins buildimage centos8
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -182,7 +185,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-{{REPO}}plugins-centos8-buildimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
 {% if REPO != "mfbase" %}
       - name: dispatch python2 tests
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
@@ -191,7 +194,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/{{REPO}}_python2_tests
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
 {% endif %}
 {% endif %}
 {% if REPO == "mfext" %}
@@ -202,7 +205,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos6-testimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfxxx testimage centos7
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -210,7 +213,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos7-testimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfxxx buildimage centos6
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -218,7 +221,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos6-buildimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfxxx buildimage centos7
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -226,7 +229,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos7-buildimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfxxx buildimage centos8
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -234,7 +237,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos8-buildimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
 {% endif %}
 {% if REPO == "mfextaddon_python2" %}
       - name: dispatch mfdata python2 tests
@@ -244,7 +247,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfdata_python2_tests
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfserv python2 tests
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -252,7 +255,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfserv_python2_tests
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfextaddon_mapserver
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -260,7 +263,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_mapserver
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfextaddon_vim
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -268,7 +271,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_vim
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
       - name: dispatch mfextaddon_scientific
         if: {% raw %}${{ github.event_name != 'pull_request' && github.event_name != 'tags' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
@@ -276,7 +279,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_scientific
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
 {% endif %}
 {% if REPO == "mfextaddon_rabbitmq" %}
       - name: dispatch mfbus
@@ -286,7 +289,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfbus
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
 {% endif %}
 {% if REPO == "mfextaddon_scientific" %}
       - name: dispatch mfextaddon_radartools
@@ -296,7 +299,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_radartools
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
 {% endif %}
 {% if REPO == "mfextaddon_radartools" %}
       - name: dispatch mfextaddon_soprano
@@ -306,7 +309,7 @@ jobs:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_soprano
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
-          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}"}'
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "${OS_VERSION}"}'
 {% endif %}
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
       - name: chown on build outputs
