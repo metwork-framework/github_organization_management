@@ -102,13 +102,8 @@ fi
     {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
     {% set TEST_IMAGE_NAME = "${OS_VERSION}:latest" %}
 {% else %}
-    {% if REPO == "mfextaddon_python3_ia" %}
-            {% set BUILD_IMAGE_NAME = "mfextaddon_python3_ia-centos7-buildimage:${DEP_BRANCH}" %}
-            {% set TEST_IMAGE_NAME = "mfxxx-centos7-testimage:${DEP_BRANCH}" %}
-    {% else %}
-        {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
-        {% set TEST_IMAGE_NAME = "mfxxx-${OS_VERSION}-testimage:${DEP_BRANCH}" %}
-    {% endif %}
+    {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
+    {% set TEST_IMAGE_NAME = "mfxxx-${OS_VERSION}-testimage:${DEP_BRANCH}" %}
 {% endif %}
 
 echo "::set-output name=branch::${B}"
