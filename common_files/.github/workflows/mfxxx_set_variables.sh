@@ -21,7 +21,11 @@ case "${GITHUB_EVENT_NAME}" in
         if [ -f .build_os ]; then
             OS_VERSION=`cat .build_os`
         else
+{% if REPO != "mfextaddon_python3_ia" %}
             OS_VERSION=centos6
+{% else %}
+            OS_VERSION=centos7
+{% endif %}
         fi
         case "${GITHUB_BASE_REF}" in
             master | integration | experimental* | release_* | ci* | pci*)
@@ -33,7 +37,11 @@ case "${GITHUB_EVENT_NAME}" in
         if [ -f .build_os ]; then
             OS_VERSION=`cat .build_os`
         else
+{% if REPO != "mfextaddon_python3_ia" %}
             OS_VERSION=centos6
+{% else %}
+            OS_VERSION=centos7
+{% endif %}
         fi
         case "${GITHUB_REF}" in
             refs/tags/v*)
