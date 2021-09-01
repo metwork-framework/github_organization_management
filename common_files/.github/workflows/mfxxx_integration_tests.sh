@@ -39,7 +39,7 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
     echo "integration_tests/" > .git/info/sparse-checkout
     git pull origin ${DEP_BRANCH}
     yum -y install vsftpd ftp
-    service vsftpd start
+    vsftpd
     echo -e "mfdata\nmfdata" | passwd mfdata
     su --command="mfdata.init" - mfdata
     su --command="mfdata.start" - mfdata
@@ -65,7 +65,7 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
     yum -y install make
 {% if REPO == "mfdata" %}
     yum -y install vsftpd ftp
-    service vsftpd start
+    vsftpd
     echo -e "mfdata\nmfdata" | passwd mfdata
 {% endif %}
     su --command="{{REPO}}.init" - {{REPO}}
