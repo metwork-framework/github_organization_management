@@ -24,6 +24,7 @@
 - we are in python 3.8 now
 - add workflow for self-hosted repositories
 - manage mfextaddons and their dispatches
+- changes to manage both centos6 and centos8 builds
 
 ### Bug Fixes
 
