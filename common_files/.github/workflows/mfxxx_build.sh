@@ -25,6 +25,8 @@ rm -rf html_doc rpms .build_hash
     yum install -y metwork-mfext-layer-python2-${BRANCH##release_}
 {% elif REPO == "mfextaddon_vim" %}
     yum install -y metwork-mfext-layer-python2_devtools-${BRANCH##release_}
+{% elif REPO == "mfextaddon_python3_ia" %}
+    yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_}
 {% elif REPO == "mfextaddon_radartools" %}
     yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_} metwork-mfext-layer-python2_scientific-${BRANCH##release_} metwork-mfext-layer-python2_devtools-${BRANCH##release_}
 {% elif REPO == "mfextaddon_soprano" %}
