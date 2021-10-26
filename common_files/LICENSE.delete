@@ -1,1 +1,1 @@
-{% if INTEGRATION_LEVEL|int < 5 %}yes{% endif %}
+{% if INTEGRATION_LEVEL|int < 5 and "mfext-addon" not in "TOPICS"|getenv|from_json %}yes{% endif %}
