@@ -69,7 +69,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     else
         BRANCH=integration
         LATEST=$("${DIR}/latest_release.py" "${DIR}/../releases.json")
-        changelog CHANGELOG "origin/${LATEST}" "no_tag_here" CHANGELOG.md "${REPO}" integration --unreleased
+        changelog CHANGELOG "origin/${LATEST}" "no_tag_here" CHANGELOG.md "${REPO}" integration --unreleased || true
         for T in $("${DIR}/active_releases.py" "${DIR}/../releases.json"); do
             BRANCH=$(echo "${T}" |awk -F ';' '{print $1;}')
             PREVIOUS=$(echo "${T}" |awk -F ';' '{print $2;}')
