@@ -25,7 +25,7 @@ function changelog {
     git config user.name "metworkbot"
     git checkout "${6}" || return 0
     set -x
-    ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" "${7}" . >"${4}" || true
+    ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" "${7}" . >"${4}"
     set +x
     git add -u
     git add --all
@@ -69,7 +69,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     else
         BRANCH=integration
         LATEST=$("${DIR}/latest_release.py" "${DIR}/../releases.json")
-        changelog CHANGELOG "origin/${LATEST}" "no_tag_here" CHANGELOG.md "${REPO}" integration --unreleased
+        changelog CHANGELOG "origin/${LATEST}" "no_tag_here" CHANGELOG.md "${REPO}" integration --unreleased || true
         for T in $("${DIR}/active_releases.py" "${DIR}/../releases.json"); do
             BRANCH=$(echo "${T}" |awk -F ';' '{print $1;}')
             PREVIOUS=$(echo "${T}" |awk -F ';' '{print $2;}')
