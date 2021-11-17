@@ -25,7 +25,7 @@ function changelog {
     git config user.name "metworkbot"
     git checkout "${6}" || return 0
     set -x
-    ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" "${7}" . >"${4}"
+    ghtc --title="${1}" --tags-regex="${3}" --include-type=FEAT --include-type=FIX --starting-rev="${2}" "${7}" . >"${4}" || true
     set +x
     git add -u
     git add --all
