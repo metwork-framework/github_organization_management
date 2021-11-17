@@ -36,10 +36,17 @@
             "branch": "release_1.1",
             "title": "1.1",
             "alternate_title": "1_dot_1",
-            "latest": 1,
+            "latest": 0,
             "previous": "release_1.0",
             "tags": "v1.1.*"
-        }
+        },
+        {
+            "branch": "release_1.2",
+            "title": "1.2",
+            "alternate_title": "1_dot_2",
+            "latest": 1,
+            "previous": "release_1.1",
+            "tags": "v1.2.*"
     ],
     "inactives": [
         {
