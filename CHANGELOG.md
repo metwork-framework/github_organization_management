@@ -25,6 +25,7 @@
 - add workflow for self-hosted repositories
 - manage mfextaddons and their dispatches
 - changes to manage both centos6 and centos8 builds
+- update released changelogs in integration branch  (#58)
 
 ### Bug Fixes
 
@@ -34,5 +35,6 @@
 - fix wrong removal of directory .github for some repositories (#47)
 - do not apply common files on github_organization_management
 - fix usage with private repos
+- automatic changelog must not fail if a repository is at integration-level-4 and has no released branch yet (#57)
 
 
