@@ -75,7 +75,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
             PREVIOUS=$(echo "${T}" |awk -F ';' '{print $2;}')
             TAGS=$(echo "${T}" |awk -F ';' '{print $3;}')
             TITLE=$(echo "${T}" |awk -F ';' '{print $4;}')
-            changelog "${BRANCH} CHANGELOG" "origin/${BRANCH}" "${TAGS}" CHANGELOG-${TITLE}.md "${REPO}" integration --no-unreleased || true
+            changelog "${BRANCH} CHANGELOG" "origin/${PREVIOUS}" "${TAGS}" CHANGELOG-${TITLE}.md "${REPO}" integration --no-unreleased || true
         done
         for T in $("${DIR}/active_releases.py" "${DIR}/../releases.json"); do
             BRANCH=$(echo "${T}" |awk -F ';' '{print $1;}')
