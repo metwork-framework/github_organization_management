@@ -70,8 +70,8 @@ if [ "${GITHUB_EVENT_NAME}" != "repository_dispatch" ]; then
             TAG=${GITHUB_REF#refs/tags/}
             DEP_BRANCH=${B}
             DEP_DIR=${B##release_}
-            TARGET_DIR=${B##release_};;
-            SKIP_DISPATCH=false
+            TARGET_DIR=${B##release_}
+            SKIP_DISPATCH=false;;
         refs/pull/*)
 {% if REPO == "mfext" or REPO == "mfextaddon_scientific" -%}
             #No build on pull requests on these repositories
