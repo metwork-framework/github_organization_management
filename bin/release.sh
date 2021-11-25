@@ -8,8 +8,7 @@ function cleanup {
     rm -Rf "${TMPDIR}"
 }
 
-#set -eu
-set -x
+set -eu
 trap cleanup EXIT
 
 if test "${BRANCH:-}" = ""; then
