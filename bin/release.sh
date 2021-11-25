@@ -24,8 +24,8 @@ else
     "${DIR}/list_repos.py" --topic=integration-level-5 >>"${TMPDIR}/repos"
     "${DIR}/list_repos.py" --topic=integration-level-4 >>"${TMPDIR}/repos2"
     "${DIR}/list_repos.py" --topic=mfext-addon >>"${TMPDIR}/repos3"
-    for rep in $(cat "${TMPDIR}/repos2"); do
-       grep $rep "${TMPDIR}/repos3" >> "${TMPDIR}/repos"
+    for REPO in $(cat "${TMPDIR}/repos2"); do
+       grep "${REPO}" "${TMPDIR}/repos3" >> "${TMPDIR}/repos"
     done
 fi
 
