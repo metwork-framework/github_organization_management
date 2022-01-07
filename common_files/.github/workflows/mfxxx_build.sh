@@ -15,11 +15,7 @@ export DRONE=true
 rm -rf html_doc rpms .build_hash
 {% endif %}
 
-{% if REPO != "mfextaddon_python3_ia" %}
-    if test "${OS_VERSION}" = "centos6"; then export METWORK_BUILD_OS=generic; else export METWORK_BUILD_OS=${OS_VERSION}; fi
-{% else %}
-    if test "${OS_VERSION}" = "centos7"; then export METWORK_BUILD_OS=generic; else export METWORK_BUILD_OS=${OS_VERSION}; fi
-{% endif %}
+    if test "${OS_VERSION}" = "centos8"; then export METWORK_BUILD_OS=generic; else export METWORK_BUILD_OS=${OS_VERSION}; fi
 
 {% if REPO == "mfextaddon_mapserver" or REPO == "mfextaddon_scientific" %}
     yum install -y metwork-mfext-layer-python2-${BRANCH##release_}
