@@ -102,10 +102,10 @@ fi
 
 {% if REPO == "mfext" %}
     {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
-    {% set TEST_IMAGE_NAME = "${OS_VERSION}:latest" %}
+    {% set TEST_IMAGE_NAME = "rockylinux/rockylinux:8" %}
 {% else %}
     {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
-    {% set TEST_IMAGE_NAME = "mfxxx-${OS_VERSION}-testimage:${DEP_BRANCH}" %}
+    {% set TEST_IMAGE_NAME = "metwork/mfxxx-${OS_VERSION}-testimage:${DEP_BRANCH}" %}
 {% endif %}
 
 echo "::set-output name=branch::${B}"
@@ -115,7 +115,7 @@ echo "::set-output name=dep_branch::${DEP_BRANCH}"
 echo "::set-output name=target_dir::${TARGET_DIR}"
 echo "::set-output name=dep_dir::${DEP_DIR}"
 echo "::set-output name=buildimage::metwork/{{BUILD_IMAGE_NAME}}"
-echo "::set-output name=testimage::metwork/{{TEST_IMAGE_NAME}}"
+echo "::set-output name=testimage::{{TEST_IMAGE_NAME}}"
 echo "::set-output name=buildlog_dir::/pub/metwork/${CI}/buildlogs/${B}/{{REPO}}/${OS_VERSION}/${GITHUB_RUN_NUMBER}"
 echo "::set-output name=skip_dispatch::${SKIP_DISPATCH}"
 {% if "private-addon" in "TOPICS"|getenv|from_json %}
