@@ -31,4 +31,5 @@ layers/layer1_python2_core/0000_adm/download_compile_requirements
 layers/layer1_python2_core/0000_adm/freeze_requirements
 layers/layer1_python2_core/0000_adm/install_requirements
 layers/layer1_python2_core/0000_adm/unsafe_pip
+layers/layer1_python2_core/0000_adm/git
 {% endif %}
