@@ -26,6 +26,7 @@
 - manage mfextaddons and their dispatches
 - changes to manage both centos6 and centos8 builds
 - update released changelogs in integration branch  (#58)
+- build under centos8
 
 ### Bug Fixes
 
