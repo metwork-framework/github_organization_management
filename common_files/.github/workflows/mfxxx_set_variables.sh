@@ -102,7 +102,7 @@ fi
 
 {% if REPO == "mfext" %}
     {% set BUILD_IMAGE_NAME = "mfext-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
-    {% set TEST_IMAGE_NAME = "rockylinux/rockylinux:8" %}
+    {% set TEST_IMAGE_NAME = "rockylinux:8" %}
 {% else %}
     {% set BUILD_IMAGE_NAME = "mfxxx-${OS_VERSION}-buildimage:${DEP_BRANCH}" %}
     {% set TEST_IMAGE_NAME = "metwork/mfxxx-${OS_VERSION}-testimage:${DEP_BRANCH}" %}
