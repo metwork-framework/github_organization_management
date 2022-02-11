@@ -91,6 +91,7 @@ jobs:
             mkdir -p ${REMOTE}
           scp: |
             '${LOCAL}/*' => ${REMOTE}
+{% if REPO != "mfextaddon_template" %}
       - name: integration tests
         if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
         run: |
@@ -357,4 +358,5 @@ jobs:
         run: |
           sudo chown -R githubactions:metworkpub .
           sudo chmod -R 775 .
+{% endif %}
 {% endif %}
