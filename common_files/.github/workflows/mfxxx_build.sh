@@ -24,6 +24,7 @@ rm -rf html_doc rpms .build_hash
 {% elif REPO == "mfextaddon_python3_ia" %}
     yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_}
 {% elif REPO == "mfextaddon_radartools" %}
+    yum install -y boost-devel
     yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_} metwork-mfext-layer-python2_scientific-${BRANCH##release_} metwork-mfext-layer-python2_devtools-${BRANCH##release_}
 {% elif REPO == "mfextaddon_soprano" %}
     yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/metwork-mfext-layer-python3_radartools* | tail -1 | awk '{print $NF}'`
