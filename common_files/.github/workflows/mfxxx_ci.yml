@@ -35,7 +35,11 @@ env:
 jobs:
   ci_build:
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
+{% if REPO == "mfextaddon_scientific" %}
+    runs-on: [self-hosted, metwork, mfextaddon_scientific]
+{% else %}
     runs-on: [self-hosted, metwork]
+{% endif %}
 {% endif %}
 {% if "github-actions" in "TOPICS"|getenv|from_json %}
     runs-on: ubuntu-latest
