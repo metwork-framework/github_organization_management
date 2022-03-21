@@ -90,9 +90,9 @@ pull_request_rules:
         #strict: true
         #commit_message: title+body
         commit_message_template: |-
-          {{ title }} (#{{ number }})
+          {% raw %}{{ title }} (#{{ number }}){% endraw %}
 
-          {{ body }}
+          {% raw %}{{ body }}{% endraw %}
       delete_head_branch: {}
     conditions:
 {% if INTEGRATION_LEVEL|int >= 4 %}
