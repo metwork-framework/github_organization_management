@@ -27,6 +27,7 @@
 - changes to manage both centos6 and centos8 builds
 - update released changelogs in integration branch  (#58)
 - build under centos8
+- replace commit_message (deprecated) by commit_message_template
 
 ### Bug Fixes
 
