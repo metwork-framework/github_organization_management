@@ -4,7 +4,7 @@ set -x
 
 git config --global credential.helper cache
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-TMPDIR=/tmp/copy_branch.$$
+TMPDIR=/tmp/remove_branch.$$
 
 function cleanup {
     rm -Rf "${TMPDIR}"
@@ -35,7 +35,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
     "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${TARGET_BRANCH}" >/dev/null 2>&1 || true
-    git checkout "${TARGET_BRANCH}"
+    #git checkout "${TARGET_BRANCH}"
     git push -u origin -d "${TARGET_BRANCH}"
     echo ""
     echo ""
