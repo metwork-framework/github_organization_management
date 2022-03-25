@@ -65,7 +65,7 @@ if [ "${GITHUB_EVENT_NAME}" != "repository_dispatch" ]; then
             TARGET_DIR=${B##release_}
             SKIP_DISPATCH=true;;
         refs/pull/*)
-{% if REPO == "mfext" or REPO == "mfextaddon_scientific" -%}
+{% if REPO == "mfext" or REPO == "mfextaddon_scientific" or REPO == "mfextaddon_radartools" or REPO == "mfextaddon_soprano" -%}
             #No build on pull requests on these repositories
             B=null
 {% endif -%}
