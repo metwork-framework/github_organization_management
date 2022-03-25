@@ -1,4 +1,4 @@
-name: remove_branch
+name: delete_branch
 on:
   workflow_dispatch:
    inputs:
@@ -39,4 +39,4 @@ jobs:
           LIMIT_TO_REPO: ${{ github.event.inputs.limit_to_repo }}
           TARGET_BRANCH: ${{ github.event.inputs.target_branch }}
         run: |
-          bin/remove_branch.sh
+          bin/delete_branch.sh

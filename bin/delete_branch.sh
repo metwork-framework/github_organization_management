@@ -35,8 +35,7 @@ for REPO in $(cat "${TMPDIR}/repos"); do
     git config user.email "metworkbot@metwork-framework.org"
     git config user.name "metworkbot"
     "${DIR}/remove_branch_protection.py" metwork-framework "${REPO}" "${TARGET_BRANCH}" >/dev/null 2>&1 || true
-    #git checkout "${TARGET_BRANCH}"
-    git push -u origin -d "${TARGET_BRANCH}"
+    git push -u origin -d "${TARGET_BRANCH}" || true
     echo ""
     echo ""
 done
