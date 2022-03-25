@@ -28,6 +28,7 @@
 - update released changelogs in integration branch  (#58)
 - build under centos8
 - replace commit_message (deprecated) by commit_message_template
+- add action remove_branch
 
 ### Bug Fixes
 
