@@ -29,6 +29,7 @@
 - build under centos8
 - replace commit_message (deprecated) by commit_message_template
 - add action remove_branch
+- add action remove_branch_protection
 
 ### Bug Fixes
 
