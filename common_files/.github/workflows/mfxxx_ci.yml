@@ -97,7 +97,7 @@ jobs:
           scp: |
             '${LOCAL}/*' => ${REMOTE}
       - name: integration tests
-        if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
+        if: {% raw %}${{ steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         run: |
           TESTIMAGE={% raw %}${{ steps.SetVariables.outputs.testimage }}{% endraw %}
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
