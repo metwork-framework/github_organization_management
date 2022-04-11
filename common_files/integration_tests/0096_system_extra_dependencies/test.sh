@@ -121,5 +121,5 @@ done
 
 if test "${RET}" = "1"; then
     echo "extra dependencies found but not exiting 1"
-    #exit 1
+    exit 1
 fi
