@@ -1,28 +1,17 @@
-{%- if REPO == "mfext" -%}
-libjvm.so
-libpython2.7.so.1.0
-libhogweed.so.4
-libnettle.so.6
-libjbig.so.2.1
-{%- elif REPO == "mfextaddon_python2" -%}
-libpython2.7.so.1.0
-{%- elif REPO == "mfextaddon_mapserver" -%}
 libcroco-0.6.so.3
 libhogweed.so.4
 libjbig.so.2.1
 libnettle.so.6
+{%- if REPO == "mfext" -%}
+libjvm.so
+libpython2.7.so.1.0
+{%- elif REPO == "mfextaddon_python2" -%}
+libpython2.7.so.1.0
 {%- elif REPO == "mfextaddon_python3_ia" -%}
 libcuda.so.1
 {%- elif REPO == "mfadmin" -%}
 libboost_system-gcc62-mt-1_65_1.so.1.65.1
-libhogweed.so.4
-libjbig.so.2.1
-libnettle.so.6
 {%- elif REPO == "mfextaddon_scientific" -%}
-libcroco-0.6.so.3
-libhogweed.so.4
-libjbig.so.2.1
-libnettle.so.6
 libCbc-8bcaaf57.so.3.10.4
 libCbcSolver-f1259821.so.3.10.4
 libCgl-fb694467.so.1.10.3
@@ -59,6 +48,4 @@ libtbb-5a9c62e6.so.2
 libvpx-3dd7ccd6.so.6.2.0
 libxml2-0dd58be2.so.2.9.10
 libz-a147dcb0.so.1.2.3
-{%- else -%}
-no_extra_lib
 {%- endif -%}
