@@ -6,9 +6,14 @@ libnettle.so.6
 libjbig.so.2.1
 {%- elif REPO == "mfextaddon_python2" -%}
 libpython2.7.so.1.0
+{%- elif REPO == "mfextaddon_mapserver" -%}
+libcroco-0.6.so.3
+{%- elif REPO == "mfextaddon_python3_ia" -%}
+libcuda.so.1
 {%- elif REPO == "mfadmin" -%}
 libboost_system-gcc62-mt-1_65_1.so.1.65.1
 {%- elif REPO == "mfextaddon_scientific" -%}
+libcroco-0.6.so.3
 libCbc-8bcaaf57.so.3.10.4
 libCbcSolver-f1259821.so.3.10.4
 libCgl-fb694467.so.1.10.3
