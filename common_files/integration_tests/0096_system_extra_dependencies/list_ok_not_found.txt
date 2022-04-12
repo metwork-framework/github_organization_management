@@ -15,6 +15,9 @@ libnettle.so.6
 libcuda.so.1
 {%- elif REPO == "mfadmin" -%}
 libboost_system-gcc62-mt-1_65_1.so.1.65.1
+libhogweed.so.4
+libjbig.so.2.1
+libnettle.so.6
 {%- elif REPO == "mfextaddon_scientific" -%}
 libcroco-0.6.so.3
 libhogweed.so.4
