@@ -31,6 +31,7 @@
 - add action remove_branch
 - add action remove_branch_protection
 - reactivate dependencies test on el8
+- reactivate dependencies tests on el8
 
 ### Bug Fixes
 
