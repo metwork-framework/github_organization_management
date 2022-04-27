@@ -9,7 +9,7 @@ function cleanup {
 }
 
 set -x
-set -eu
+set -u
 trap cleanup EXIT
 
 if test "${BRANCH:-}" = ""; then
