@@ -8,7 +8,8 @@ function cleanup {
     rm -Rf "${TMPDIR}"
 }
 
-set -eu
+set -u
+set -x
 trap cleanup EXIT
 
 mkdir -p "${TMPDIR}"
