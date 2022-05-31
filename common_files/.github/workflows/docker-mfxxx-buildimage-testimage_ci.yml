@@ -107,12 +107,28 @@ jobs:
           repository: metwork-framework/mfsysmon
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos6"}'
-      - name: dispatch mfextaddon_python2
+      - name: dispatch mfextaddon_scientific
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.DockerStep.outputs.dispatch_bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
-          repository: metwork-framework/mfextaddon_python2
+          repository: metwork-framework/mfextaddon_scientific
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos6"}'
+      - name: dispatch mfextaddon_mapserver
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.DockerStep.outputs.dispatch_bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/mfextaddon_mapserver
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos6"}'
+      - name: dispatch mfextaddon_vim
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.DockerStep.outputs.dispatch_bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/mfextaddon_vim
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos6"}'
       - name: dispatch mfextaddon_rabbitmq
@@ -173,12 +189,28 @@ jobs:
           repository: metwork-framework/mfsysmon
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos8"}'
-      - name: dispatch mfextaddon_python2
+      - name: dispatch mfextaddon_scientific
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.DockerStep.outputs.dispatch_bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v1
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
-          repository: metwork-framework/mfextaddon_python2
+          repository: metwork-framework/mfextaddon_scientific
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos8"}'
+      - name: dispatch mfextaddon_mapserver
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.DockerStep.outputs.dispatch_bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/mfextaddon_mapserver
+          event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
+          client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos8"}'
+      - name: dispatch mfextaddon_vim
+        if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' && steps.DockerStep.outputs.dispatch_bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
+          repository: metwork-framework/mfextaddon_vim
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "centos8"}'
       - name: dispatch mfextaddon_rabbitmq

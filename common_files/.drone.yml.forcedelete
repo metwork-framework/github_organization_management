@@ -1,3 +1,0 @@
-{% if "github-actions" in "TOPICS"|getenv|from_json or "github-selfhosted" in "TOPICS"|getenv|from_json %}
-yes
-{% endif %}

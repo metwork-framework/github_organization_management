@@ -271,20 +271,14 @@ in the same way and with the same repository (for official [add-ons]({% raw %}{{
 For example (please refer to corresponding add-on documentation)
 
 ```console tab="CentOS/Fedora"
-# To install python2 support
-yum install metwork-mfext-layer-python2
-
-# To install python2 devtools
-yum install metwork-mfext-layer-python2_devtools
+# To install python3 devtools
+yum install metwork-mfext-layer-python3_devtools
 
 # To install opinionated VIM with Python3 support
 yum install metwork-mfext-layer-python3_vim
 
 # To install all scientific libraries (for Python3)
 yum install metwork-mfext-layer-python3_scientific
-
-# To install all scientific libraries (for Python2)
-yum install metwork-mfext-layer-python2_scientific
 
 # To install "machine learning" Python3 libraries
 yum install metwork-mfext-layer-python3_ia
@@ -296,10 +290,8 @@ yum install metwork-mfext-layer-python3_mapserverapi
 ```
 
 ```console tab="Mageia"
-# To install python2 support
-urpmi metwork-mfext-layer-python2
-# To install python2 devtools
-urpmi metwork-mfext-layer-python2_devtools
+# To install python3 devtools
+urpmi metwork-mfext-layer-python3_devtools
 
 # To install opinionated VIM with Python3 support
 # for CentOS or Fedora (see above note for other distributions)
@@ -307,9 +299,6 @@ urpmi metwork-mfext-layer-python3_vim
 
 # To install all scientific libraries (for Python3)
 urpmi metwork-mfext-layer-python3_scientific
-
-# To install all scientific libraries (for Python2)
-urpmi metwork-mfext-layer-python2_scientific
 
 # To install "machine learning" Python3 libraries
 urpmi metwork-mfext-layer-python3_ia
@@ -321,10 +310,8 @@ urpmi metwork-mfext-layer-python3_mapserverapi
 ```
 
 ```console tab="SUSE"
-# To install python2 support
-zypper install metwork-mfext-layer-python2
-# To install python2 devtools
-zypper install metwork-mfext-layer-python2_devtools
+# To install python3 devtools
+zypper install metwork-mfext-layer-python3_devtools
 
 # To install opinionated VIM with Python3 support
 # for CentOS or Fedora (see above note for other distributions)
@@ -332,9 +319,6 @@ zypper install metwork-mfext-layer-python3_vim
 
 # To install all scientific libraries (for Python3)
 zypper install metwork-mfext-layer-python3_scientific
-
-# To install all scientific libraries (for Python2)
-zypper install metwork-mfext-layer-python2_scientific
 
 # To install "machine learning" Python3 libraries
 zypper install metwork-mfext-layer-python3_ia

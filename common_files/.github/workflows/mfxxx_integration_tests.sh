@@ -27,36 +27,6 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
     yum -y localinstall ./rpms/metwork-mfext*.rpm
     if test -d "integration_tests"; then cd integration_tests; /opt/metwork-mfext/bin/mfext_wrapper ./run_integration_tests.sh; cd ..; fi
 {% else %}
-{% if REPO == "mfdata_python2_tests" %}
-    yum -y install metwork-mfdata-full metwork-mfext-layer-python2
-    yum -y install git make
-    git init python2_tests
-    cd python2_tests
-    git remote add -t ${DEP_BRANCH} -f origin https://github.com/metwork-framework/mfdata.git
-    git config core.sparseCheckout true
-    echo "integration_tests/" > .git/info/sparse-checkout
-    git pull origin ${DEP_BRANCH}
-
-    su --command="mfdata.init" - mfdata
-    su --command="mfdata.start" - mfdata
-    su --command="mfdata.status" - mfdata
-    if test -d "integration_tests"; then chown -R mfdata integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - mfdata; cd ..; fi
-    su --command="mfdata.stop" - mfdata
-{% elif REPO == "mfserv_python2_tests" %}
-    yum -y install metwork-mfserv-full metwork-mfext-layer-python2
-    yum -y install git make
-    git init python2_tests
-    cd python2_tests
-    git remote add -t ${DEP_BRANCH} -f origin https://github.com/metwork-framework/mfserv.git
-    git config core.sparseCheckout true
-    echo "integration_tests/" > .git/info/sparse-checkout
-    git pull origin ${DEP_BRANCH}
-    su --command="mfserv.init" - mfserv
-    su --command="mfserv.start" - mfserv
-    su --command="mfserv.status" - mfserv
-    if test -d "integration_tests"; then chown -R mfserv integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - mfserv; cd ..; fi
-    su --command="mfserv.stop" - mfserv
-{% else %}
     yum -y localinstall ./rpms/metwork-{{REPO}}*.rpm
     yum -y install make
     su --command="{{REPO}}.init" - {{REPO}}
@@ -64,6 +34,5 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
     su --command="{{REPO}}.status" - {{REPO}}
     if test -d "integration_tests"; then chown -R {{REPO}} integration_tests; cd integration_tests; su --command="cd `pwd`; ./run_integration_tests.sh" - {{REPO}}; cd ..; fi
     su --command="{{REPO}}.stop" - {{REPO}}
-{% endif %}
 {% endif %}
 {% endif %}

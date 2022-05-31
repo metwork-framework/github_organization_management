@@ -2,7 +2,4 @@
 {% if INTEGRATION_LEVEL|int == 5 or "mfext-addon" in "TOPICS"|getenv|from_json %}
 set_variables.sh
 {% endif %}
-{% if REPO == "mfserv_python2_tests" or REPO == "mfdata_python2_tests" %}
-set_variables.sh
-{% endif %}
 {% endif %}

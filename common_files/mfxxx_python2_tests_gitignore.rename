@@ -1,3 +1,0 @@
-{% if REPO|fnmatch('mf*_python2_tests') %}
-.gitignore
-{% endif %}

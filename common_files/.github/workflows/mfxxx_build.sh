@@ -17,15 +17,11 @@ rm -rf html_doc rpms .build_hash
 
     if test "${OS_VERSION}" = "centos8"; then export METWORK_BUILD_OS=generic; else export METWORK_BUILD_OS=${OS_VERSION}; fi
 
-{% if REPO == "mfextaddon_mapserver" or REPO == "mfextaddon_scientific" %}
-    yum install -y metwork-mfext-layer-python2-${BRANCH##release_}
-{% elif REPO == "mfextaddon_vim" %}
-    yum install -y metwork-mfext-layer-python2_devtools-${BRANCH##release_}
-{% elif REPO == "mfextaddon_python3_ia" %}
+{% if REPO == "mfextaddon_python3_ia" %}
     yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_}
 {% elif REPO == "mfextaddon_radartools" %}
     yum install -y boost-devel
-    yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_} metwork-mfext-layer-python2_scientific-${BRANCH##release_} metwork-mfext-layer-python2_devtools-${BRANCH##release_}
+    yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_}
 {% elif REPO == "mfextaddon_soprano" %}
     yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/metwork-mfext-layer-radartools* | tail -1 | awk '{print $NF}'`
     yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${DRONE_BRANCH}/${OS_VERSION}/metwork-mfext-layer-python3_radartools* | tail -1 | awk '{print $NF}'`

@@ -17,7 +17,6 @@ doc/_build
 doc/layer_*.md
 doc/api
 doc/layer_root.rst
-doc/layer_python2_scientific.rst
 doc/layer_python3_scientific.rst
 doc/layer_scientific.rst
 doc/mfextaddon_scientific_intro.rst
@@ -26,10 +25,3 @@ doc/CHANGELOG*.rst
 doc/changelogs.rst 
 /__pycache__
 _docs_build
-{% if REPO == "mfextaddon_python2" %}
-layers/layer1_python2_core/0000_adm/download_compile_requirements
-layers/layer1_python2_core/0000_adm/freeze_requirements
-layers/layer1_python2_core/0000_adm/install_requirements
-layers/layer1_python2_core/0000_adm/unsafe_pip
-layers/layer1_python2_core/0000_adm/git
-{% endif %}

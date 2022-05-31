@@ -4,9 +4,6 @@ libjbig.so.2.1
 libnettle.so.6
 {% if REPO == "mfext" -%}
 libjvm.so
-libpython2.7.so.1.0
-{% elif REPO == "mfextaddon_python2" -%}
-libpython2.7.so.1.0
 {% elif REPO == "mfextaddon_python3_ia" -%}
 libcuda.so.1
 {% elif REPO == "mfextaddon_scientific" -%}

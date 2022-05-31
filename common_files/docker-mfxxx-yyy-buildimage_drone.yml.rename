@@ -1,5 +1,0 @@
-{% if "github-actions" not in "TOPICS"|getenv|from_json %}
-{% if REPO|fnmatch('docker-mf*-*-buildimage') %}
-.drone.yml
-{% endif %}
-{% endif %}
