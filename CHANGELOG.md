@@ -32,6 +32,7 @@
 - add action remove_branch_protection
 - reactivate dependencies test on el8
 - reactivate dependencies tests on el8
+- remove python2 and references to drone
 
 ### Bug Fixes
 
