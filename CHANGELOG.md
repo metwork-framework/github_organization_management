@@ -33,6 +33,7 @@
 - reactivate dependencies test on el8
 - reactivate dependencies tests on el8
 - remove python2 and references to drone
+- switch from python 3.9 to python 3.10
 
 ### Bug Fixes
 
