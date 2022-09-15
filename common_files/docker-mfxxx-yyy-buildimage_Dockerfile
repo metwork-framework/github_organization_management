@@ -45,3 +45,6 @@ COPY --from=yum_cache /etc/yum.repos.d/metwork.repo /etc/yum.repos.d/
 COPY --from=yum_cache /tmp/yum_cache .
 RUN yum clean all
 RUN yum -y install metwork-{{DEP2}}
+{%- if MODULE == "mfservplugins" -%}
+RUN yum -y install langpacks-fr
+{%- endif -%}
