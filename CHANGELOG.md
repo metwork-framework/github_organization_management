@@ -34,6 +34,7 @@
 - reactivate dependencies tests on el8
 - remove python2 and references to drone
 - switch from python 3.9 to python 3.10
+- add langpacks-fr in image metwork/mfservplugins-centos8-buildimage
 
 ### Bug Fixes
 
