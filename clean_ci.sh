@@ -69,7 +69,7 @@ for BRANCH in ${BRANCHES}; do
   fi
   for OS in centos6 centos7 centos8; do
     DELETED=0
-    for MODULE in  mfext-layer-python2_radartools-${BRANCH_SHORT} mfext-layer-python3_radartools-${BRANCH_SHORT} mfext-layer-soprano-${BRANCH_SHORT} mfext-layer-elasticsearch-${BRANCH_SHORT}; do
+    for MODULE in  mfext-layer-python2_radartools-${BRANCH_SHORT} mfext-layer-python3_radartools-${BRANCH_SHORT} mfext-layer-radartools-${BRANCH_SHORT} soprano-${BRANCH_SHORT} mfext-layer-elasticsearch-${BRANCH_SHORT}; do
       echo "- Searching for ${BRANCH}/${OS}/${MODULE}/..."
       # We only keep rpms of the 3 last ci
       for N in `find /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS} -type f -name "metwork-${MODULE}-${BRANCH_SHORT}.ci*.rpm" 2>/dev/null |xargs -r -n 1 basename |grep '\.ci[0-9][0-9]*\.' |sed 's/^.*\.\(ci[0-9][0-9]*\)\..*$/\1/g' |sed 's/ci//g' |sort -rn |uniq |awk 'NR>3'`; do
