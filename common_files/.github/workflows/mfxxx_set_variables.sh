@@ -121,16 +121,16 @@ echo "::set-output name=skip_dispatch::${SKIP_DISPATCH}"
 {% if "private-addon" in "TOPICS"|getenv|from_json %}
 echo "::set-output name=rpm_dir::/private/metwork_addons/${CI}/rpms/${B}/${OS_VERSION}"
 echo "::set-output name=doc_dir::/private/metwork_addons/${CI}/docs/${B}/{{REPO}}"
-{% if ${CI} == "continuous_integration" %}
-case "${B}" in
+if [ "${CI}" == "continuous_integration" ]; then
+  case "${B}" in
     master | release_*)
-echo "::set-output name=nexus_dir::https://artifacts.cloudmf.dev/repository/rpm-snapshots-metwork-addons/${B}/${OS_VERSION}/";
+      echo "::set-output name=nexus_dir::https://artifacts.cloudmf.dev/repository/rpm-snapshots-metwork-addons/${B}/${OS_VERSION}/";
     *)
-echo "::set-output name=nexus_dir::null";
-esac
-{% else %}
-echo "::set-output name=nexus_dir::https://artifacts.cloudmf.dev/repository/rpm-releases-metwork-addons/${B}/${OS_VERSION}/";
-{% endif %}
+      echo "::set-output name=nexus_dir::null";
+  esac
+else
+      echo "::set-output name=nexus_dir::https://artifacts.cloudmf.dev/repository/rpm-releases-metwork-addons/${B}/${OS_VERSION}/";
+fi
 {% else %}
 echo "::set-output name=rpm_dir::/pub/metwork/${CI}/rpms/${B}/${OS_VERSION}"
 echo "::set-output name=doc_dir::/pub/metwork/${CI}/docs/${B}/{{REPO}}"
