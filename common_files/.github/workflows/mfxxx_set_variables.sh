@@ -124,9 +124,9 @@ echo "::set-output name=doc_dir::/private/metwork_addons/${CI}/docs/${B}/{{REPO}
 if [ "${CI}" == "continuous_integration" ]; then
   case "${B}" in
     master | release_*)
-      echo "::set-output name=nexus_dir::https://artifacts.cloudmf.dev/repository/rpm-snapshots-metwork-addons/${B}/${OS_VERSION}/";
+      echo "::set-output name=nexus_dir::https://artifacts.cloudmf.dev/repository/rpm-snapshots-metwork-addons/${B}/${OS_VERSION}/";;
     *)
-      echo "::set-output name=nexus_dir::null";
+      echo "::set-output name=nexus_dir::null";;
   esac
 else
       echo "::set-output name=nexus_dir::https://artifacts.cloudmf.dev/repository/rpm-releases-metwork-addons/${B}/${OS_VERSION}/";
