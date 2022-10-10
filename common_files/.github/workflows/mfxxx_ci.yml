@@ -141,7 +141,10 @@ jobs:
       - name: upload private rpms on nexus
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.nexus_dir != 'null' }}{% endraw %}
         run: |
-          for rpm in `{% raw %}${{ github.workspace }}{% endraw %}/rpms/*.rpm`; do
+          cd {% raw %}${{ github.workspace }}{% endraw %}/rpms/
+          sudo chown -R githubactions:metworkpub .
+          sudo chmod -R 775 .
+          for rpm in *.rpm; do
           curl -v -w "%{http_code}\n" --user {% raw %}${{ secrets.METWORK_NEXUS_USER }}{% endraw %}:{% raw %}${{ secrets.METWORK_NEXUS_PASSWORD }}{% endraw %} --upload-file $rpm {% raw %}${{ steps.SetVariables.outputs.nexus_dir }}{% endraw %};
           done
 {% endif %}
