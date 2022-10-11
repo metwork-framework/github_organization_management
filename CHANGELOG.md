@@ -35,6 +35,7 @@
 - remove python2 and references to drone
 - switch from python 3.9 to python 3.10
 - add langpacks-fr in image metwork/mfservplugins-centos8-buildimage
+- upload rpms on nexus for private addons
 
 ### Bug Fixes
 
