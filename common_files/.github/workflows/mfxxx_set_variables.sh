@@ -134,5 +134,5 @@ fi
 {% else %}
 echo "::set-output name=rpm_dir::/pub/metwork/${CI}/rpms/${B}/${OS_VERSION}"
 echo "::set-output name=doc_dir::/pub/metwork/${CI}/docs/${B}/{{REPO}}"
-echo "::set-output name=nexus_dir::null";;
+echo "::set-output name=nexus_dir::null"
 {% endif %}
