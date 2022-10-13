@@ -36,6 +36,7 @@
 - switch from python 3.9 to python 3.10
 - add langpacks-fr in image metwork/mfservplugins-centos8-buildimage
 - upload rpms on nexus for private addons
+- upgrade actions checkout and repository-dispatch (use NodeJS 16)
 
 ### Bug Fixes
 
