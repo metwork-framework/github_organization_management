@@ -60,8 +60,8 @@ if test -f /opt/metwork-mfext-${TARGET_DIR}/.dhash; then cat /opt/metwork-mfext-
 cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
 echo "${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
 if test -f "${BUILDCACHE}/build_hash_{{REPO}}_${BRANCH}_`cat .build_hash`"; then
-    echo "bypass=true" >> ${GITHUB_OUTPUT}
-    echo "buildcache=null" >> ${GITHUB_OUTPUT}
+    echo "bypass=true" >> github_output
+    echo "buildcache=null" >> github_output
     exit 0
 fi
 {% endif %} 
@@ -83,7 +83,7 @@ touch ${hash_file}
 rm -f ./build_hash
 chown 1018:1018 ${hash_file}
 chmod 664 ${hash_file}
-echo "buildcache=${hash_file}" >> ${GITHUB_OUTPUT}
+echo "buildcache=${hash_file}" >> github_output
 {% endif %} 
 
-echo "bypass=false" >> ${GITHUB_OUTPUT}
+echo "bypass=false" >> github_output
