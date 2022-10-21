@@ -12,9 +12,9 @@ else
 fi
 HASH_AFTER=`docker images -q $TAG_BRANCH`
 if [ "${HASH_BEFORE}" == "${HASH_AFTER}" ]; then
-    echo '::set-output name=dispatch_bypass::true'
+    echo 'dispatch_bypass=true' >> $GITHUB_OUTPUT
 else
-    echo '::set-output name=dispatch_bypass::false'
+    echo 'dispatch_bypass=false' >> $GITHUB_OUTPUT
     docker push $TAG_BRANCH
     if [ "$BRANCH" == "master" ]; then
         docker push $TAG_LATEST
