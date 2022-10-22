@@ -37,6 +37,7 @@
 - add langpacks-fr in image metwork/mfservplugins-centos8-buildimage
 - upload rpms on nexus for private addons
 - upgrade actions checkout and repository-dispatch (use NodeJS 16)
+- remove deprecated set-output command
 
 ### Bug Fixes
 
