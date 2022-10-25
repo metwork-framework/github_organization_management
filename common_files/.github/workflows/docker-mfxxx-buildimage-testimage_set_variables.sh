@@ -49,7 +49,7 @@ if test "${BRANCH}" = "master"; then
     TAG_LATEST="metwork/{{MODULE}}-{{OS}}-testimage:latest"
 fi 
 {% endif %}
-echo 'branch=${BRANCH}' >> $GITHUB_OUTPUT
-echo 'os=${OS_VERSION}' >> $GITHUB_OUTPUT
-echo 'tag_branch=${TAG_BRANCH}' >> $GITHUB_OUTPUT
-echo 'tag_latest=${TAG_LATEST}' >> $GITHUB_OUTPUT
+echo "branch=${BRANCH}" >> $GITHUB_OUTPUT
+echo "os=${OS_VERSION}" >> $GITHUB_OUTPUT
+echo "tag_branch=${TAG_BRANCH}" >> $GITHUB_OUTPUT
+echo "tag_latest=${TAG_LATEST}" >> $GITHUB_OUTPUT
