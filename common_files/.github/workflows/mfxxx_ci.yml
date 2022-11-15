@@ -149,21 +149,6 @@ jobs:
           curl -v -w "%{http_code}\n" --user {% raw %}${{ secrets.METWORK_NEXUS_USER }}{% endraw %}:{% raw %}${{ secrets.METWORK_NEXUS_PASSWORD }}{% endraw %} --upload-file $rpm {% raw %}${{ steps.SetVariables.outputs.nexus_dir }}{% endraw %};
           done
 {% endif %}
-      - name: mageia_repo
-        if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: appleboy/ssh-action@master
-        with:
-          host: {% raw %}${{ secrets.METWORKPUB_HOST }}{% endraw %}
-          username: {% raw %}${{ secrets.METWORKPUB_USERNAME }}{% endraw %}
-          password: {% raw %}${{ secrets.METWORKPUB_PASSWORD }}{% endraw %}
-          port: 22
-          script: |
-{% if "private-addon" in "TOPICS"|getenv|from_json %}
-            docker run -v /private:/private --rm mageia:6 /bin/bash -c "genhdlist2 --nolock --allow-empty-media {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}"
-{% else %}
-            docker run -v /pub:/pub --rm mageia:6 /bin/bash -c "genhdlist2 --nolock --allow-empty-media {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}"
-{% endif %}
-
       - name: publish doc
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
