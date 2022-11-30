@@ -4,21 +4,24 @@
 
 To uninstall {{REPO}} metwork module, use the following command (as `root` user):
 
-```console tab="CentOS/Fedora"
+=== "CentOS/Fedora"
+```console
 {% if REPO != "mfext" %}
 service metwork stop {{REPO}}
 {% endif %}
 yum remove "metwork-{{REPO}}*"
 ```
 
-```console tab="Mageia"
+=== "Mageia"
+```console
 {% if REPO != "mfext" %}
 service metwork stop {{REPO}}
 {% endif %}
 urpme "metwork-{{REPO}}*"
 ```
 
-```console tab="SUSE"
+=== "SUSE"
+```console
 {% if REPO != "mfext" %}
 service metwork stop {{REPO}}
 {% endif %}
@@ -29,7 +32,8 @@ zypper remove "metwork-{{REPO}}*"
 
 To uninstall all metwork modules, use following `root` commands:
 
-```console tab="CentOS/Fedora"
+=== "CentOS/Fedora"
+```console
 # We stop metwork services (see note below)
 service metwork stop
 
@@ -37,7 +41,8 @@ service metwork stop
 yum remove "metwork-*"
 ```
 
-```console tab="Mageia"
+=== "Mageia"
+```console
 # We stop metwork services (see note below)
 service metwork stop
 
@@ -45,7 +50,8 @@ service metwork stop
 urpme "metwork-*"
 ```
 
-```console tab="SUSE"
+=== "SUSE"
+```console
 # We stop metwork services (see note below)
 service metwork stop
 
