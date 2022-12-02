@@ -38,6 +38,7 @@
 - upload rpms on nexus for private addons
 - upgrade actions checkout and repository-dispatch (use NodeJS 16)
 - remove deprecated set-output command
+- mkdocs: superfences tabs is deprecated in favor of tabbed extension
 
 ### Bug Fixes
 
