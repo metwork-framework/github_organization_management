@@ -36,9 +36,17 @@
             "branch": "release_2.0",
             "title": "2.0",
             "alternate_title": "2_dot_0",
-            "latest": 1,
+            "latest": 0,
             "previous": "release_1.2",
             "tags": "v2.0.*"
+        },
+        {
+            "branch": "release_2.1",
+            "title": "2.1",
+            "alternate_title": "2_dot_1",
+            "latest": 1,
+            "previous": "release_2.0",
+            "tags": "v2.1.*"
         }
     ],
     "inactives": [
