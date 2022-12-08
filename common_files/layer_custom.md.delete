@@ -1,3 +1,3 @@
-{% if REPO not in ("mfbus", "mfserv", "mfbase", "mfsysmon", "mfdata", "mfadmin") %}
+{% if REPO not in ("mfbus", "mfserv", "mfbase", "mfsysmon", "mfdata") %}
 yes
 {% endif %}
