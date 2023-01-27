@@ -1,10 +1,10 @@
 /adm
 /layers/layer*/*/build
 /layers/download_archive
-/layers/layer*/*_extra_packages/src
-/layers/layer*/*_extra_packages/tempolayer*
-/layers/layer*/*_extra_python_packages/src
-/layers/layer*/*_extra_python_packages/tempolayer*
+/layers/layer*/*_extra_packages*/src
+/layers/layer*/*_extra_packages*/tempolayer*
+/layers/layer*/*_extra_python_packages*/src
+/layers/layer*/*_extra_python_packages*/tempolayer*
 /layers/layer*/cache
 {% if REPO == "mfextaddon_python3_ia" %}
 layers/layer5_python3_ia/0600_tensorflow/requirements3.txt
