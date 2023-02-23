@@ -41,6 +41,7 @@
 - mkdocs: superfences tabs is deprecated in favor of tabbed extension
 - add release_2.1
 - add initscripts and vim in build images
+- add cronie (for crontab) in Metwork docker build images
 
 ### Bug Fixes
 
