@@ -45,7 +45,7 @@ COPY --from=yum_cache /etc/yum.repos.d/metwork.repo /etc/yum.repos.d/
 COPY --from=yum_cache /tmp/yum_cache .
 RUN yum clean all
 {% if MODULE == "mfservplugins" -%}
-RUN yum -y install metwork-{{DEP2}} langpacks-fr initscripts cronie vim
+RUN yum -y install metwork-{{DEP2}} langpacks-fr
 {% else -%}
-RUN yum -y install metwork-{{DEP2}} initscripts cronie vim
+RUN yum -y install metwork-{{DEP2}}
 {%- endif -%}
