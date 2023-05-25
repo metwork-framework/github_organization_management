@@ -42,6 +42,7 @@
 - add release_2.1
 - add initscripts and vim in build images
 - add cronie (for crontab) in Metwork docker build images
+- switch from python 3.10 to python 3.11
 
 ### Bug Fixes
 
