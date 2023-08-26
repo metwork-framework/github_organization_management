@@ -43,6 +43,7 @@
 - add initscripts and vim in build images
 - add cronie (for crontab) in Metwork docker build images
 - switch from python 3.10 to python 3.11
+- fix image name on DockerHub
 
 ### Bug Fixes
 
