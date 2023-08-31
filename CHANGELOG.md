@@ -44,6 +44,7 @@
 - add cronie (for crontab) in Metwork docker build images
 - switch from python 3.10 to python 3.11
 - fix image name on DockerHub
+- trigger build of plugins rocky9 images
 
 ### Bug Fixes
 
