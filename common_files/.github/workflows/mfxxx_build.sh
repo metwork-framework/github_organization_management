@@ -30,6 +30,7 @@ rm -rf html_doc rpms .build_hash
     yum -y install metwork-mfext-layer-rabbitmq-${DRONE_BRANCH##release_}
 {% endif %}
 
+git config --global --add safe.directory /src
 cd /src
 
 {% if "mfext-addon" in "TOPICS"|getenv|from_json %}
