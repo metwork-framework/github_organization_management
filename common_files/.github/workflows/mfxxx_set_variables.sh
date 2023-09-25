@@ -118,21 +118,6 @@ echo "buildimage=metwork/{{BUILD_IMAGE_NAME}}" >> ${GITHUB_OUTPUT}
 echo "testimage={{TEST_IMAGE_NAME}}" >> ${GITHUB_OUTPUT}
 echo "buildlog_dir=/pub/metwork/${CI}/buildlogs/${B}/{{REPO}}/${OS_VERSION}/${GITHUB_RUN_NUMBER}" >> ${GITHUB_OUTPUT}
 echo "skip_dispatch=${SKIP_DISPATCH}" >> ${GITHUB_OUTPUT}
-{% if "private-addon" in "TOPICS"|getenv|from_json %}
-echo "rpm_dir=/private/metwork_addons/${CI}/rpms/${B}/${OS_VERSION}" >> ${GITHUB_OUTPUT}
-echo "doc_dir=/private/metwork_addons/${CI}/docs/${B}/{{REPO}}" >> ${GITHUB_OUTPUT}
-if [ "${CI}" == "continuous_integration" ]; then
-  case "${B}" in
-    master | release_*)
-      echo "nexus_dir=https://artifacts.cloudmf.dev/repository/rpm-snapshots-metwork-addons/${B}/${OS_VERSION}/" >> ${GITHUB_OUTPUT};;
-    *)
-      echo "nexus_dir=null" >> ${GITHUB_OUTPUT};;
-  esac
-else
-      echo "nexus_dir=https://artifacts.cloudmf.dev/repository/rpm-releases-metwork-addons/${B}/${OS_VERSION}/" >> ${GITHUB_OUTPUT}
-fi
-{% else %}
 echo "rpm_dir=/pub/metwork/${CI}/rpms/${B}/${OS_VERSION}" >> ${GITHUB_OUTPUT}
 echo "doc_dir=/pub/metwork/${CI}/docs/${B}/{{REPO}}" >> ${GITHUB_OUTPUT}
 echo "nexus_dir=null" >> ${GITHUB_OUTPUT}
-{% endif %}

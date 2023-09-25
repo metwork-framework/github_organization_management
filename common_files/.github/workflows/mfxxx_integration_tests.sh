@@ -13,10 +13,6 @@ echo -e "[metwork_${DEP_BRANCH}]" >/etc/yum.repos.d/metwork.repo
 echo -e "name=Metwork Continuous Integration Branch ${DEP_BRANCH}" >> /etc/yum.repos.d/metwork.repo
 echo -e "baseurl=http://metwork-framework.org/pub/metwork/continuous_integration/rpms/${DEP_BRANCH}/${OS_VERSION}/" >> /etc/yum.repos.d/metwork.repo
 echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwork.repo
-{% if REPO == "mfextaddon_soprano" %}
-    yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS_VERSION}/metwork-mfext-layer-radartools* | tail -1 | awk '{print $NF}'`
-    yum -y localinstall `ls -lrt /private/metwork_addons/continuous_integration/rpms/${BRANCH}/${OS_VERSION}/metwork-mfext-layer-python3_radartools* | tail -1 | awk '{print $NF}'`
-{% endif %}
 {% if "mfext-addon" in "TOPICS"|getenv|from_json %}
     for rpm in ./rpms/metwork-mfext*.rpm; do rpm -qp --requires ./$rpm | grep metwork | grep -v "=" >> liste_dep; done
     cat liste_dep | sort -u > liste_dep2
