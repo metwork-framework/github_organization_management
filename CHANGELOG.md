@@ -56,5 +56,6 @@
 - do not apply common files on github_organization_management
 - fix usage with private repos
 - automatic changelog must not fail if a repository is at integration-level-4 and has no released branch yet (#57)
+- shellcheck fixes on test.sh
 
 
