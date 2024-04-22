@@ -10,12 +10,18 @@ on:
   repository_dispatch:
     types:
       - metwork-trigger*
-
+    workflow_dispatch:
+    inputs:
+      workflow_branch:
+        description: branch to use
+        required: true
+        type: string
 env:
     WORKFLOW_SCRIPTS_DIR: .github/workflows
     DOCKER_WORKFLOW_SCRIPTS_DIR: /src/.github/workflows
     PAYLOAD_BRANCH: {% raw %}${{ github.event.client_payload.branch}}{% endraw %}
     PAYLOAD_OS: {% raw %}${{ github.event.client_payload.os}}{% endraw %}
+    WORKFLOW_BRANCH: ${{ github.event.inputs.workflow_branch }}
 
 jobs:
   ci_build:
@@ -25,7 +31,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: {% raw %}${{ github.event.client_payload.branch || github.ref }}{% endraw %}
+          ref: {% raw %}${{ github.event.client_payload.branch || github.event.inputs.workflow_branch || github.ref }}{% endraw %}
       - name: set variables
         id: SetVariables
         run: |
