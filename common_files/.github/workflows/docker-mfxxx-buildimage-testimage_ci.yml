@@ -10,12 +10,13 @@ on:
   repository_dispatch:
     types:
       - metwork-trigger*
-    workflow_dispatch:
+  workflow_dispatch:
     inputs:
       workflow_branch:
         description: branch to use
         required: true
         type: string
+
 env:
     WORKFLOW_SCRIPTS_DIR: .github/workflows
     DOCKER_WORKFLOW_SCRIPTS_DIR: /src/.github/workflows
