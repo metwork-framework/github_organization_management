@@ -22,7 +22,7 @@ env:
     DOCKER_WORKFLOW_SCRIPTS_DIR: /src/.github/workflows
     PAYLOAD_BRANCH: {% raw %}${{ github.event.client_payload.branch}}{% endraw %}
     PAYLOAD_OS: {% raw %}${{ github.event.client_payload.os}}{% endraw %}
-    WORKFLOW_BRANCH: ${{ github.event.inputs.workflow_branch }}
+    WORKFLOW_BRANCH: {% raw %}${{ github.event.inputs.workflow_branch }}{% endraw %}
 
 jobs:
   ci_build:
