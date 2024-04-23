@@ -21,7 +21,7 @@ case "${GITHUB_EVENT_NAME}" in
             OS_VERSION=${PAYLOAD_OS}
         fi;;
     workflow_dispatch)
-        B=${WORKFLOW_BRANCH}
+        BRANCH=${WORKFLOW_BRANCH}
         if [ -f .build_os ]; then
             OS_VERSION=`cat .build_os`
         else
