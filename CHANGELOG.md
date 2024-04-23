@@ -47,6 +47,7 @@
 - trigger build of plugins rocky9 images
 - fix repository links in installation guide
 - add release 2.2
+- add workflow_dispatch for buildimages repositories
 
 ### Bug Fixes
 
