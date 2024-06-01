@@ -16,6 +16,7 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
 {% if "mfext-addon" in "TOPICS"|getenv|from_json %}
     for rpm in ./rpms/metwork-mfext*.rpm; do rpm -qp --requires ./$rpm | grep metwork | grep -v "=" >> liste_dep; done
     cat liste_dep | sort -u > liste_dep2
+    yum clean all
     yum -y install `cat liste_dep2`
     rm -f liste_dep liste_dep2
     rm /etc/yum.repos.d/metwork.repo
