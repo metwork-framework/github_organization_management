@@ -49,6 +49,7 @@
 - add release 2.2
 - add workflow_dispatch for buildimages repositories
 - upgrade from Python 3.11 to Python 3.12
+- authorize liblz4.so.1 as dependency
 
 ### Bug Fixes
 
