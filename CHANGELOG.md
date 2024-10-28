@@ -50,6 +50,7 @@
 - add workflow_dispatch for buildimages repositories
 - upgrade from Python 3.11 to Python 3.12
 - authorize liblz4.so.1 as dependency
+- authorize libmpi.so.12 and libhwloc.so.15 as dependencies
 
 ### Bug Fixes
 
