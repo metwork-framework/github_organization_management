@@ -51,6 +51,8 @@
 - upgrade from Python 3.11 to Python 3.12
 - authorize liblz4.so.1 as dependency
 - authorize libmpi.so.12 and libhwloc.so.15 as dependencies
+- authorize libcap.so.2 and libudev.so.1 (for fedora>=38)
+- authorize mpîch dependencies for fedora>=39
 
 ### Bug Fixes
 
