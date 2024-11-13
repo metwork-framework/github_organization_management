@@ -10,5 +10,7 @@ if [ "$NB_DAYS_BEFORE_EXP" -lt "30" ]; then
     chmod 0644 /home/mfserv/config/fullchain.pem /home/mfserv/config/privkey.pem
     chown mfserv:metwork /home/mfserv/config/fullchain.pem /home/mfserv/config/privkey.pem
     /usr/sbin/service metwork start mfserv 
+    certbot certificates > /root/certificates.log
 fi
-certbot certificates > /root/certificates.log
+/usr/bin/rm -f /var/log/letsencrypt/letsencrypt.log.[3456789][0123456789]
+
