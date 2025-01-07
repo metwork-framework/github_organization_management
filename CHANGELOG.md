@@ -53,6 +53,7 @@
 - authorize libmpi.so.12 and libhwloc.so.15 as dependencies
 - authorize libcap.so.2 and libudev.so.1 (for fedora>=38)
 - authorize mpîch dependencies for fedora>=39
+- (revert) remove mpich dependencies on fedora >= 38
 
 ### Bug Fixes
 
