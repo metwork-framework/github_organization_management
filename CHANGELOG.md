@@ -54,6 +54,7 @@
 - authorize libcap.so.2 and libudev.so.1 (for fedora>=38)
 - authorize mpîch dependencies for fedora>=39
 - (revert) remove mpich dependencies on fedora >= 38
+- add Qt5 libraries as authorized dependencies
 
 ### Bug Fixes
 
