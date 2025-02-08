@@ -6,6 +6,10 @@
 /layers/layer*/*_extra_python_packages*/src
 /layers/layer*/*_extra_python_packages*/tempolayer*
 /layers/layer*/cache
+{% if REPO == "mfextaddon_scientific" %}
+layers/layer1_scientific/0003_libimagequant/imagequant.pc
+layers/layer1_scientific/0001_cargo_c/.cargo
+{% endif %}
 {% if REPO == "mfextaddon_python3_ia" %}
 layers/layer5_python3_ia/0600_tensorflow/requirements3.txt
 {% endif %}
