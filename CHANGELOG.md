@@ -57,6 +57,7 @@
 - add Qt5 libraries as authorized dependencies
 - fix .gitignore and add authorized Qt5 dependency libraries
 - authorized qt5 depedencies on rockylinux:9 and fedora's
+- add revert_ldd_not_found.sh
 
 ### Bug Fixes
 
