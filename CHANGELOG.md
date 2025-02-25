@@ -58,6 +58,7 @@
 - fix .gitignore and add authorized Qt5 dependency libraries
 - authorized qt5 depedencies on rockylinux:9 and fedora's
 - add revert_ldd_not_found.sh
+- add libzip.so.5 and libssl.so.1.1
 
 ### Bug Fixes
 
