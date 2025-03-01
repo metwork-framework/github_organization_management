@@ -59,6 +59,7 @@
 - authorized qt5 depedencies on rockylinux:9 and fedora's
 - add revert_ldd_not_found.sh
 - add libzip.so.5 and libssl.so.1.1
+- add libXaw3d.so.8 (for gv)
 
 ### Bug Fixes
 
