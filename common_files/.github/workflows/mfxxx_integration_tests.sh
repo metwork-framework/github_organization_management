@@ -28,7 +28,7 @@ echo -e "gpgcheck=0\n\enabled=1\n\metadata_expire=0\n" >>/etc/yum.repos.d/metwor
     yum -y localinstall ./rpms/metwork-{{REPO}}*.rpm
     yum -y install make
 {% if REPO == "mfserv" %}
-    yum -y install metwork-mfext-layer-php-${DEP_BRANCH}
+    yum -y install metwork-mfext-layer-php-${DEP_BRANCH} 2>/dev/null || echo "layer php is missing"
 {% endif %}
     su --command="{{REPO}}.init" - {{REPO}}
     su --command="{{REPO}}.start" - {{REPO}}
