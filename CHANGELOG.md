@@ -73,5 +73,6 @@
 - automatic changelog must not fail if a repository is at integration-level-4 and has no released branch yet (#57)
 - shellcheck fixes on test.sh
 - fix badge CI in README file
+- add libdav1d.so.7 as authorized dependency (for fedora >= 42)
 
 
