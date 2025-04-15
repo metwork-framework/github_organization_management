@@ -61,6 +61,7 @@
 - add libzip.so.5 and libssl.so.1.1
 - add libXaw3d.so.8 (for gv)
 - fix documentation builts with plugin awesome-nav
+- authorize lttng-ust libraries and dependencies
 
 ### Bug Fixes
 
