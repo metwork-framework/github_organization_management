@@ -62,6 +62,7 @@
 - add libXaw3d.so.8 (for gv)
 - fix documentation builts with plugin awesome-nav
 - authorize lttng-ust libraries and dependencies
+- revert authorize lttng-ust libraries and dependencies
 
 ### Bug Fixes
 
