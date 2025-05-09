@@ -52,9 +52,17 @@
             "branch": "release_2.2",
             "title": "2.2",
             "alternate_title": "2_dot_2",
-            "latest": 1,
+            "latest": 0,
             "previous": "release_2.1",
             "tags": "v2.2.*"
+        },
+        {
+            "branch": "release_2.3",
+            "title": "2.3",
+            "alternate_title": "2_dot_3",
+            "latest": 1,
+            "previous": "release_2.2",
+            "tags": "v2.3.*"
         }
     ],
     "inactives": [
