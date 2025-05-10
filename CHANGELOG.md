@@ -63,6 +63,7 @@
 - fix documentation builts with plugin awesome-nav
 - authorize lttng-ust libraries and dependencies
 - revert authorize lttng-ust libraries and dependencies
+- add release_2.3
 
 ### Bug Fixes
 
