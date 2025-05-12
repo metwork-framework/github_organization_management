@@ -35,7 +35,7 @@ env:
 jobs:
   ci_build:
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
-{% if REPO == "mfextaddon_scientific" %}
+{% if REPO == "mfextaddon_scientific" or REPO == "mfextaddon_extratools" %}
     runs-on: [self-hosted, metwork, mfextaddon_scientific]
 {% else %}
     runs-on: [self-hosted, metwork]
