@@ -1,6 +1,8 @@
 .PHONY: validate checks clean apply
 
 validate: repositories.json
+	cat repositories.json
+	cat releases.json
 	cat releases.json |json_verify
 	cat labels.json |json_verify
 	cat repositories.json |json_verify
