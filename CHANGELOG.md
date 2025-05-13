@@ -64,6 +64,7 @@
 - authorize lttng-ust libraries and dependencies
 - revert authorize lttng-ust libraries and dependencies
 - add release_2.3
+- add mfextaddon_extratools
 
 ### Bug Fixes
 
