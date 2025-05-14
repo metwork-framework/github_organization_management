@@ -59,3 +59,9 @@ jobs:
         run: |
           make apply_config
         if: github.ref == 'refs/heads/master' && github.event_name == 'schedule'
+      - name: "apply_config3"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GHTOK }}
+        run: |
+          make apply_config
+        if: github.ref == 'refs/heads/master' && github.event_name == 'workflow_dispatch'
