@@ -66,6 +66,7 @@
 - add release_2.3
 - add mfextaddon_extratools
 - add workflow_dispatch on action apply_config
+- add layer python3_extratools as layer soprano dependency
 
 ### Bug Fixes
 
