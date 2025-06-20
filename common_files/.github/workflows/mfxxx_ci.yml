@@ -161,7 +161,7 @@ jobs:
           sudo rm -f {% raw %}${{ steps.BuildStep.outputs.buildcache }}{% endraw %}
 {% endif %}
 {% if REPO == "mfserv" or REPO == "mfdata" or REPO == "mfbase" %}
-      - name: dispatch plugins buildimage centos8 from centos8
+      - name: dispatch plugins buildimage rocky8 from rocky8
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v3
         with:
@@ -169,7 +169,7 @@ jobs:
           repository: metwork-framework/docker-{{REPO}}plugins-centos8-buildimage
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
-      - name: dispatch plugins image rocky9 from centos8
+      - name: dispatch plugins image rocky9 from rocky8
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
         uses: peter-evans/repository-dispatch@v3
         with:
