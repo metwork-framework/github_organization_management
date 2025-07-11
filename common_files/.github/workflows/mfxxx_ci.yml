@@ -44,13 +44,13 @@ jobs:
 {% if "github-actions" in "TOPICS"|getenv|from_json %}
     runs-on: ubuntu-latest
 {% endif %}
+    steps:
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
       - name: clean workspace
         run: |
           rm -rf {% raw %}${{ github.workspace }}{% endraw %}
           mkdir {% raw %}${{ github.workspace }}{% endraw %}
 {% endif %}
-    steps:
       - name: checkout
         uses: actions/checkout@v4
         with:
