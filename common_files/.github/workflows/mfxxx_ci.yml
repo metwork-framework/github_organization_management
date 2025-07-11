@@ -44,6 +44,12 @@ jobs:
 {% if "github-actions" in "TOPICS"|getenv|from_json %}
     runs-on: ubuntu-latest
 {% endif %}
+{% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
+      - name: clean workspace
+        run: |
+          rm -rf {% raw %}${{ github.workspace }}{% endraw %}
+          mkdir {% raw %}${{ github.workspace }}{% endraw %}
+{% endif %}
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -297,12 +303,5 @@ jobs:
           repository: metwork-framework/mfextaddon_soprano
           event-type: metwork-trigger-{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
-{% endif %}
-{% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
-      - name: chown on build outputs
-        if: always()
-        run: |
-          sudo chown -R githubactions:metworkpub .
-          sudo chmod -R 775 .
 {% endif %}
 {% endif %}
