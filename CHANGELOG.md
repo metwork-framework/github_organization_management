@@ -67,6 +67,7 @@
 - add mfextaddon_extratools
 - add workflow_dispatch on action apply_config
 - add layer python3_extratools as layer soprano dependency
+- trigger build of tagged mfserv/mfdata/mfbase images
 
 ### Bug Fixes
 
