@@ -18,7 +18,7 @@ argparser.add_argument("ORG", help="organization name")
 argparser.add_argument("--topic", help="filter by this topic")
 args = argparser.parse_args()
 
-auth=Auth.Token(TOKEN)
+auth = Auth.Token(TOKEN)
 g = Github(auth=auth)
 org = g.get_organization(args.ORG)
 repos = []

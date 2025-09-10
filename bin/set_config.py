@@ -35,7 +35,7 @@ with open(f"{DIR}/../releases.json", "r") as f:
     c = f.read()
 releases = json.loads(c)
 
-auth=Auth.Token(TOKEN)
+auth = Auth.Token(TOKEN)
 g = Github(auth=auth)
 for repository in repositories:
     repo = g.get_repo("%s/%s" % ("metwork-framework", repository["name"]))
