@@ -4,7 +4,7 @@ import os
 import itertools
 import argparse
 import json
-from github import Github
+import github
 
 TOKEN = os.environ["GITHUB_TOKEN"]
 ORG = "metwork-framework"
@@ -17,7 +17,7 @@ argparser.add_argument("ORG", help="organization name")
 argparser.add_argument("--topic", help="filter by this topic")
 args = argparser.parse_args()
 
-g = Github(TOKEN)
+g = github.Auth.Token(TOKEN)
 org = g.get_organization(args.ORG)
 repos = []
 for repo in itertools.chain(org.get_repos("public"), org.get_repos("private")):
