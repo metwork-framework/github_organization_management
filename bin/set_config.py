@@ -5,6 +5,7 @@ import json
 import requests
 import logging
 from github import Github
+from github import Auth
 
 TOKEN = os.environ["GITHUB_TOKEN"]
 HEADERS_WITH_TOKEN = {"Authorization": "token %s" % TOKEN}
@@ -34,7 +35,8 @@ with open(f"{DIR}/../releases.json", "r") as f:
     c = f.read()
 releases = json.loads(c)
 
-g = Github(TOKEN)
+auth=Auth.Token(TOKEN)
+g = Github(auth=auth)
 for repository in repositories:
     repo = g.get_repo("%s/%s" % ("metwork-framework", repository["name"]))
     extra_labels = []
