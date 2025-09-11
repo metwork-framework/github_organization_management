@@ -68,6 +68,7 @@
 - add workflow_dispatch on action apply_config
 - add layer python3_extratools as layer soprano dependency
 - trigger build of tagged mfserv/mfdata/mfbase images
+- bump to Python 3.13
 
 ### Bug Fixes
 
@@ -81,5 +82,6 @@
 - shellcheck fixes on test.sh
 - fix badge CI in README file
 - add libdav1d.so.7 as authorized dependency (for fedora >= 42)
+- fix depreciation warning ("login_or_token is depreciated")
 
 
