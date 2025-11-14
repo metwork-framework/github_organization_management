@@ -89,4 +89,6 @@ chmod 664 ${hash_file}
 echo "buildcache=${hash_file}" >> github_output
 {% endif %} 
 
+make clean
+
 echo "bypass=false" >> github_output
