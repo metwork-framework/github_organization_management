@@ -45,6 +45,7 @@ jobs:
     runs-on: ubuntu-latest
 {% endif %}
     steps:
+{% if "github-actions" in "TOPICS"|getenv|from_json %}
       - name: Aggressive cleanup
         #from https://dev.to/mathio/squeezing-disk-space-from-github-actions-runners-an-engineers-guide-3pjg
         run: |
@@ -74,6 +75,7 @@ jobs:
           sudo rm -rf /opt/hostedtoolcache
           echo "available disk after"
           df -h
+{% endif %}
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
       - name: clean workspace
         run: |
