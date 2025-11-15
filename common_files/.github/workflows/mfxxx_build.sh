@@ -74,6 +74,9 @@ if test -d doc; then make doc >${BUILDLOGS}/make_doc.log 2>&1 || ( tail -200 ${B
 rm -Rf html_doc
 if test -d /opt/metwork-{{MODULE}}-${TARGET_DIR}/html_doc; then cp -Rf /opt/metwork-{{MODULE}}-${TARGET_DIR}/html_doc . ; fi
 make test >${BUILDLOGS}/make_test.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_test.log ; exit 1 )
+
+make clean
+
 make RELEASE_BUILD=${GITHUB_RUN_NUMBER} rpm >${BUILDLOGS}/make_rpm.log 2>&1 || ( tail -200 ${BUILDLOGS}/make_rpm.log ; exit 1 )
 
 mkdir rpms
@@ -88,7 +91,5 @@ chown 1018:1018 ${hash_file}
 chmod 664 ${hash_file}
 echo "buildcache=${hash_file}" >> github_output
 {% endif %} 
-
-make clean
 
 echo "bypass=false" >> github_output
