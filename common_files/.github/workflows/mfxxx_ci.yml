@@ -48,6 +48,7 @@ jobs:
       - name: Aggressive cleanup
         #from https://dev.to/mathio/squeezing-disk-space-from-github-actions-runners-an-engineers-guide-3pjg
         run: |
+          echo "available disk before"
           df -h
           # Remove Java (JDKs)
           sudo rm -rf /usr/lib/jvm
@@ -71,6 +72,7 @@ jobs:
           sudo rm -rf /usr/local/share/powershell
           # Remove CodeQL and other toolcaches
           sudo rm -rf /opt/hostedtoolcache
+          echo "available disk after"
           df -h
 {% if "github-selfhosted" in "TOPICS"|getenv|from_json %}
       - name: clean workspace
