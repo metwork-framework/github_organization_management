@@ -69,6 +69,7 @@
 - add layer python3_extratools as layer soprano dependency
 - trigger build of tagged mfserv/mfdata/mfbase images
 - bump to Python 3.13
+- add agressive cleanup (a lot of useless stuff)
 
 ### Bug Fixes
 
