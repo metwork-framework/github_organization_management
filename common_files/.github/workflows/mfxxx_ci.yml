@@ -178,6 +178,7 @@ jobs:
       - name: publish doc
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: thebaptiste/ssh-scp-ssh-pipelines@metwork
+        continue-on-error: true
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.doc_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}{% endraw %}/html_doc
