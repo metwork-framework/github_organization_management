@@ -82,6 +82,9 @@ for layer in *; do
     cd ..
 done
 {% else %}
+{% if REPO == "mfextaddon_python3_ia" %}
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib64/openmpi/lib
+{% endif %}
 cd "${MFEXT_HOME}" || exit 1
 cd opt || exit 1
 for layer in *; do
