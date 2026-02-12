@@ -1,1 +1,22 @@
 libcuda.so.1
+{% if REPO == "mfextaddon_python3_ia" %}
+libcublas.so.11
+libcublas.so.13
+libcublasLt.so.11
+libcublasLt.so.13
+libcudart.so.11.0
+libcudart.so.13
+libcusparse.so.11
+libhipblas.so.2
+libhipblas.so.3
+libhipblaslt.so.0
+libhipblaslt.so.1
+libhipsparse.so.1
+libhipsparse.so.4
+libimf.so
+libintlc.so.5
+libirng.so
+libnvJitLink.so.13
+libsvml.so
+libsycl.so.8
+{% endif %}
