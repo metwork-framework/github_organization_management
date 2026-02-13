@@ -70,6 +70,7 @@
 - trigger build of tagged mfserv/mfdata/mfbase images
 - bump to Python 3.13
 - add agressive cleanup (a lot of useless stuff)
+- add allowed not found dependencies for bitsandbytes
 
 ### Bug Fixes
 
