@@ -83,7 +83,7 @@ jobs:
           mkdir {% raw %}${{ github.workspace }}{% endraw %}
 {% endif %}
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: {% raw %}${{ github.event.client_payload.branch || github.ref }}{% endraw %}
