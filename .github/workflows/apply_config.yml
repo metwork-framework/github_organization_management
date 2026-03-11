@@ -1,5 +1,4 @@
 name: apply_config
-1,$s/checkout@v6/checkout@v6/g
 on:
   workflow_dispatch:
    inputs:
