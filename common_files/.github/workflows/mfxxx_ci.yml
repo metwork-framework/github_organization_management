@@ -201,7 +201,7 @@ jobs:
 {% if REPO == "mfserv" or REPO == "mfdata" or REPO == "mfbase" %}
       - name: dispatch plugins rocky8 from rocky8 tag
         if: {% raw %}${{ github.ref_type == 'tag' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-plugins
@@ -209,7 +209,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "tag": "{% raw %}${{ github.ref_name }}{% endraw %}", "repo": "{{REPO}}", "rocky_version": "8"}'
       - name: dispatch plugins rocky9 from rocky8 tag
         if: {% raw %}${{ github.ref_type == 'tag' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-plugins
@@ -217,7 +217,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "tag": "{% raw %}${{ github.ref_name }}{% endraw %}", "repo": "{{REPO}}", "rocky_version": "9"}'
       - name: dispatch plugins rocky10 from rocky8 tag
         if: {% raw %}${{ github.ref_type == 'tag' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-plugins
@@ -225,7 +225,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "tag": "{% raw %}${{ github.ref_name }}{% endraw %}", "repo": "{{REPO}}", "rocky_version": "10"}'
       - name: dispatch plugins buildimage rocky8 from rocky8 
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-{{REPO}}plugins-centos8-buildimage
@@ -233,7 +233,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch plugins buildimage rocky9 from rocky8
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-{{REPO}}plugins-rocky9-image
@@ -243,7 +243,7 @@ jobs:
 {% if REPO == "mfext" %}
       - name: dispatch mfxxx testimage centos6 from centos6
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos6-testimage
@@ -251,7 +251,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfxxx testimage centos7 from centos6
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos7-testimage
@@ -259,7 +259,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfxxx testimage centos8 from centos8
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos8-testimage
@@ -267,7 +267,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfxxx buildimage centos6 from centos6
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos6-buildimage
@@ -275,7 +275,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfxxx buildimage centos7 from centos6
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos7-buildimage
@@ -283,7 +283,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfxxx buildimage centos8 from centos6
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos8-buildimage
@@ -291,7 +291,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfxxx buildimage centos8 from centos8
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/docker-mfxxx-centos8-buildimage
@@ -301,7 +301,7 @@ jobs:
 {% if REPO == "mfextaddon_rabbitmq" %}
       - name: dispatch mfbus
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfbus
@@ -311,7 +311,7 @@ jobs:
 {% if REPO == "mfextaddon_scientific" %}
       - name: dispatch mfextaddon_radartools
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_radartools
@@ -319,7 +319,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfextaddon_python3_ia centos8
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos8' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_python3_ia
@@ -327,7 +327,7 @@ jobs:
           client-payload: '{"branch": "{% raw %}${{ steps.SetVariables.outputs.branch }}{% endraw %}", "os": "{% raw %}${{ steps.SetVariables.outputs.os }}{% endraw %}"}'
       - name: dispatch mfextaddon_python3_ia centos7
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.os == 'centos6' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_python3_ia
@@ -337,7 +337,7 @@ jobs:
 {% if REPO == "mfextaddon_radartools" %}
       - name: dispatch mfextaddon_soprano
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.skip_dispatch == 'false' && steps.SetVariables.outputs.branch != 'null' && steps.BuildStep.outputs.bypass == 'false' }}{% endraw %}
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: {% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           repository: metwork-framework/mfextaddon_soprano
