@@ -71,6 +71,8 @@
 - bump to Python 3.13
 - add agressive cleanup (a lot of useless stuff)
 - add allowed not found dependencies for bitsandbytes
+- replace action checkout@v4 by checkout@v6
+- bump action repositort-dispatch to v4
 
 ### Bug Fixes
 
