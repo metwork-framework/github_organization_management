@@ -115,8 +115,9 @@ jobs:
           TAG={% raw %}${{ steps.SetVariables.outputs.tag }}{% endraw %}
           DEP_BRANCH={% raw %}${{ steps.SetVariables.outputs.dep_branch }}{% endraw %}
           BUILDIMAGE={% raw %}${{ steps.SetVariables.outputs.buildimage }}{% endraw %}
+          TOKEN={% raw %}${{ secrets.METWORK_ACCESS_TOKEN }}{% endraw %}
           docker pull ${BUILDIMAGE}
-          docker run ${DOCKER_RUN_OPTIONS} -e TOKEN=${{ secrets.METWORK_ACCESS_TOKEN }} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} -e OS_VERSION=${OS_VERSION} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
+          docker run ${DOCKER_RUN_OPTIONS} -e TOKEN=${TOKEN} -e TARGET_DIR=${TARGET_DIR} -e BRANCH=${BRANCH} -e DEP_BRANCH=${DEP_BRANCH} -e TAG=${TAG} -e OS_VERSION=${OS_VERSION} --rm ${BUILDIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/build.sh"
           cat  {% raw %}${{ github.workspace }}{% endraw %}/github_output >> ${GITHUB_OUTPUT}
 {% if REPO != "mfextaddon_template" %}
       - name: publish buildlogs
