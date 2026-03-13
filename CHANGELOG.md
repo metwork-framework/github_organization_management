@@ -73,6 +73,7 @@
 - add allowed not found dependencies for bitsandbytes
 - replace action checkout@v4 by checkout@v6
 - bump action repositort-dispatch to v4
+- use wget with token and revert local_sources volume
 
 ### Bug Fixes
 
