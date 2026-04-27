@@ -25,8 +25,8 @@ jobs:
           sudo apt-get -y install yajl-tools python3 python3-pip git python3-setuptools-git python3-setuptools
           sudo pip3 install git+https://github.com/metwork-framework/envtpl.git
           sudo pip3 install git+https://github.com/metwork-framework/cookiecutter_hooks.git
-          sudo pip3 install git+https://github.com/metwork-framework/git_history_to_changelog.git#egg=ghtc
-          sudo pip3 install --ignore-installed PyGithub
+          sudo pip3 install --ignore-installed git+https://github.com/metwork-framework/git_history_to_changelog.git#egg=ghtc
+          sudo pip3 install PyGithub
       - name: "validate"
         env:
           GITHUB_TOKEN: ${{ secrets.GHTOK }}
