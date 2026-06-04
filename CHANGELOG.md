@@ -75,6 +75,7 @@
 - bump action repositort-dispatch to v4
 - use wget with token and revert local_sources volume
 - delete_head_branch is deprecated
+- remove cla assistant approved check
 
 ### Bug Fixes
 
