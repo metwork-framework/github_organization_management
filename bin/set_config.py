@@ -92,7 +92,6 @@ for repository in repositories:
         bprotection = repository["branch_protections"].get(branch_name, {})
         enforce = bprotection.get("enforce_admins", False)
         strict = bprotection.get("required_status_checks", {}).get("strict", False)
-        contexts = bprotection.get("required_status_checks", {}).get("contexts", [])
         dismiss = bprotection.get("required_pull_request_reviews", {}).get(
             "dismiss_stale_reviews", False
         )
@@ -108,7 +107,6 @@ for repository in repositories:
             or dismiss != BP_REQUIRED_PR_REVIEWS_DISMISS
             or owners != BP_REQUIRED_PR_REVIEWS_OWNERS
             or count != BP_REQUIRED_PR_REVIEWS_COUNT
-            or not compare_list_of_strings(contexts, BP_REQUIRED_STATUS_CHECK_CONTEXTS)
         ):
             print(
                 "create branch protection for %s/%s" % (repository["name"], branch_name)
@@ -130,7 +128,6 @@ for repository in repositories:
             try:
                 branch.edit_protection(
                     strict=BP_REQUIRED_STATUS_CHECK_STRICT,
-                    contexts=BP_REQUIRED_STATUS_CHECK_CONTEXTS,
                     enforce_admins=BP_ENFORCE_ADMINS,
                     dismiss_stale_reviews=BP_REQUIRED_PR_REVIEWS_DISMISS,
                     require_code_owner_reviews=BP_REQUIRED_PR_REVIEWS_OWNERS,
