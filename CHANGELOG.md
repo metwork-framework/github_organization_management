@@ -76,6 +76,7 @@
 - use wget with token and revert local_sources volume
 - delete_head_branch is deprecated
 - remove cla assistant approved check
+- add dependabot.yml
 
 ### Bug Fixes
 
