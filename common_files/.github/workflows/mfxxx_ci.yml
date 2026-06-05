@@ -123,6 +123,7 @@ jobs:
       - name: publish buildlogs
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
         uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@v1.1.5
+        continue-on-error: true
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.buildlog_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}/buildlogs{% endraw %}
