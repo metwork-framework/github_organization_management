@@ -77,6 +77,7 @@
 - delete_head_branch is deprecated
 - remove cla assistant approved check
 - add dependabot.yml
+- publish buildlogs when failing
 
 ### Bug Fixes
 
