@@ -1,10 +1,13 @@
 libcuda.so.1
 {% if REPO == "mfextaddon_python3_ia" %}
 libcublas.so.11
+libcublas.so.12
 libcublas.so.13
 libcublasLt.so.11
+libcublasLt.so.12
 libcublasLt.so.13
 libcudart.so.11.0
+libcudart.so.12
 libcudart.so.13
 libcusparse.so.11
 libhipblas.so.2
@@ -16,6 +19,7 @@ libhipsparse.so.4
 libimf.so
 libintlc.so.5
 libirng.so
+libnvJitLink.so.12
 libnvJitLink.so.13
 libsvml.so
 libsycl.so.8
