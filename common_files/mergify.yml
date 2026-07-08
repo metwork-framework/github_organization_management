@@ -112,10 +112,9 @@ pull_request_rules:
     actions:
       merge:
         method: squash
-        commit_message_template: |-
-          {% raw %}{{ title }} (#{{ number }}){% endraw %}
-
-          {% raw %}{{ body }}{% endraw %}
+        commit_message_format:
+          title: pr-title
+          body: pr-body
     conditions:
 {% if INTEGRATION_LEVEL|int >= 4 %}
       - base!=master
