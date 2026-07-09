@@ -78,6 +78,7 @@
 - remove cla assistant approved check
 - add dependabot.yml
 - publish buildlogs when failing
+- upgrade mergify configuration to current format
 
 ### Bug Fixes
 
