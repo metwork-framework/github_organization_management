@@ -79,6 +79,7 @@
 - add dependabot.yml
 - publish buildlogs when failing
 - upgrade mergify configuration to current format
+- move dependabot.yml to .github directory
 
 ### Bug Fixes
 
