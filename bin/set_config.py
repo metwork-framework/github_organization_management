@@ -37,6 +37,7 @@ releases = json.loads(c)
 auth = Auth.Token(TOKEN)
 g = Github(auth=auth)
 for repository in repositories:
+    print("repository :", repository)
     repo = g.get_repo("%s/%s" % ("metwork-framework", repository["name"]))
     extra_labels = []
     if 4 in repository["integration_levels"]:
@@ -89,6 +90,7 @@ for repository in repositories:
         branch_name = release["branch"]
         if branch_name not in repository["branches"]:
             continue
+        print("branch : ", branch_name)
         bprotection = repository["branch_protections"].get(branch_name, {})
         enforce = bprotection.get("enforce_admins", False)
         strict = bprotection.get("required_status_checks", {}).get("strict", False)
