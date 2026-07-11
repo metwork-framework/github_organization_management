@@ -80,6 +80,7 @@
 - publish buildlogs when failing
 - upgrade mergify configuration to current format
 - move dependabot.yml to .github directory
+- fix path to python requirements and only check security updates
 
 ### Bug Fixes
 
