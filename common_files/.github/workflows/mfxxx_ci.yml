@@ -83,7 +83,7 @@ jobs:
           mkdir {% raw %}${{ github.workspace }}{% endraw %}
 {% endif %}
       - name: checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: {% raw %}${{ github.event.client_payload.branch || github.ref }}{% endraw %}
@@ -122,7 +122,7 @@ jobs:
 {% if REPO != "mfextaddon_template" %}
       - name: publish buildlogs
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@v1.1.5
+        uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@v1.1.6
         continue-on-error: true
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.buildlog_dir }}{% endraw %}
@@ -147,7 +147,7 @@ jobs:
           docker run ${DOCKER_RUN_OPTIONS} -e DEP_BRANCH=${DEP_BRANCH} -e BRANCH=${BRANCH} -e OS_VERSION=${OS_VERSION} --rm ${TESTIMAGE} /bin/bash -c "${DOCKER_WORKFLOW_SCRIPTS_DIR}/integration_tests.sh"
       - name: publish rpms
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@v1.1.5
+        uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@v1.1.6
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}{% endraw %}/rpms
@@ -162,7 +162,7 @@ jobs:
             '${LOCAL}/metwork-*.rpm' => ${REMOTE}
       - name: createrepo
         if: {% raw %}${{ github.event_name != 'pull_request' && steps.BuildStep.outputs.bypass == 'false' && steps.SetVariables.outputs.branch != 'null' }}{% endraw %}
-        uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@v1.1.5
+        uses: yitianyigexiangfa/ssh-scp-ssh-pipelines@v1.1.6
         env:
           REMOTE: {% raw %}${{ steps.SetVariables.outputs.rpm_dir }}{% endraw %}
           LOCAL: {% raw %}${{ github.workspace }}{% endraw %}/.github/workflows
