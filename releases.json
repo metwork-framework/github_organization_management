@@ -1,38 +1,6 @@
 {
     "actives": [
         {
-            "branch": "release_0.9",
-            "title": "0.9",
-            "alternate_title": "0_dot_9",
-            "latest": 0,
-            "previous": "release_0.8",
-            "tags": "v0.9.*"
-        },
-        {
-            "branch": "release_1.0",
-            "title": "1.0",
-            "alternate_title": "1_dot_0",
-            "latest": 0,
-            "previous": "release_0.9",
-            "tags": "v1.0.*"
-        },
-        {
-            "branch": "release_1.1",
-            "title": "1.1",
-            "alternate_title": "1_dot_1",
-            "latest": 0,
-            "previous": "release_1.0",
-            "tags": "v1.1.*"
-        },
-        {
-            "branch": "release_1.2",
-            "title": "1.2",
-            "alternate_title": "1_dot_2",
-            "latest": 0,
-            "previous": "release_1.1",
-            "tags": "v1.2.*"
-        },
-        {
             "branch": "release_2.0",
             "title": "2.0",
             "alternate_title": "2_dot_0",
@@ -60,9 +28,17 @@
             "branch": "release_2.3",
             "title": "2.3",
             "alternate_title": "2_dot_3",
-            "latest": 1,
+            "latest": 0,
             "previous": "release_2.2",
             "tags": "v2.3.*"
+        },
+        {
+            "branch": "release_2.4",
+            "title": "2.4",
+            "alternate_title": "2_dot_4",
+            "latest": 1,
+            "previous": "release_2.3",
+            "tags": "v2.4.*"
         }
     ],
     "inactives": [
@@ -97,6 +73,38 @@
             "latest": 0,
             "previous": "release_0.7",
             "tags": "v0.8.*"
+        },
+        {
+            "branch": "release_0.9",
+            "title": "0.9",
+            "alternate_title": "0_dot_9",
+            "latest": 0,
+            "previous": "release_0.8",
+            "tags": "v0.9.*"
+        },
+        {
+            "branch": "release_1.0",
+            "title": "1.0",
+            "alternate_title": "1_dot_0",
+            "latest": 0,
+            "previous": "release_0.9",
+            "tags": "v1.0.*"
+        },
+        {
+            "branch": "release_1.1",
+            "title": "1.1",
+            "alternate_title": "1_dot_1",
+            "latest": 0,
+            "previous": "release_1.0",
+            "tags": "v1.1.*"
+        },
+        {
+            "branch": "release_1.2",
+            "title": "1.2",
+            "alternate_title": "1_dot_2",
+            "latest": 0,
+            "previous": "release_1.1",
+            "tags": "v1.2.*"
         }
     ],
     "persistents": [
