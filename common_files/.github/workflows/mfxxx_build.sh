@@ -17,19 +17,25 @@ rm -rf html_doc rpms .build_hash
 
     if test "${OS_VERSION}" = "centos8"; then export METWORK_BUILD_OS=generic; else export METWORK_BUILD_OS=${OS_VERSION}; fi
 
+case "${BRANCH}" in
+    ci* | pci*)
+	export DEP_BRANCH=integration
+    *)
+	export DEP_BRANCH=${BRANCH}
+esac;;
 {% if REPO == "mfextaddon_python3_ia" %}
-    yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_}
+    yum install -y metwork-mfext-layer-python3_scientific-${DEP_BRANCH##release_}
 {% elif REPO == "mfextaddon_radartools" %}
     yum install -y boost-devel
-    yum install -y metwork-mfext-layer-python3_scientific-${BRANCH##release_}
+    yum install -y metwork-mfext-layer-python3_scientific-${DEP_BRANCH##release_}
 {% elif REPO == "mfextaddon_soprano" %}
-    yum install -y metwork-mfext-layer-radartools-${BRANCH##release_}
-    yum install -y metwork-mfext-layer-python3_radartools-${BRANCH##release_}
-    yum install -y metwork-mfext-layer-python3_ia-${BRANCH##release_}
-    yum install -y metwork-mfext-layer-python3_extratools-${BRANCH##release_}
+    yum install -y metwork-mfext-layer-radartools-${DEP_BRANCH##release_}
+    yum install -y metwork-mfext-layer-python3_radartools-${DEP_BRANCH##release_}
+    yum install -y metwork-mfext-layer-python3_ia-${DEP_BRANCH##release_}
+    yum install -y metwork-mfext-layer-python3_extratools-${DEP_BRANCH##release_}
 {% endif %}
 {% if REPO == "mfbus" %}
-    yum -y install metwork-mfext-layer-rabbitmq-${DRONE_BRANCH##release_}
+    yum -y install metwork-mfext-layer-rabbitmq-${DEP_BRANCH##release_}
 {% endif %}
 
 git config --global --add safe.directory /src
@@ -61,7 +67,7 @@ fi
 MODULEHASH=`/opt/metwork-mfext-${TARGET_DIR}/bin/mfext_wrapper module_hash 2>module_hash.debug`
 if test -f /opt/metwork-mfext-${TARGET_DIR}/.dhash; then cat /opt/metwork-mfext-${TARGET_DIR}/.dhash; fi
 cat module_hash.debug |sort |uniq ; rm -f module_hash.debug
-echo "${MODULEHASH}${DRONE_TAG}${DRONE_BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
+echo "${MODULEHASH}${DRONE_TAG}${BRANCH}" |md5sum |cut -d ' ' -f1 >.build_hash
 if test -f "${BUILDCACHE}/build_hash_{{REPO}}_${BRANCH}_`cat .build_hash`"; then
     echo "bypass=true" >> github_output
     echo "buildcache=null" >> github_output
