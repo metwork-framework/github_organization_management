@@ -19,10 +19,10 @@ rm -rf html_doc rpms .build_hash
 
 case "${BRANCH}" in
     ci* | pci*)
-	export DEP_BRANCH=integration
+        export DEP_BRANCH=integration
     *)
-	export DEP_BRANCH=${BRANCH}
-esac;;
+        export DEP_BRANCH=${BRANCH}
+esac
 {% if REPO == "mfextaddon_python3_ia" %}
     yum install -y metwork-mfext-layer-python3_scientific-${DEP_BRANCH##release_}
 {% elif REPO == "mfextaddon_radartools" %}
