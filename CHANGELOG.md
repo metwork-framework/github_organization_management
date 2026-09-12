@@ -83,6 +83,8 @@
 - fix path to python requirements and only check security updates
 - update actions checkout and ssh-scp-ssh-pipelines
 - add release 2.4
+- fix for ci_* and pci_* branches
+- upgrade bootstrap.sh to Python 3.14
 
 ### Bug Fixes
 
