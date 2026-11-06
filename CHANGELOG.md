@@ -85,6 +85,7 @@
 - add release 2.4
 - fix for ci_* and pci_* branches
 - upgrade bootstrap.sh to Python 3.14
+- add libatomic.so.1 as authorized system dependency
 
 ### Bug Fixes
 
