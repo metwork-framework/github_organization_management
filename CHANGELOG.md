@@ -86,6 +86,7 @@
 - fix for ci_* and pci_* branches
 - upgrade bootstrap.sh to Python 3.14
 - add libatomic.so.1 as authorized system dependency
+- add libmvec.so.1 (for ncl under gcc 14)
 
 ### Bug Fixes
 
